@@ -2,7 +2,7 @@
 
 namespace COMP2139_Assignment1.Models
 {
-	public class Photos
+	public class Photo
 	{
 		[Key]
 		public int photoId {  get; set; }
@@ -10,7 +10,7 @@ namespace COMP2139_Assignment1.Models
 		[Required]
 		public string photoLocation { get; set; }
 
-		public string CarPlateNumber { get; set; }
+		public string? CarPlateNumber { get; set; }
 
 		public Car? Car { get; set; }
 

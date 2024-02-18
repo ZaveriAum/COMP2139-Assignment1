@@ -2,13 +2,13 @@
 
 namespace COMP2139_Assignment1.Models
 {
-    public class Reviews
+    public class Review
     {
         [Key]
         public int RatingId { get; set; }
 
         [Required]
-        public string Review {  get; set; }
+        public string Comment {  get; set; }
 
         public string CarPlateNumber { get; set; }
 

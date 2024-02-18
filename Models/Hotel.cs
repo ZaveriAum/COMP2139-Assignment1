@@ -17,7 +17,7 @@ namespace COMP2139_Assignment1.Models
         public string Features { get; set;}
 
         [Required]
-        public int Rating { get; set;}
+        public int? Rating { get; set;}
 
         [Required]
         public string Description { get; set;}
