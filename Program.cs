@@ -1,3 +1,6 @@
+using COMP2139_Assignment1.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace COMP2139_Assignment1
 {
     public class Program
@@ -8,6 +11,8 @@ namespace COMP2139_Assignment1
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

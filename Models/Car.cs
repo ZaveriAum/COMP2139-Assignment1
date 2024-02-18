@@ -25,7 +25,6 @@ namespace COMP2139_Assignment1.Models
         [Required]
         public string RentalCompany {  get; set; }
 
-        [Required]
         public int Rating { get; set; }
 
        
