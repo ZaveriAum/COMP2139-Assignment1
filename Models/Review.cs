@@ -8,12 +8,12 @@ namespace COMP2139_Assignment1.Models
         public int RatingId { get; set; }
 
         [Required]
-        public string Comment { get; set; }
+        public string Comment {  get; set; }
 
         public string CarPlateNumber { get; set; }
 
-        public Car? Car { get; set; }
-
+        public Car? Car {  get; set; }
+        
         public string? RoomId { get; set; }
 
         public Room? Room { get; set; }

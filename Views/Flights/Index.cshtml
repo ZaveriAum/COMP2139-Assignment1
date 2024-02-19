@@ -1,0 +1,54 @@
+﻿@model List<Flight>
+
+@{
+    ViewData["Title"] = "Flight";
+}
+
+<DOCTYPE html>
+    <html>
+    <head>
+
+    </head>
+    <body>
+        <h2>Flights</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Flight Number</td>
+                        <td>Airline</td>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Price</td>
+                        <td>Seats</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var flight in Model)
+                    {
+
+                        <tr>
+                            <td>@flight.FlightNumber</td>
+                            <td>@flight.Airline</td>
+                            <td>@flight.From</td>
+                            <td>@flight.To</td>
+                            <td>@flight.Price</td>
+                            <td>@flight.Seats</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No Projects data</p>
+        }
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
+        </p>
+    </body>
+</html>

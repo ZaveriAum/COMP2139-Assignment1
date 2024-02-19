@@ -23,10 +23,10 @@ namespace COMP2139_Assignment1.Models
         public int price { get; set; }
 
         [Required]
-        public string RentalCompany { get; set; }
+        public string RentalCompany {  get; set; }
 
         public int Rating { get; set; }
 
-
+       
     }
 }
