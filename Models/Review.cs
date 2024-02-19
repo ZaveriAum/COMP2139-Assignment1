@@ -18,7 +18,7 @@ namespace COMP2139_Assignment1.Models
 
         public Room? Room { get; set; }
 
-        public string? HotelId { get; set; }
+        public int? HotelId { get; set; }
         public Hotel? Hotel { get; set; }
     }
 }

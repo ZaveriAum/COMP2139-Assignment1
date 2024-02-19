@@ -9,6 +9,7 @@ namespace COMP2139_Assignment1.Data
 
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
+
         public DbSet<Car> Cars { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Review> Reviews { get; set; }
