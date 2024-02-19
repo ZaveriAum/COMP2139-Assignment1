@@ -22,6 +22,12 @@ namespace COMP2139_Assignment1.Controllers
 			return View(_context.Flights.ToList());
 		}
 
+		[HttpGet]
+		public IActionResult SearchFlight()
+		{
+			return View(_context.Flights.ToList());
+		}
+
 		[HttpGet("AddFlight")]
 		public IActionResult AddFlight() 
 		{
@@ -110,22 +116,25 @@ namespace COMP2139_Assignment1.Controllers
 			return NotFound();
         }
 
-		/*[HttpGet]
-		public async Task<IActionResult> Search(string searchStringFrom, searchStringFrom, )
+		[HttpGet]
+		public async Task<IActionResult> Search(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate)
 		{
 			var flightsQuery = from f in _context.Flights select f;
 
-			bool searchPerformed = !String.IsNullOrEmpty(searchString);
+			bool searchPerformed = !String.IsNullOrEmpty(searchStringFrom) || !String.IsNullOrEmpty(searchStringTo);
 
-            if (searchPerformed)
-            {
-                flightsQuery = flightsQuery.Where(f =>f.From.Contains(searchString) ||
-													  f.To.Contains(searchString));
-            }
+			if (searchPerformed)
+			{
+				flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) ||
+													  f.To.Contains(searchStringTo) ||
+													  f.DepartureDate == searchStringDepartureDate);
+			}
 			var flights = await flightsQuery.ToListAsync();
 			ViewData["SearchPerformed"] = searchPerformed;
-			ViewData["SearchString"] = searchString;
-			return View("Index", flights);
-        }*/
-    }
+			ViewData["SearchStringFrom"] = searchStringFrom;
+			ViewData["SearchStringTo"] = searchStringTo;
+			ViewData["searchStringDepartureDate"] = searchStringDepartureDate;
+			return View("SearchFlight", flights);
+		}
+	}
 }

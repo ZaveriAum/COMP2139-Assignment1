@@ -1,0 +1,66 @@
+﻿@model List<Flight>
+
+@{
+    ViewData["Title"] = "Flight";
+    bool searchPerformed = ViewData["SearchPerformed"] as bool? ?? false;
+    string searchStringFrom = ViewData["SearchStringFrom"] as string;
+    string searchStringTo = ViewData["SearchStringTo"] as string;
+    DateOnly? searchStringDepartureDate = ViewData["searchStringDepartureDate"] as DateOnly?;
+}
+
+<DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    </head>
+    <body>
+        <h2>Flights</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Flight Number</td>
+                        <td>Airline</td>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Price</td>
+                        <td>Seats</td>
+                        <td>Details</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var flight in Model)
+                    {
+                        <tr>
+                            <td>@flight.FlightNumber</td>
+                            <td>@flight.Airline</td>
+                            <td>@flight.From</td>
+                            <td>@flight.To</td>
+                            <td>@flight.Price</td>
+                            <td>@flight.Seats</td>
+                            <td><a asp-action="Details" asp-route-flightId="@flight.FlightId"><i class="fa-solid fa-ticket"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else{
+            if (searchPerformed)
+            {
+                <p>No flights awailable with the given requirments.</p>
+            }
+            else
+            {
+            <p>No Projects data</p>
+            }
+        }
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
+        </p>
+    </body>
+</html>

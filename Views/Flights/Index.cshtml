@@ -11,44 +11,12 @@
 
     </head>
     <body>
-        <h2>Flights</h2>
-
-        @if (Model.Any())
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Flight Number</td>
-                        <td>Airline</td>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Price</td>
-                        <td>Seats</td>
-                        <td>Details</td>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach (var flight in Model)
-                    {
-                            <tr>
-                                <td>@flight.FlightNumber</td>
-                                <td>@flight.Airline</td>
-                                <td>@flight.From</td>
-                                <td>@flight.To</td>
-                                <td>@flight.Price</td>
-                                <td>@flight.Seats</td>
-                            <td><a asp-action="Details" asp-route-flightId="@flight.FlightId"><i class="fa-solid fa-ticket"></i></a></td>
-                            </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p>No Projects data</p>
-        }
+        <form class="d-flex" asp-action="Search" method="get">
+            <input class="form-control" type="text" placeholder="From" name="searchStringFrom"/>
+            <input class="form-control" type="text" placeholder="Going to" name="searchStringTo" />
+            <input class="form-control" type="date" name="searchStringDepartureDate" />
+            <button class="btn btn-outline-success" type="Submit">Search</button>
+        </form>
         <p>
             <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
         </p>
