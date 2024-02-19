@@ -1,7 +1,5 @@
 ﻿using COMP2139_Assignment1.Models;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace COMP2139_Assignment1.Data
 {
