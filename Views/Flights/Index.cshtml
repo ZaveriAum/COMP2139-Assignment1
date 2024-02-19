@@ -1,0 +1,24 @@
+﻿@model List<Flight>
+
+@{
+    ViewData["Title"] = "Flight";
+}
+
+<DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    </head>
+    <body>
+        <form class="d-flex" asp-action="Search" method="get">
+            <input class="form-control" type="text" placeholder="From" name="searchStringFrom"/>
+            <input class="form-control" type="text" placeholder="Going to" name="searchStringTo" />
+            <input class="form-control" type="date" name="searchStringDepartureDate" />
+            <button class="btn btn-outline-success" type="Submit">Search</button>
+        </form>
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
+        </p>
+    </body>
+</html>
