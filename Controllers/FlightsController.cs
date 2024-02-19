@@ -1,6 +1,7 @@
 ﻿using COMP2139_Assignment1.Data;
 using COMP2139_Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Evaluation;
 using Microsoft.EntityFrameworkCore;
 
 namespace COMP2139_Assignment1.Controllers
@@ -93,6 +94,20 @@ namespace COMP2139_Assignment1.Controllers
         private bool FlightExists(int flightId)
         {
             return _context.Flights.Any(e => e.FlightId == flightId);
+        }
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Delete(int flightId)
+		{
+			var flight = _context.Flights.Find(flightId);
+            if (flight != null)
+            {
+                _context.Flights.Remove(flight);
+				_context.SaveChanges();
+				return RedirectToAction(nameof(Index));
+            }
+			return NotFound();
         }
     }
 }
