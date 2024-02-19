@@ -38,5 +38,16 @@ namespace COMP2139_Assignment1.Controllers
 			}
 			return View(flight);
 		}
+
+		[HttpGet]
+		public IActionResult Details(int flightId)
+		{
+			var flight = _context.Flights.FirstOrDefault(f=>f.FlightId == flightId);
+			if (flight == null)
+			{
+				return NotFound();
+			}
+			return View(flight);
+		}
 	}
 }

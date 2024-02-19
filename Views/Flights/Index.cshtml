@@ -7,6 +7,7 @@
 <DOCTYPE html>
     <html>
     <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     </head>
     <body>
@@ -23,6 +24,7 @@
                         <td>To</td>
                         <td>Price</td>
                         <td>Seats</td>
+                        <td>Details</td>
                     </tr>
                 </thead>
 
@@ -30,15 +32,15 @@
 
                     @foreach (var flight in Model)
                     {
-
-                        <tr>
-                            <td>@flight.FlightNumber</td>
-                            <td>@flight.Airline</td>
-                            <td>@flight.From</td>
-                            <td>@flight.To</td>
-                            <td>@flight.Price</td>
-                            <td>@flight.Seats</td>
-                        </tr>
+                            <tr>
+                                <td>@flight.FlightNumber</td>
+                                <td>@flight.Airline</td>
+                                <td>@flight.From</td>
+                                <td>@flight.To</td>
+                                <td>@flight.Price</td>
+                                <td>@flight.Seats</td>
+                            <td><a asp-action="Details" asp-route-flightId="@flight.FlightId"><i class="fa-solid fa-ticket"></i></a></td>
+                            </tr>
                     }
                 </tbody>
             </table>
