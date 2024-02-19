@@ -29,15 +29,6 @@ namespace COMP2139_Assignment1.Models
         public string To { get; set; }
 
         [Required]
-        public int EconomySeats { get; set; }
-
-        [Required]
-        public int PremiumSeats { get; set; }
-
-        [Required]
-        public string BusinessClassSeats { get; set; }
-
-        [Required]
-        public string FirstClass {  get; set; }
+        public int Seats { get; set; }
     }
 }
