@@ -14,11 +14,17 @@ namespace COMP2139_Assignment1.Models
 		[Required]
 		public string Airline { get; set; }
 
-		[Required]
-		public DateTime ArrivalTime { get; set; }
+        [Required]
+        public DateOnly DepartureDate { get; set; }
+
+        [Required]
+		public DateOnly ArrivalDate { get; set; }
 
 		[Required]
-		public DateTime DepartureTime { get; set; }
+		public TimeOnly DepartureTime { get; set; }
+
+		[Required]
+		public TimeOnly ArrivalTime { get; set; }
 
 		[Required]
 		public int Price { get; set; }

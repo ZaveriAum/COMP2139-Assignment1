@@ -109,5 +109,23 @@ namespace COMP2139_Assignment1.Controllers
             }
 			return NotFound();
         }
+
+		/*[HttpGet]
+		public async Task<IActionResult> Search(string searchStringFrom, searchStringFrom, )
+		{
+			var flightsQuery = from f in _context.Flights select f;
+
+			bool searchPerformed = !String.IsNullOrEmpty(searchString);
+
+            if (searchPerformed)
+            {
+                flightsQuery = flightsQuery.Where(f =>f.From.Contains(searchString) ||
+													  f.To.Contains(searchString));
+            }
+			var flights = await flightsQuery.ToListAsync();
+			ViewData["SearchPerformed"] = searchPerformed;
+			ViewData["SearchString"] = searchString;
+			return View("Index", flights);
+        }*/
     }
 }
