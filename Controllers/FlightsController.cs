@@ -1,6 +1,7 @@
 ﻿using COMP2139_Assignment1.Data;
 using COMP2139_Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace COMP2139_Assignment1.Controllers
 {
@@ -49,5 +50,49 @@ namespace COMP2139_Assignment1.Controllers
 			}
 			return View(flight);
 		}
-	}
+
+		[HttpGet]
+		public IActionResult Edit(int flightId)
+		{
+			var flight = _context.Flights.Find(flightId);
+			if(flight == null)
+				return NotFound();
+			return View(flight);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Edit(int flightId, [Bind("FlightNumber", "Airline", "ArrivalTime", "DepartureTime", "Price", "From", "To", "Seats")] Flight flight)
+		{
+			if(flightId != flight.FlightId)
+			{
+				return NotFound();
+			}
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(flight);
+					_context.SaveChanges();
+				}
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!FlightExists(flight.FlightId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+			return View(flight);
+		}
+        private bool FlightExists(int flightId)
+        {
+            return _context.Flights.Any(e => e.FlightId == flightId);
+        }
+    }
 }
