@@ -4,6 +4,7 @@ using COMP2139_Assignment1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240221180806_Room_Model_Added")]
+    partial class Room_Model_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,129 +161,6 @@ namespace COMP2139_Assignment1.Migrations
                     b.HasKey("HotelId");
 
                     b.ToTable("Hotels");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoCar", b =>
-                {
-                    b.Property<int>("PhotoCarId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoCarId"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PhotoCarId");
-
-                    b.ToTable("PhotoCars");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoHotel", b =>
-                {
-                    b.Property<int>("PhotoHotelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoHotelId"));
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PhotoHotelId");
-
-                    b.ToTable("PhotoHotels");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoRoom", b =>
-                {
-                    b.Property<int>("PhotoRoomId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoRoomId"));
-
-                    b.Property<string>("PhotoPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PhotoRoomId");
-
-                    b.ToTable("PhotoRooms");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewCar", b =>
-                {
-                    b.Property<int>("ReviewCarId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewCarId"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Review")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("ReviewCarId");
-
-                    b.ToTable("ReviewCars");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewHotel", b =>
-                {
-                    b.Property<int>("ReviewHotelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewHotelId"));
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Review")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("ReviewHotelId");
-
-                    b.ToTable("ReviewHotels");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewRoom", b =>
-                {
-                    b.Property<int>("ReviewRoomId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewRoomId"));
-
-                    b.Property<string>("Review")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ReviewRoomId");
-
-                    b.ToTable("ReviewRooms");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
