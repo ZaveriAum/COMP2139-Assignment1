@@ -14,7 +14,7 @@ namespace COMP2139_Assignment1.Models
 
         public Car? Car {  get; set; }
         
-        public string? RoomId { get; set; }
+        public int? RoomId { get; set; }
 
         public Room? Room { get; set; }
 

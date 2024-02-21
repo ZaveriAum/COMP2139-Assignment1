@@ -1,6 +1,7 @@
 ﻿using COMP2139_Assignment1.Data;
 using COMP2139_Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<< Updated upstream
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -11,17 +12,31 @@ namespace COMP2139_Labs.Controllers
         private readonly ApplicationDbContext _db;
 
         public ProjectsController(ApplicationDbContext db)
+=======
+using System;
+
+namespace COMP2139_Assignment1.Controllers
+{
+    public class HotelsController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+
+        public HotelsController(ApplicationDbContext db)
+>>>>>>> Stashed changes
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
+<<<<<<< Updated upstream
             /*var projects = new List<Project>()
             {
                 new Project { ProjectId = "1", Name = "First 1", Description = "First Project" },
                 new Project { ProjectId = "2", Name = "Second 2", Description = "Second Project" }
             };*/
+=======
+>>>>>>> Stashed changes
 
             return View(_db.Hotels.ToList());
         }
@@ -53,6 +68,7 @@ namespace COMP2139_Labs.Controllers
             }
             return View(project);
         }
+<<<<<<< Updated upstream
 
         public IActionResult Edit(int id)
         {
@@ -125,3 +141,8 @@ namespace COMP2139_Labs.Controllers
         }
     }
 }
+=======
+    }
+}
+
+>>>>>>> Stashed changes

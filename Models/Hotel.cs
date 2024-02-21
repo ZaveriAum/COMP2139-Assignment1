@@ -15,8 +15,11 @@ namespace COMP2139_Assignment1.Models
         public string HotelLocation { get; set;}
 
         [Required]
+<<<<<<< Updated upstream
         public string Features { get; set;}
 
+=======
+>>>>>>> Stashed changes
         public int? Rating { get; set;}
 
         [Required]
