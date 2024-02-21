@@ -4,6 +4,7 @@ using COMP2139_Assignment1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240221132252_Remove-Room")]
+    partial class RemoveRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,54 +27,36 @@ namespace COMP2139_Assignment1.Migrations
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Car", b =>
                 {
-                    b.Property<int>("CarId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("PlateNumber")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
-
-                    b.Property<string>("City")
+                    b.Property<string>("CarModel")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Make")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PickUpLocation")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("PlateNumber")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.Property<string>("RentalCompany")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CarId");
+                    b.Property<int>("price")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlateNumber");
 
                     b.ToTable("Cars");
                 });
@@ -86,8 +71,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.Property<string>("Airline")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("ArrivalDate")
                         .HasColumnType("date");
@@ -124,40 +108,28 @@ namespace COMP2139_Assignment1.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("COMP2139_Assignment1.Models.Hotel", b =>
+            modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
                 {
-                    b.Property<int>("HotelId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("RoomId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Highlights")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelId"));
-
-                    b.Property<string>("HotelCity")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("HotelDescription")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("HotelLocation")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("HotelName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.HasKey("HotelId");
+                    b.HasKey("RoomId");
 
-                    b.ToTable("Hotels");
+                    b.ToTable("Rooms");
                 });
 #pragma warning restore 612, 618
         }

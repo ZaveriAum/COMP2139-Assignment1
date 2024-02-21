@@ -4,6 +4,7 @@ using COMP2139_Assignment1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240221174628_Car_Model_Added")]
+    partial class Car_Model_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,42 +125,6 @@ namespace COMP2139_Assignment1.Migrations
                     b.HasKey("FlightId");
 
                     b.ToTable("Flights");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.Hotel", b =>
-                {
-                    b.Property<int>("HotelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelId"));
-
-                    b.Property<string>("HotelCity")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("HotelDescription")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("HotelLocation")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("HotelName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.HasKey("HotelId");
-
-                    b.ToTable("Hotels");
                 });
 #pragma warning restore 612, 618
         }

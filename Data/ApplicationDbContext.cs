@@ -8,12 +8,8 @@ namespace COMP2139_Assignment1.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Flight> Flights { get; set; }
-        public DbSet<Hotel> Hotels { get; set; }
+
         public DbSet<Car> Cars { get; set; }
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<Photo> Photos { get; set; }
-
-
+        public DbSet<Hotel> Hotels { get; set; }
     }
 }
