@@ -17,5 +17,8 @@ namespace COMP2139_Assignment1.Data
         public DbSet<ReviewHotel> ReviewHotels { get; set; }
         public DbSet<ReviewRoom> ReviewRooms { get; set; }
 
+        public DbSet<PhotoCar> PhotoCars { get; set;}
+        public DbSet<PhotoHotel> PhotoHotels { get; set;}
+        public DbSet<PhotoRoom> PhotoRooms { get; set;}
     }
 }
