@@ -25,17 +25,17 @@ namespace COMP2139_Assignment1.Models
 		[DataType(DataType.Date)]
         public DateOnly DepartureDate { get; set; }
 
-		// What is the date of arrival on the destination this is set by the arline therefore it will depend of the timezone of the destination
+        // At what time will the flight take off on the give date
+        [Required]
+        [Display(Name = "Departure Time")]
+        [DataType(DataType.Time)]
+        public TimeOnly DepartureTime { get; set; }
+
+        // What is the date of arrival on the destination this is set by the arline therefore it will depend of the timezone of the destination
         [Required]
 		[Display(Name ="Arrival Date")]
 		[DataType(DataType.Date)]
 		public DateOnly ArrivalDate { get; set; }
-
-		// At what time will the flight take off on the give date
-		[Required]
-		[Display(Name ="Departure Time")]
-		[DataType(DataType.Time)]
-		public TimeOnly DepartureTime { get; set; }
 
 		// What time will it arrive at the decided Destination
 		[Required]
