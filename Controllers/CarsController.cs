@@ -95,6 +95,11 @@ namespace COMP2139_Assignment1.Controllers
             return View(car);
         }
 
+        private bool CarExists(int carId)
+        {
+            return _context.Cars.Any(c=> c.CarId == carId);
+        }
+
         /*        [HttpGet]
         public async Task<IActionResult> Search(string searchStringPickUp, DateOnly searchStringDate)
         {
