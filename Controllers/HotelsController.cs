@@ -139,14 +139,12 @@ namespace COMP2139_Assignment1.Controllers
             if (searchPerformed)
             {
                 hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(searchName) ||
-                                                      f.HotelLocation.Contains(searchLocation) ||
-                                                      f.Rating == searchRating);
+                                                      f.HotelLocation.Contains(searchLocation));
             }
             var hotels = await hotelQuery.ToListAsync();
             ViewData["SearchPerformed"] = searchPerformed;
             ViewData["SearchName"] = searchName;
             ViewData["seacrhLocation"] = searchLocation;
-            ViewData["searchRating"] = searchRating;
             return View("Search", hotels);
         }
     }
