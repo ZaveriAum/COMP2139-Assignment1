@@ -78,7 +78,7 @@ namespace COMP2139_Assignment1.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(hotel.HotelId))
+                    if (!HotelExists(hotel.HotelId))
                     {
                         return NotFound();
                     }
@@ -92,9 +92,9 @@ namespace COMP2139_Assignment1.Controllers
             return View(hotel);
         }
 
-        private bool ProjectExists(int projectId)
+        private bool HotelExists(int hotelId)
         {
-            return _db.Hotels.Any(e => e.HotelId == projectId);
+            return _db.Hotels.Any(e => e.HotelId == hotelId);
         }
 
         public IActionResult Delete(int id)
@@ -119,12 +119,6 @@ namespace COMP2139_Assignment1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return NotFound();
-        }
-
-        [HttpGet]
-        public IActionResult SearchHotel()
-        {
-            return View(_db.Hotels.ToList());
         }
 
 
