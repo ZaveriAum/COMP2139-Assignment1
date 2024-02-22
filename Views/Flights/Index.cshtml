@@ -12,13 +12,18 @@
     </head>
     <body>
         <form class="d-flex" asp-action="Search" method="get">
-            <input class="form-control" type="text" placeholder="From" name="searchStringFrom"/>
-            <input class="form-control" type="text" placeholder="Going to" name="searchStringTo" />
-            <input class="form-control" type="date" name="searchStringDepartureDate" />
+            <input class="form-control" type="text" placeholder="From" name="searchStringFrom" required/>
+            <input class="form-control" type="text" placeholder="Going to" name="searchStringTo" required/>
+            <input class="form-control" type="date" id="searchStringDepartureDate" name="searchStringDepartureDate" required />
             <button class="btn btn-outline-success" type="Submit">Search</button>
         </form>
         <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">Add Flight</a>
         </p>
     </body>
 </html>
+<script>
+    // JavaScript code to set today's date as the placeholder
+    var today = new Date().toISOString().slice(0, 10);
+    document.getElementById("searchStringDepartureDate").setAttribute('value', today);
+</script>

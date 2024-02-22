@@ -27,12 +27,12 @@ namespace COMP2139_Assignment1.Models
         public string PickUpLocation { get; set; }
 
         [Required]
-        [StringLength(20, ErrorMessage ="Make of the car should not exceed the limit of 20 characters.")]
-        [Display(Name ="Car Make")]
+        [StringLength(20, ErrorMessage ="Brand of the car should not exceed the limit of 20 characters.")]
+        [Display(Name ="Car  Brand")]
         public string Make { get; set; }
 
         [Required]
-        [StringLength(20, ErrorMessage ="Model of the car shoiuld not exceed the limit of 20 characters.")]
+        [StringLength(20, ErrorMessage ="Model of the car should not exceed the limit of 20 characters.")]
         [Display(Name ="Car Model")]
         public string Model { get; set; }
 
@@ -43,8 +43,9 @@ namespace COMP2139_Assignment1.Models
 
         [Required]
         [DataType(DataType.Currency)]
-        [Display(Name ="Price")]
-        public int Price { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [Display(Name = "Price")]
+        public double Price { get; set; }
 
         [Required]
         [Display(Name ="Rental Company")]

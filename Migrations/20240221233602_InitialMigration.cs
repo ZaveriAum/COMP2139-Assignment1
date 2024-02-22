@@ -23,7 +23,7 @@ namespace COMP2139_Assignment1.Migrations
                     Make = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "float", nullable: false),
                     RentalCompany = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false)
                 },
@@ -44,7 +44,7 @@ namespace COMP2139_Assignment1.Migrations
                     DepartureTime = table.Column<TimeOnly>(type: "time", nullable: false),
                     ArrivalDate = table.Column<DateOnly>(type: "date", nullable: false),
                     ArrivalTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "float", nullable: false),
                     From = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     To = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Seats = table.Column<int>(type: "int", nullable: false)
@@ -162,7 +162,7 @@ namespace COMP2139_Assignment1.Migrations
                     RoomId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "float", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     HotelId = table.Column<int>(type: "int", nullable: false)
                 },

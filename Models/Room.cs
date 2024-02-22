@@ -11,7 +11,10 @@ namespace COMP2139_Assignment1.Models
         public string Description { get; set; }
 
         [Required]
-        public int Price { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [Display(Name = "Price")]
+        public double Price { get; set; }
 
         [Required]
         public int Rating { get; set; }

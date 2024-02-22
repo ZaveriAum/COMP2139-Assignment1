@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace COMP2139_Assignment1.Controllers
 {
+	//up
 	public class FlightsController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -19,7 +20,8 @@ namespace COMP2139_Assignment1.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			return View(_context.Flights.ToList());
+
+            return View(_context.Flights.ToList());
 		}
 
 		[HttpGet]
@@ -28,16 +30,20 @@ namespace COMP2139_Assignment1.Controllers
 			return View(_context.Flights.ToList());
 		}
 
-		[HttpGet("AddFlight")]
-		public IActionResult AddFlight() 
+		[HttpGet("Create")]
+		public IActionResult Create() 
 		{
 			return View();
 		}
 
-		[HttpPost("AddFlight")]
+		[HttpPost("Create")]
 		[ValidateAntiForgeryToken]
-		public IActionResult AddFlight(Flight flight)
+		public IActionResult Create(Flight flight)
 		{
+			Console.WriteLine(flight.Price);
+
+            Type type = flight.Price.GetType();
+			Console.WriteLine(type);
 			if (ModelState.IsValid)
 			{
 				_context.Flights.Add(flight);
@@ -69,7 +75,7 @@ namespace COMP2139_Assignment1.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Edit(int flightId, [Bind("FlightNumber", "Airline", "ArrivalTime", "DepartureTime", "Price", "From", "To", "Seats")] Flight flight)
+		public IActionResult Edit(int flightId, [Bind("FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
 		{
 			if(flightId != flight.FlightId)
 			{
@@ -125,8 +131,8 @@ namespace COMP2139_Assignment1.Controllers
 
 			if (searchPerformed)
 			{
-				flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) ||
-													  f.To.Contains(searchStringTo) ||
+				flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) &&
+													  f.To.Contains(searchStringTo) &&
 													  f.DepartureDate == searchStringDepartureDate);
 			}
 			var flights = await flightsQuery.ToListAsync();
