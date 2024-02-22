@@ -1,7 +1,7 @@
 ﻿@model COMP2139_Assignment1.Models.Flight
 
 @{
-    ViewData["Title"] = "AddFlight";
+    ViewData["Title"] = "Create Flight";
 }
 
 <h1>AddFlight</h1>
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddFlight">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FlightNumber" class="control-label"></label>
