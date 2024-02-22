@@ -1,11 +1,11 @@
 ﻿@model List<Hotel>
 
+
 @{
     ViewData["Title"] = "Hotel";
     bool searchPerformed = ViewData["SearchPerformed"] as bool? ?? false;
     string searchName = ViewData["searchName"] as string;
     string seacrhLocation = ViewData["seacrhLocation"] as string;
-    int? searchRating = ViewData["searchRating"] as int?;
 }
 
 <DOCTYPE html>

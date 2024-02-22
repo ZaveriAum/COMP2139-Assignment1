@@ -15,6 +15,13 @@ namespace COMP2139_Assignment1.Controllers
         {
             _db = db;
         }
+          
+        public IActionResult List()
+        {
+
+
+            return View(_db.Hotels.ToList());
+        }
 
         public IActionResult Index()
         {
@@ -63,7 +70,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("HotelName, HotelLocation, Rating, Description")] Hotel hotel)
+        public IActionResult Edit(int id, [Bind("HotelName", "HotelLocation", "Rating", "Description")] Hotel hotel)
         {
             if (id != hotel.HotelId)
             {
@@ -123,23 +130,21 @@ namespace COMP2139_Assignment1.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Search(string searchName, string seacrhLocation, int searchRating)
+        public async Task<IActionResult> Search(string searchName, string searchLocation, int searchRating)
         {
             var hotelQuery = from f in _db.Hotels select f;
 
-            bool searchPerformed = !String.IsNullOrEmpty(searchName) || !String.IsNullOrEmpty(seacrhLocation);
+            bool searchPerformed = !String.IsNullOrEmpty(searchName) || !String.IsNullOrEmpty(searchLocation);
 
             if (searchPerformed)
             {
                 hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(searchName) ||
-                                                      f.HotelLocation.Contains(seacrhLocation) ||
-                                                      f.Rating == searchRating);
+                                                      f.HotelLocation.Contains(searchLocation));
             }
             var hotels = await hotelQuery.ToListAsync();
             ViewData["SearchPerformed"] = searchPerformed;
             ViewData["SearchName"] = searchName;
-            ViewData["seacrhLocation"] = seacrhLocation;
-            ViewData["searchRating"] = searchRating;
+            ViewData["seacrhLocation"] = searchLocation;
             return View("Search", hotels);
         }
     }

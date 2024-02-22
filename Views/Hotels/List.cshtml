@@ -1,35 +1,26 @@
-﻿@model IEnumerable<COMP2139_Assignment1.Models.Hotel>
-
+﻿@model List<Hotel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Tittle"] = "Hotel";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<form class="d-flex" asp-action="Search" method="get">
-    <input class="form-control" type="text" placeholder="HotelName" name="searchName" />
-    <input class="form-control" type="text" placeholder="HotelLocation" name="seacrhLocation" />
-    <button class="btn btn-outline-success" type="Submit">Search</button>
-</form>
-
-@* <table class="table">
+<h2>Hotels</h2>
+@if (Model.Any())
+{
+    <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.HotelName)
+               Hotel Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HotelLocation)
+               Hotel Location
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rating)
+               Rating
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th></th>
         </tr>
@@ -51,15 +42,20 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |
+                <a asp-action="Index" asp-controller="Rooms" asp-route-hotelId="@item.HotelId" class="btn btn-warning">View Hotel</a> |
                 <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
- *@
+
+}
+else
+{
+    <p>No Hotels data</p>
+}
 
 <p>
-    <a asp-action="List">List All Hotel</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Hotels" asp-action="Create">Create Hotel</a>
 </p>
