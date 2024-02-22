@@ -1,0 +1,61 @@
+﻿@model List<Hotel>
+
+@{
+    ViewData["Title"] = "Hotel";
+    bool searchPerformed = ViewData["SearchPerformed"] as bool? ?? false;
+    string searchName = ViewData["searchName"] as string;
+    string seacrhLocation = ViewData["seacrhLocation"] as string;
+    int? searchRating = ViewData["searchRating"] as int?;
+}
+
+<DOCTYPE html>
+    <html>
+    <head>
+
+    </head>
+    <body>
+        <h2>Hotel</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Hotel Name</td>
+                        <td>Hotel Location</td>
+                        <td>Rating</td>
+                        <td>Description</td>
+   
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var hotel in Model)
+                    {
+                        <tr>
+                            <td>@hotel.HotelName</td>
+                            <td>@hotel.HotelLocation</td>
+                            <td>@hotel.Rating</td>
+                            <td>@hotel.Description</td>
+                            <td><a asp-action="Details" asp-route-hotelId="@hotel.HotelId"><i class="fa-solid fa-ticket"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else{
+            if (searchPerformed)
+            {
+                <p>No hotels available with the given requirments.</p>
+            }
+            else
+            {
+            <p>No hotels data</p>
+            }
+        }
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="AddHotel">Add Hotel</a>
+        </p>
+    </body>
+</html>

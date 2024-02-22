@@ -46,8 +46,9 @@ namespace COMP2139_Assignment1.Models
 		// What is the price of the flight
 		[Required]
 		[DataType(DataType.Currency)]
-		[Display(Name ="Price")]
-		public int Price { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [Display(Name ="Price")]
+		public double Price { get; set; }
 
 		// From where is this flight taking off
 		[Required]
@@ -56,7 +57,7 @@ namespace COMP2139_Assignment1.Models
 
 		// What is the destination if the flight going to be
 		[Required]
-		[Display(Name ="Destinaiton")]
+		[Display(Name ="Destination")]
 		public string To { get; set; }
 		
 		// Number of seats offered by the flight
