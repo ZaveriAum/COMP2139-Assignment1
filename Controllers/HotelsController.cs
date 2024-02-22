@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-
+//update
 namespace COMP2139_Assignment1.Controllers
 {
     public class HotelsController : Controller
