@@ -9,45 +9,9 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HotelName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HotelLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<form class="d-flex" asp-action="Search" method="get">
+    <input class="form-control" type="text" placeholder="HotelName" name="searchName" />
+    <input class="form-control" type="text" placeholder="HotelLocation" name="seacrhLocation" />
+    <input class="form-control" type="number" name="searchRating" />
+    <button class="btn btn-outline-success" type="Submit">Search</button>
+</form>
