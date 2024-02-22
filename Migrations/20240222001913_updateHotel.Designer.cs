@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240221051446_updateHotel")]
+    [Migration("20240222001913_updateHotel")]
     partial class updateHotel
     {
         /// <inheritdoc />
@@ -27,36 +27,54 @@ namespace COMP2139_Assignment1.Migrations
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Car", b =>
                 {
-                    b.Property<string>("PlateNumber")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("CarModel")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
+
+                    b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Make")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PickUpLocation")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.Property<string>("RentalCompany")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
-                    b.HasKey("PlateNumber");
+                    b.HasKey("CarId");
 
                     b.ToTable("Cars");
                 });
@@ -71,7 +89,8 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.Property<string>("Airline")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateOnly>("ArrivalDate")
                         .HasColumnType("date");
@@ -129,7 +148,6 @@ namespace COMP2139_Assignment1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Rating")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("HotelId");
@@ -137,69 +155,127 @@ namespace COMP2139_Assignment1.Migrations
                     b.ToTable("Hotels");
                 });
 
-            modelBuilder.Entity("COMP2139_Assignment1.Models.Photo", b =>
+            modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoCar", b =>
                 {
-                    b.Property<int>("photoId")
+                    b.Property<int>("PhotoCarId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("photoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoCarId"));
 
-                    b.Property<string>("CarPlateNumber")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("HotelId")
+                    b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("photoLocation")
+                    b.Property<string>("PhotoPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("photoId");
+                    b.HasKey("PhotoCarId");
 
-                    b.HasIndex("CarPlateNumber");
-
-                    b.HasIndex("HotelId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Photos");
+                    b.ToTable("PhotoCars");
                 });
 
-            modelBuilder.Entity("COMP2139_Assignment1.Models.Review", b =>
+            modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoHotel", b =>
                 {
-                    b.Property<int>("RatingId")
+                    b.Property<int>("PhotoHotelId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoHotelId"));
 
-                    b.Property<string>("CarPlateNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("PhotoPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HotelId")
+                    b.HasKey("PhotoHotelId");
+
+                    b.ToTable("PhotoHotels");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoRoom", b =>
+                {
+                    b.Property<int>("PhotoRoomId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoRoomId"));
+
+                    b.Property<string>("PhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    b.HasKey("RatingId");
+                    b.HasKey("PhotoRoomId");
 
-                    b.HasIndex("CarPlateNumber");
+                    b.ToTable("PhotoRooms");
+                });
 
-                    b.HasIndex("HotelId");
+            modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewCar", b =>
+                {
+                    b.Property<int>("ReviewCarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasIndex("RoomId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewCarId"));
 
-                    b.ToTable("Reviews");
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Review")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("ReviewCarId");
+
+                    b.ToTable("ReviewCars");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewHotel", b =>
+                {
+                    b.Property<int>("ReviewHotelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewHotelId"));
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Review")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("ReviewHotelId");
+
+                    b.ToTable("ReviewHotels");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewRoom", b =>
+                {
+                    b.Property<int>("ReviewRoomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewRoomId"));
+
+                    b.Property<string>("Review")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReviewRoomId");
+
+                    b.ToTable("ReviewRooms");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
@@ -210,12 +286,21 @@ namespace COMP2139_Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
+                    b.Property<DateTime>("AvailabilityEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("AvailabilityStartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -228,50 +313,6 @@ namespace COMP2139_Assignment1.Migrations
                     b.HasIndex("HotelId");
 
                     b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.Photo", b =>
-                {
-                    b.HasOne("COMP2139_Assignment1.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarPlateNumber");
-
-                    b.HasOne("COMP2139_Assignment1.Models.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelId");
-
-                    b.HasOne("COMP2139_Assignment1.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("COMP2139_Assignment1.Models.Review", b =>
-                {
-                    b.HasOne("COMP2139_Assignment1.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarPlateNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("COMP2139_Assignment1.Models.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelId");
-
-                    b.HasOne("COMP2139_Assignment1.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
