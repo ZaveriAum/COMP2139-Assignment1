@@ -19,9 +19,6 @@ namespace COMP2139_Assignment1.Migrations
                 name: "AvailabilityStartDate",
                 table: "Rooms");
 
-            migrationBuilder.DropColumn(
-                name: "PickUpLocation",
-                table: "Cars");
         }
 
         /// <inheritdoc />

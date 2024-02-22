@@ -63,19 +63,22 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int carId, [Bind("PlateNumber", "City", "PickUpLocation", "Make", "Model", "Description", "Price", "RentalCompany")] Car car)
+        public IActionResult Edit(int carId, [Bind("PlateNumber", "Brand", "Model", "Description", "City", "PickUpLocation", "Price", "RentalCompany")] Car car)
         {
-            if(carId != car.CarId) { return NotFound(); }
-            if(ModelState.IsValid)
+            if (carId != car.CarId)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(car);
                     _context.SaveChanges();
                 }
-                catch(DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
                 {
-                    if(!CarExists(car.CarId))
+                    if (!CarExists(car.CarId))
                     {
                         return NotFound();
                     }
@@ -84,7 +87,7 @@ namespace COMP2139_Assignment1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(car);
         }

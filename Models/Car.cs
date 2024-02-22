@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace COMP2139_Assignment1.Models
 {
@@ -14,9 +15,14 @@ namespace COMP2139_Assignment1.Models
         [StringLength(15, ErrorMessage ="Plate number should not exceed the limit of 15 characters.")]
         public string PlateNumber { get; set; }
 
+        [Required]
+        [Display(Name = "Pickup Address")]
+        [StringLength(100, ErrorMessage = "Pickup address should not exceed the limit of 100 characters.")]
+        public string PickUpLocation { get; set; }
+
         // The city from where the car is in this is used in search.
         [Required]
-        [Display(Name ="City (in which the car will operate)")]
+        [Display(Name ="City")]
         [StringLength(30, ErrorMessage ="City name should not exceed the limit of 30 characters.")]
         public string City { get; set; }
 
@@ -39,7 +45,7 @@ namespace COMP2139_Assignment1.Models
         [Required]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C0}")]
-        [Display(Name = "Price")]
+        [Display(Name = "Price Per Day")]
         public double Price { get; set; }
 
         [Required]
@@ -47,10 +53,10 @@ namespace COMP2139_Assignment1.Models
         [StringLength(50, ErrorMessage ="Company name cannot exceed the limit of 50 characters.")]
         public string RentalCompany {  get; set; }
 
-        [Required]
+        [AllowNull]
         [Display(Name ="Rating")]
         [Range(0, 5)]
-        public int Rating { get; set; }
+        public double? Rating { get; set; }
 
        
     }
