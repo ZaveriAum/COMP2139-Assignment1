@@ -1,0 +1,57 @@
+﻿@model List<Car>
+
+@{
+    ViewData["Title"] = "Cars"; 
+}
+
+<DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    </head>
+    <body>
+        <h2>Flights</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Rental Company</td>
+                        <td>Model</td>
+                        <td>Make</td>
+                        <td>Description</td>
+                        <td>Price/Day</td>
+                        <td>Rating</td>
+                        <td>Details</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var car in Model)
+                    {
+                        <tr>
+                            <td>@car.RentalCompany</td>
+                            <td>@car.Model</td>
+                            <td>@car.Make</td>
+                            <td>@car.Description</td>
+                            <td>@car.Price</td>
+                            <td>@car.Rating</td>
+                            <td><a asp-action="Details" asp-route-carId="@car.CarId"><i class="fa-solid fa-circle-info"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+       
+        else
+        {
+            <p>No Car data</p>
+        }
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Cars";
+}
+<DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    </head>
+    <body>
+        <form class="d-flex" asp-action="Search" method="get">
+            <input class="form-control" type="text" name="searchStringPickUp" placeholder="Pick Up" required/>
+            <input id="searchStringDate" placeholder="yyyy-mm-dd" class="form-control" type="date" name="searchStringDate" />
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+        </form>
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="ListCar">List Cars</a>
+        </p>
+    </body>
+</html>
+
+<script>
+    // JavaScript code to set today's date as the placeholder
+    var today = new Date().toISOString().slice(0, 10);
+    document.getElementById("searchStringDate").setAttribute('value', today);
+</script>

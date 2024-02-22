@@ -71,7 +71,7 @@ namespace COMP2139_Assignment1.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Edit(int flightId, [Bind("FlightNumber", "Airline", "ArrivalTime", "DepartureTime", "Price", "From", "To", "Seats")] Flight flight)
+		public IActionResult Edit(int flightId, [Bind("FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
 		{
 			if(flightId != flight.FlightId)
 			{
@@ -127,8 +127,8 @@ namespace COMP2139_Assignment1.Controllers
 
 			if (searchPerformed)
 			{
-				flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) ||
-													  f.To.Contains(searchStringTo) ||
+				flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) &&
+													  f.To.Contains(searchStringTo) &&
 													  f.DepartureDate == searchStringDepartureDate);
 			}
 			var flights = await flightsQuery.ToListAsync();
