@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240221183534_PhotoModelAddedForHotelCarRoom")]
-    partial class PhotoModelAddedForHotelCarRoom
+    [Migration("20240222001913_updateHotel")]
+    partial class updateHotel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,27 +135,19 @@ namespace COMP2139_Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelId"));
 
-                    b.Property<string>("HotelCity")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("HotelDescription")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HotelLocation")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HotelName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rating")
+                    b.Property<int?>("Rating")
                         .HasColumnType("int");
 
                     b.HasKey("HotelId");
@@ -294,13 +286,21 @@ namespace COMP2139_Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
+                    b.Property<DateTime>("AvailabilityEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("AvailabilityStartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -317,13 +317,13 @@ namespace COMP2139_Assignment1.Migrations
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
                 {
-                    b.HasOne("COMP2139_Assignment1.Models.Hotel", "hotel")
+                    b.HasOne("COMP2139_Assignment1.Models.Hotel", "Hotel")
                         .WithMany()
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("hotel");
+                    b.Navigation("Hotel");
                 });
 #pragma warning restore 612, 618
         }
