@@ -1,4 +1,4 @@
-﻿using COMP2139_Assignment1.Data;
+﻿ using COMP2139_Assignment1.Data;
 using COMP2139_Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -47,30 +47,30 @@ namespace COMP2139_Assignment1.Controllers
             };
             return View(room);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create([Bind("Title", "Description", "ProjectId")] ProjectTask task)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.ProjectTask.Add(task);
-        //        _context.SaveChanges();
-        //        return RedirectToAction(nameof(Index), new { projectId = task.ProjectId });
-        //    }
-        //    ViewBag.Projects = new SelectList(_context.Projects, "ProjectId", "Name", task.ProjectId);
-        //    return View(task);
-        //}
-        [HttpGet]
-        public IActionResult Edit(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("Description", "Price","Rating","HotelId")] Room room)
         {
-            var room = _context.Rooms.Include(t => t.Hotel).FirstOrDefault(t => t.HotelId == id);
-            if (room == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                _context.Rooms.Add(room);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index), new { hotelId = room.HotelId });
             }
-            ViewBag.Projects = new SelectList(_context.Hotels, "ProjectId", "Name", room.HotelId);
+            ViewBag.Hotels = new SelectList(_context.Hotels, "HotelId", "HotelName", room.HotelId);
             return View(room);
         }
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    var room = _context.Rooms.Include(t => t.Hotel).FirstOrDefault(t => t.HotelId == id);
+        //    if (room == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewBag.Projects = new SelectList(_context.Hotels, "ProjectId", "Name", room.HotelId);
+        //    return View(room);
+        //}
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public IActionResult Edit(int id, [Bind("ProjectTaskId", "Title", "Description", "ProjectId")] ProjectTask task)
