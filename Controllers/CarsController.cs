@@ -20,21 +20,15 @@ namespace COMP2139_Assignment1.Controllers
             return View(_context.Cars.ToList());
         }
 
+       
         [HttpGet]
-        public IActionResult SearchCar()
-        {
-            return View(_context.Cars.ToList());
-        }
-
-        [HttpGet("ListCar")]
-        public IActionResult ListCar()
+        public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost("ListCar")]
         [ValidateAntiForgeryToken]
-        public IActionResult ListCar(Car car)
+        public IActionResult Create(Car car)
         {
             if (ModelState.IsValid)
             {
@@ -100,12 +94,43 @@ namespace COMP2139_Assignment1.Controllers
             return _context.Cars.Any(c=> c.CarId == carId);
         }
 
-        /*        [HttpGet]
-        public async Task<IActionResult> Search(string searchStringPickUp, DateOnly searchStringDate)
+        [HttpGet]
+        public async Task<IActionResult> Search(string City,string Model,string Brand,double MinPrice,double MaxPrice)
         {
-            var carsQuery = from c in _context.Cars select c;
-            bool searchPerformed = !String.IsNullOrEmpty(searchStringPickUp)
-        }*/
+            if (_context.Cars == null)
+            {
+                return Problem("Sorry, there are currently no cars availible at the moment!");
+            }
+
+            var Cars= from c in _context.Cars
+                         select c;
+
+            if (!String.IsNullOrEmpty(City))
+            {
+                Cars = Cars.Where(s => s.City!.Contains(City));
+            }
+            if(!String.IsNullOrEmpty(Model))
+            {
+                Cars = Cars.Where(s => s.Model.Contains(Model));
+            }
+            if (!String.IsNullOrEmpty(Brand))
+            {
+                Cars = Cars.Where(s => s.Brand.Contains(Brand));
+            }
+            if (MinPrice > 0)
+            {
+                Cars = Cars.Where(s => s.Price >= MinPrice);
+            }
+
+            if (MaxPrice > 0)
+            {
+                Cars = Cars.Where(s => s.Price <= MaxPrice);
+            }
+
+
+
+            return View(await Cars.ToListAsync());
+        }
 
 
     }

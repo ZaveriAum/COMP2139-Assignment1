@@ -9,12 +9,15 @@
     </head>
     <body>
         <form class="d-flex" asp-action="Search" method="get">
-            <input class="form-control" type="text" name="searchStringPickUp" placeholder="Pick Up" required/>
-            <input id="searchStringDate" placeholder="yyyy-mm-dd" class="form-control" type="date" name="searchStringDate" />
+            <input class="form-control" type="text" name="City" placeholder="City" required/>
+            <input class="form-control" type="text" name="Brand" placeholder="Brand"/>
+            <input class="form-control" type="text" name="Model" placeholder="Model" />
+            <input class="form-control" type="number" name="MinPrice" placeholder="Minimum Price" />
+            <input class="form-control" type="number" name="MaxPrice" placeholder="Maximum Price" />
             <button type="submit" class="btn btn-outline-primary">Search</button>
         </form>
         <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="ListCar">List Cars</a>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">List a Car!</a>
         </p>
     </body>
 </html>

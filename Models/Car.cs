@@ -10,26 +10,21 @@ namespace COMP2139_Assignment1.Models
 
         // Car number for details of the car
         [Required]
-        [Display(Name ="Plate Number")]
+        [Display(Name ="Plate Number")] 
         [StringLength(15, ErrorMessage ="Plate number should not exceed the limit of 15 characters.")]
         public string PlateNumber { get; set; }
 
         // The city from where the car is in this is used in search.
         [Required]
-        [Display(Name ="City")]
-        [StringLength(30, ErrorMessage ="CIty name should not exceed the limit of 30 characters.")]
+        [Display(Name ="City (in which the car will operate)")]
+        [StringLength(30, ErrorMessage ="City name should not exceed the limit of 30 characters.")]
         public string City { get; set; }
 
-        // Pickup location of the card based on the city for the details page
-        [Required]
-        [Display(Name ="Pickup Address")]
-        [StringLength(100, ErrorMessage ="Pickup address should not exceed the limit of 100 characters.")]
-        public string PickUpLocation { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage ="Brand of the car should not exceed the limit of 20 characters.")]
         [Display(Name ="Car  Brand")]
-        public string Make { get; set; }
+        public string Brand { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage ="Model of the car should not exceed the limit of 20 characters.")]

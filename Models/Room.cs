@@ -22,12 +22,6 @@ namespace COMP2139_Assignment1.Models
         [Required]
         public bool IsAvailable { get; set; }
 
-        [Required]
-        public DateTime AvailabilityStartDate { get; set; }
-
-        [Required]
-        public DateTime AvailabilityEndDate { get; set; }
-
 
         // foreign key for Hotel
         public int HotelId { get; set; }

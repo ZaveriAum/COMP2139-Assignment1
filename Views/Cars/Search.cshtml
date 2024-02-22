@@ -11,7 +11,7 @@
 
     </head>
     <body>
-        <h2>Flights</h2>
+        <h2>Cars</h2>
 
         @if (Model.Any())
         {
@@ -20,7 +20,7 @@
                     <tr>
                         <td>Rental Company</td>
                         <td>Model</td>
-                        <td>Make</td>
+                        <td>Brand</td>
                         <td>Description</td>
                         <td>Price/Day</td>
                         <td>Rating</td>
@@ -35,7 +35,7 @@
                         <tr>
                             <td>@car.RentalCompany</td>
                             <td>@car.Model</td>
-                            <td>@car.Make</td>
+                            <td>@car.Brand</td>
                             <td>@car.Description</td>
                             <td>@car.Price</td>
                             <td>@car.Rating</td>
@@ -51,7 +51,7 @@
             <p>No Car data</p>
         }
         <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="AddFlight">Add Flight</a>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">List another car!</a>
         </p>
     </body>
 </html>
