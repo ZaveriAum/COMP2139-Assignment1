@@ -63,7 +63,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ProjectId, Name, Description")] Hotel hotel)
+        public IActionResult Edit(int id, [Bind("HotelName, HotelLocation, Rating, Description")] Hotel hotel)
         {
             if (id != hotel.HotelId)
             {
@@ -119,6 +119,34 @@ namespace COMP2139_Assignment1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult SearchHotel()
+        {
+            return View(_db.Hotels.ToList());
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string searchName, string seacrhLocation, int searchRating)
+        {
+            var hotelQuery = from f in _db.Hotels select f;
+
+            bool searchPerformed = !String.IsNullOrEmpty(searchName) || !String.IsNullOrEmpty(seacrhLocation);
+
+            if (searchPerformed)
+            {
+                hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(searchName) ||
+                                                      f.HotelLocation.Contains(seacrhLocation) ||
+                                                      f.Rating == searchRating);
+            }
+            var hotels = await hotelQuery.ToListAsync();
+            ViewData["SearchPerformed"] = searchPerformed;
+            ViewData["SearchName"] = searchName;
+            ViewData["seacrhLocation"] = seacrhLocation;
+            ViewData["searchRating"] = searchRating;
+            return View("Search", hotels);
         }
     }
 }
