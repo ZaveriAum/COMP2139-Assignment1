@@ -31,10 +31,11 @@
                 <span asp-validation-for="BookedEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Confirm" class="btn btn-primary" /> |
-                <a asp-controller="Cars" asp-action="Index">Back to Car</a>
+                <input type="submit" value="Confirm" class="btn btn-primary" />
             </div>
         </form>
+        <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@ViewData["CarId"]" class="btn btn-dark">Check car bookings</a>
+        <a asp-controller="Cars" asp-action="Index" class="btn btn-info">Back to Search</a>
     </div>
 </div>
 

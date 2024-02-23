@@ -58,6 +58,10 @@ namespace COMP2139_Assignment1.Controllers
                 ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
                 return View(booking);
             }
+            if (BookingDatesIntersect(booking))
+            {
+                ModelState.AddModelError("", "Sorry, this date for this car is already booked") ;
+            }
             if (ModelState.IsValid)
             {
                 _context.CarBookings.Add(booking);
@@ -93,10 +97,25 @@ namespace COMP2139_Assignment1.Controllers
 
             else
             {
-                // Handle the case where the specified CarId is not found
                 return NotFound();
             }
+        }
+        // Helper function to only book if there is currently not a booking for said item
+        private bool BookingDatesIntersect(CarBooking newBooking)
+        {
+            var existingBookings = _context.CarBookings
+                .Where(b => b.CarId == newBooking.CarId && b.Id != newBooking.Id)
+                .ToList();
 
+            foreach (var existingBooking in existingBookings)
+            {
+                if (newBooking.BookedStartDate < existingBooking.BookedEndDate ||
+                    newBooking.BookedEndDate > existingBooking.BookedStartDate)
+                {
+                    return true; 
+                }
+            }
+            return false; 
         }
 
     }
