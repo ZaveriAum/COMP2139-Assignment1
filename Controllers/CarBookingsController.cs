@@ -1,6 +1,9 @@
-﻿using COMP2139_Assignment1.Data;
+﻿
+using COMP2139_Assignment1.Data;
 using COMP2139_Assignment1.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,41 +17,84 @@ namespace COMP2139_Assignment1.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int CarId)
         {
+            ViewData["CarId"] = CarId;
             return View();
         }
+
         [HttpGet]
-        public IActionResult Create(int carId)
+        public IActionResult Create(int CarId)
         {
-            var car = _context.Cars.Find(carId);
-            if (car == null)
+            var Car = _context.Cars.Find(CarId);
+            if (Car == null)
             {
                 return NotFound();
             }
-            ViewData["carId"] = carId;
-            ViewData["PlateNumber"] = car.PlateNumber;
-            ViewData["City"] = car.City;
-            ViewData["PickupLocation"] = car.PickUpLocation;
-            ViewData["Brand"] = car.Brand;
-            ViewData["Model"] = car.Model;
-            ViewData["Price"]= car.Price;
-            ViewData["RentalCompany"] = car.RentalCompany;
+            ViewData["carId"] = CarId;
+            ViewData["PlateNumber"] = Car.PlateNumber;
+            ViewData["City"] = Car.City;
+            ViewData["PickupLocation"] = Car.PickUpLocation;
+            ViewData["Brand"] = Car.Brand;
+            ViewData["Model"] = Car.Model;
+            ViewData["Price"] = Car.Price;
+            ViewData["RentalCompany"] = Car.RentalCompany;
             ViewData["SearchString"] = TempData["SearchString"];
 
             return View();
         }
         public IActionResult Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
-            Console.WriteLine(booking.BookedEndDate);
+            if (booking.BookedEndDate < booking.BookedStartDate)
+            {
+                ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
+                return View(booking);
+            }
+            if (booking.BookedStartDate < DateTime.Now.AddDays(-1))
+            {
+                ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
+                return View(booking);
+            }
             if (ModelState.IsValid)
             {
-
                 _context.CarBookings.Add(booking);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Search", new { CarId = booking.CarId });
             }
             return View(booking);
         }
+
+        public async Task<IActionResult> Search(int CarId)
+        {
+            var Car = await _context.Cars.FindAsync(CarId);
+
+            if (Car != null)
+            {
+                var CarBookings = from cb in _context.CarBookings
+                                  select cb;
+
+                CarBookings = CarBookings.Where(c => c.CarId == CarId);
+                ViewData["CarId"] = CarId;
+                ViewData["PlateNumber"] = Car.PlateNumber;
+                ViewData["City"] = Car.City;
+                ViewData["PickupLocation"] = Car.PickUpLocation;
+                ViewData["Brand"] = Car.Brand;
+                ViewData["Model"] = Car.Model;
+                ViewData["Price"] = Car.Price;
+                ViewData["RentalCompany"] = Car.RentalCompany;
+
+                var CarBookingsList = await CarBookings.ToListAsync();
+                return View("Index", CarBookingsList);
+            }
+
+            else
+            {
+                // Handle the case where the specified CarId is not found
+                return NotFound();
+            }
+
+        }
+
     }
 }
+
