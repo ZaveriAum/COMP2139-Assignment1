@@ -38,13 +38,7 @@ namespace COMP2139_Assignment1.Migrations
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-            migrationBuilder.AddColumn<string>(
-                name: "PickUpLocation",
-                table: "Cars",
-                type: "nvarchar(100)",
-                maxLength: 100,
-                nullable: false,
-                defaultValue: "");
+
         }
     }
 }
