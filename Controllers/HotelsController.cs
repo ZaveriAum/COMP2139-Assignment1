@@ -47,15 +47,14 @@ namespace COMP2139_Assignment1.Controllers
             return View(hotel);
         }
 
-
         public IActionResult Details(int id)
         {
-            var project = _db.Hotels.FirstOrDefault(p => p.HotelId == id);
-            if (project == null)
+            var hotel = _db.Hotels.FirstOrDefault(p => p.HotelId == id);
+            if (hotel == null)
             {
                 return NotFound();
             }
-            return View(project);
+            return View(hotel);
         }
 
         public IActionResult Edit(int id)

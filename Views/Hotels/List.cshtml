@@ -42,8 +42,10 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
-                <a asp-action="Index" asp-controller="Rooms" asp-route-hotelId="@item.HotelId" class="btn btn-warning">View Hotel</a> |
-                <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a> |
+                <a asp-action="Index" asp-controller="Rooms" asp-route-hotelId="@item.HotelId" class="btn btn-warning">View Room</a> |
+
             </td>
         </tr>
 }
