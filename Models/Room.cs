@@ -20,18 +20,12 @@ namespace COMP2139_Assignment1.Models
         public int Rating { get; set; }
 
         [Required]
-        public bool IsAvailable { get; set; }
+        public bool IsAvailable { get; set; } = true;
 
 
         // foreign key for Hotel
         public int HotelId { get; set; }
         public Hotel? Hotel { get; set; }
-
-        public Room()
-        {
-            // Set default values
-            IsAvailable = true;
-        }
 
 
     }

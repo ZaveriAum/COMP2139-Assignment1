@@ -5,7 +5,7 @@
 namespace COMP2139_Assignment1.Migrations
 {
     /// <inheritdoc />
-    public partial class FixedRatingAttributes : Migration
+    public partial class adding_the_bookingTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,15 +35,15 @@ namespace COMP2139_Assignment1.Migrations
             name: "IX_CarBookings_CarId",
             table: "CarBookings",
             column: "CarId");
-        
 
-        migrationBuilder.AlterColumn<double>(
-                name: "Rating",
-                table: "Cars",
-                type: "float",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
+
+            migrationBuilder.AlterColumn<double>(
+                    name: "Rating",
+                    table: "Cars",
+                    type: "float",
+                    nullable: true,
+                    oldClrType: typeof(int),
+                    oldType: "int");
 
         }
 
@@ -64,8 +64,8 @@ namespace COMP2139_Assignment1.Migrations
                 oldType: "float",
                 oldNullable: true);
 
-                migrationBuilder.DropTable(
-               name: "CarBookings");
+            migrationBuilder.DropTable(
+           name: "CarBookings");
         }
     }
 }

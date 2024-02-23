@@ -47,9 +47,10 @@ namespace COMP2139_Assignment1.Controllers
             return View(hotel);
         }
 
-        public IActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Details(int hotelId)
         {
-            var hotel = _db.Hotels.FirstOrDefault(p => p.HotelId == id);
+            var hotel = _db.Hotels.FirstOrDefault(p => p.HotelId == hotelId);
             if (hotel == null)
             {
                 return NotFound();
@@ -57,9 +58,10 @@ namespace COMP2139_Assignment1.Controllers
             return View(hotel);
         }
 
-        public IActionResult Edit(int id)
+        [HttpGet]
+        public IActionResult Edit(int hotelId)
         {
-            var hotel = _db.Hotels.Find(id);
+            var hotel = _db.Hotels.Find(hotelId);
             if (hotel == null)
             {
                 return NotFound();
@@ -69,9 +71,9 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("HotelName", "HotelLocation", "Rating", "Description")] Hotel hotel)
+        public IActionResult Edit(int hotelId, [Bind("HotelId", "HotelName", "HotelLocation", "Description")] Hotel hotel)
         {
-            if (id != hotel.HotelId)
+            if (hotelId != hotel.HotelId)
             {
                 return NotFound();
             }
@@ -101,16 +103,6 @@ namespace COMP2139_Assignment1.Controllers
         private bool HotelExists(int hotelId)
         {
             return _db.Hotels.Any(e => e.HotelId == hotelId);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var project = _db.Hotels.FirstOrDefault(p => p.HotelId == id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-            return View(project);
         }
 
         [HttpPost, ActionName("DeleteConfirmed")]
