@@ -76,6 +76,30 @@ namespace COMP2139_Assignment1.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BookedEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("BookedStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("CarBookings");
+                });
+
             modelBuilder.Entity("COMP2139_Assignment1.Models.Flight", b =>
                 {
                     b.Property<int>("FlightId")
@@ -306,6 +330,17 @@ namespace COMP2139_Assignment1.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
+                {
+                    b.HasOne("COMP2139_Assignment1.Models.Car", "Car")
+                        .WithMany("CarBookings")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
                 {
                     b.HasOne("COMP2139_Assignment1.Models.Hotel", "Hotel")
@@ -315,6 +350,11 @@ namespace COMP2139_Assignment1.Migrations
                         .IsRequired();
 
                     b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.Car", b =>
+                {
+                    b.Navigation("CarBookings");
                 });
 #pragma warning restore 612, 618
         }

@@ -31,6 +31,8 @@ namespace COMP2139_Assignment1
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            //Seed Database
+            ApplicationDbInitializer.Seed(app);
             app.Run();
         }
     }

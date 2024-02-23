@@ -58,6 +58,7 @@ namespace COMP2139_Assignment1.Models
         [Range(0, 5)]
         public double? Rating { get; set; }
 
+        public List<CarBooking>? CarBookings { get; set; }
        
     }
 }

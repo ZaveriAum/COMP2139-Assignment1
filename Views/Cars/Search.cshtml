@@ -25,6 +25,7 @@
                         <td>Price/Day</td>
                         <td>Rating</td>
                         <td>Details</td>
+                        <td>Book It!</td>
                     </tr>
                 </thead>
 
@@ -40,6 +41,7 @@
                             <td>$@car.Price</td>
                             <td>@car.Rating</td>
                             <td><a asp-action="Details" asp-route-carId="@car.CarId"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td><a asp-controller="CarBookings" class="btn btn-primary" asp-action="Create" asp-route-carId="@car.CarId">Book This Car!</a></td>
                         </tr>
                     }
                 </tbody>

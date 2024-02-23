@@ -26,7 +26,7 @@ namespace COMP2139_Assignment1.Controllers
         {
             return View();
         }
-
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Car car)
         {
@@ -130,6 +130,8 @@ namespace COMP2139_Assignment1.Controllers
             {
                 return Problem("Sorry, there are currently no cars availible at the moment!");
             }
+           
+           // string SearchString =  City+ "&Brand="+ Brand + "&Model=" + Model +"&MinPrice="+MinPrice+"&MaxPrice=" + MaxPrice;
 
             var Cars= from c in _context.Cars
                          select c;
@@ -156,7 +158,7 @@ namespace COMP2139_Assignment1.Controllers
                 Cars = Cars.Where(s => s.Price <= MaxPrice);
             }
 
-
+            //TempData["SearchString"] = SearchString;
 
             return View(await Cars.ToListAsync());
         }

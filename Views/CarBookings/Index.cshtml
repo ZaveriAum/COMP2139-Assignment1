@@ -1,0 +1,23 @@
+﻿@model List<CarBooking>
+
+@{
+    ViewData["Title"] = "Car Bookings";
+}
+<DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    </head>
+    <body>
+        <p>
+            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">Create a Car Booking!</a>
+        </p>
+    </body>
+</html>
+
+<script>
+    // JavaScript code to set today's date as the placeholder
+    var today = new Date().toISOString().slice(0, 10);
+    document.getElementById("searchStringDate").setAttribute('value', today);
+</script>
