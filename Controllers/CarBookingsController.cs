@@ -45,6 +45,9 @@ namespace COMP2139_Assignment1.Controllers
         }
         public IActionResult Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
+            Console.WriteLine($"BookedStartDate: {booking.BookedStartDate}");
+            Console.WriteLine($"BookedEndDate: {booking.BookedEndDate}");
+            Console.WriteLine($"CarId: {booking.CarId}");
             if (booking.BookedEndDate < booking.BookedStartDate)
             {
                 ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
@@ -84,6 +87,7 @@ namespace COMP2139_Assignment1.Controllers
                 ViewData["RentalCompany"] = Car.RentalCompany;
 
                 var CarBookingsList = await CarBookings.ToListAsync();
+                
                 return View("Index", CarBookingsList);
             }
 
