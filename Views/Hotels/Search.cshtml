@@ -39,6 +39,7 @@
                             <td>@hotel.Rating</td>
                             <td>@hotel.Description</td>
                             <td><a asp-action="Details" asp-route-hotelId="@hotel.HotelId"><i class="fa-solid fa-ticket"></i></a></td>
+                            <td><a asp-action="Index" asp-controller="Rooms" asp-route-hotelId="@hotel.HotelId">Room</a></td>
                         </tr>
                     }
                 </tbody>
