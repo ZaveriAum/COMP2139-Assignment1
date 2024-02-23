@@ -63,9 +63,9 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int carId, [Bind("PlateNumber", "Brand", "Model", "Description", "City", "PickUpLocation", "Price", "RentalCompany")] Car car)
+        public IActionResult Edit(int id, [Bind("CarId","PlateNumber","Brand","Model","City","Price","RentalCompany" ,"Description", "PickUpLocation")] Car car)
         {
-            if (carId != car.CarId)
+            if (id != car.CarId)
             {
                 return NotFound();
             }
@@ -91,6 +91,32 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
+
+
+        public IActionResult Delete(int Carid)
+        {
+            var car = _context.Cars.FirstOrDefault(p => p.CarId == Carid);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            return View(car);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int CarId)
+        {
+            var car = _context.Cars.Find(CarId);
+            if (car != null)
+            {
+                _context.Cars.Remove(car);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return NotFound();
+        }
+
 
         private bool CarExists(int carId)
         {

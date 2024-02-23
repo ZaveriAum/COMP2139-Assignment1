@@ -40,10 +40,7 @@ namespace COMP2139_Assignment1.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Create(Flight flight)
 		{
-			Console.WriteLine(flight.Price);
-
             Type type = flight.Price.GetType();
-			Console.WriteLine(type);
 			if (ModelState.IsValid)
 			{
 				_context.Flights.Add(flight);
