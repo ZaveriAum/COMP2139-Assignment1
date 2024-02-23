@@ -6,9 +6,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
 <form class="d-flex" asp-action="Search" method="get">
     <input class="form-control" type="text" placeholder="HotelName" name="searchName" />
@@ -59,6 +56,9 @@
     </tbody>
 </table>
  *@
+<p>
+    <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+</p>
 
 <p>
     <a asp-action="List">List All Hotel</a>
