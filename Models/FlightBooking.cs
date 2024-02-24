@@ -17,9 +17,6 @@ namespace COMP2139_Assignment1.Models
 
         // Passport information (for international flights)
         public string? PassportNumber { get; set; }
-
-        public DateTime BookingTime { get; set; } = DateTime.Now;
-
     }
 
 }

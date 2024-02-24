@@ -124,13 +124,6 @@ namespace COMP2139_Assignment1.Controllers
 
             if (FlightBooking != null)
             {
-                if (FlightBooking.BookingTime <DateTime.Now.AddDays(1))
-                {
-                    ModelState.AddModelError("", "You cannot delete a booking within 24 hours of the start date.");
-                    return View("Delete", FlightBooking);
-                }
-
-
                 _context.FlightBookings.Remove(FlightBooking);
                 _context.SaveChanges();
                 return RedirectToAction("Search", new { flightId = FlightBooking.FlightId });

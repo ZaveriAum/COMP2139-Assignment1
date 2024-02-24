@@ -73,7 +73,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("CarId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
@@ -97,7 +97,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("CarBookings");
+                    b.ToTable("CarBookings", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Flight", b =>
@@ -145,7 +145,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("FlightId");
 
-                    b.ToTable("Flights");
+                    b.ToTable("Flights", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.FlightBooking", b =>
@@ -155,9 +155,6 @@ namespace COMP2139_Assignment1.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BookingTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
@@ -174,7 +171,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("FlightId");
 
-                    b.ToTable("FlightBookings");
+                    b.ToTable("FlightBookings", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Hotel", b =>
@@ -202,7 +199,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("HotelId");
 
-                    b.ToTable("Hotels");
+                    b.ToTable("Hotels", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoCar", b =>
@@ -222,7 +219,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("PhotoCarId");
 
-                    b.ToTable("PhotoCars");
+                    b.ToTable("PhotoCars", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoHotel", b =>
@@ -242,7 +239,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("PhotoHotelId");
 
-                    b.ToTable("PhotoHotels");
+                    b.ToTable("PhotoHotels", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoRoom", b =>
@@ -262,7 +259,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("PhotoRoomId");
 
-                    b.ToTable("PhotoRooms");
+                    b.ToTable("PhotoRooms", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewCar", b =>
@@ -283,7 +280,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("ReviewCarId");
 
-                    b.ToTable("ReviewCars");
+                    b.ToTable("ReviewCars", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewHotel", b =>
@@ -304,7 +301,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("ReviewHotelId");
 
-                    b.ToTable("ReviewHotels");
+                    b.ToTable("ReviewHotels", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewRoom", b =>
@@ -325,7 +322,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("ReviewRoomId");
 
-                    b.ToTable("ReviewRooms");
+                    b.ToTable("ReviewRooms", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
@@ -356,7 +353,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.RoomBooking", b =>
@@ -380,7 +377,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomBookings");
+                    b.ToTable("RoomBookings", (string)null);
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
