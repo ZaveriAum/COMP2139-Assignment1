@@ -20,6 +20,7 @@
 					<th>Car License Plate</th>
 					<th>Rented From</th>
 					<th>Total Price Paid</th>
+					<th>Cancel Booking</th>
 				</tr>
 			</thead>
 
@@ -38,10 +39,10 @@
 							double calculatedPrice = (Convert.ToDouble(ViewData["Price"]) * (carBooking.BookedEndDate - carBooking.BookedStartDate).TotalDays);
 							double @minimumPrice = Convert.ToDouble(ViewData["Price"]);
 							double finalPrice = Math.Max(calculatedPrice, minimumPrice);}
-							@finalPrice
+							$@finalPrice
 							</td>
 						<td>					
-							@* <a asp-controller="carBookings" asp-action=""></a> *@
+							 <a asp-controller="CarBookings" class="btn btn-danger" asp-route-id="@carBooking.Id" asp-action="Delete">Cancel Booking</a> 
 						</td>
 
 					</tr>

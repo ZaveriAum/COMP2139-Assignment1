@@ -70,8 +70,47 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(booking);
         }
+        public IActionResult Delete(int id)
+        {
+            var CarBooking = _context.CarBookings.FirstOrDefault(cb => cb.Id == id);
 
-        public async Task<IActionResult> Search(int CarId)
+            if (CarBooking == null)
+            {
+                return NotFound();
+            }
+
+            var Car = _context.Cars.FirstOrDefault(c => c.CarId == CarBooking.CarId);
+            if (Car == null)
+            {
+                return NotFound(); 
+            }
+
+            CarBooking.Car = Car;
+            return View(CarBooking);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeleteConfirmed(int id)
+		{
+			var CarBooking = _context.CarBookings.Find(id);
+
+
+            if (CarBooking != null)
+			{
+                if (CarBooking.BookedStartDate < DateTime.Now.AddDays(1))
+                {
+                    ModelState.AddModelError("", "You cannot delete a booking within 24 hours of the start date.");
+                    return View("Delete", CarBooking); 
+                }
+
+                _context.CarBookings.Remove(CarBooking);
+				_context.SaveChanges();
+                return RedirectToAction("Search", new { carId = CarBooking.CarId });
+            }
+			return NotFound();
+		}
+		public async Task<IActionResult> Search(int CarId)
         {
             var Car = await _context.Cars.FindAsync(CarId);
 
@@ -115,6 +154,7 @@ namespace COMP2139_Assignment1.Controllers
                     return true; 
                 }
             }
+
             return false; 
         }
 
