@@ -1,23 +1,25 @@
-﻿@model COMP2139_Assignment1.Models.CarBooking
+﻿@model CarBooking
 
 @{
-    ViewData["Title"] = "Add Booking";
+    ViewData["Title"] = "Edit Booking";
 }
 
-<h1>Book @ViewData["Brand"] @ViewData["Model"], license plate @ViewData["PlateNumber"] </h1>
+<h1>Edit</h1>
 
-<h4>Car</h4>
+<h4>Car Booking</h4>
 <hr />
 <div class="row">
     <p>
-        Are you sure you want to Book the car with License plate @ViewData["PlateNumber"] in @ViewData["City"]. This car is a @ViewData["Brand"] @ViewData["Model"], and is being rented out by
+        Are you sure you want to Edit the booking for the car with License plate @ViewData["PlateNumber"] in @ViewData["City"]. This car is a @ViewData["Brand"] @ViewData["Model"], and is being rented out by
         @ViewData["RentalCompany"] at a price of $@ViewData["Price"] per day.
     </p>
-    <p>If you are sure you want to book this car please enter the following information and press Confirm</p>
+    <p>If you are sure you want to edit this booking for this car please enter the following information and press Confirm</p>
+
 </div>
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" asp-route-CarId="@ViewData["CarId"]">
+        <form asp-action="Edit" asp-route-id="@Model.Id">
             <input type="hidden" asp-for="CarId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -32,11 +34,8 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Confirm" class="btn btn-primary" />
-                <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@ViewData["CarId"]" class="btn btn-dark">Check booking availibility</a>
-                <a asp-controller="Cars" asp-action="Index" class="btn btn-info">Back to Search</a>
             </div>
         </form>
-
     </div>
 </div>
 
@@ -45,4 +44,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-

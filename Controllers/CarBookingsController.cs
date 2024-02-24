@@ -4,6 +4,7 @@ using COMP2139_Assignment1.Models;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,32 +46,106 @@ namespace COMP2139_Assignment1.Controllers
         }
         public IActionResult Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
-            Console.WriteLine($"BookedStartDate: {booking.BookedStartDate}");
-            Console.WriteLine($"BookedEndDate: {booking.BookedEndDate}");
-            Console.WriteLine($"CarId: {booking.CarId}");
-            if (booking.BookedEndDate < booking.BookedStartDate)
+            var Car = _context.Cars.Find(booking.CarId);
+            if (Car == null)
             {
-                ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
-                return View(booking);
+                return NotFound();
             }
-            if (booking.BookedStartDate < DateTime.Now.AddDays(-1))
-            {
-                ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
-                return View(booking);
-            }
-            if (BookingDatesIntersect(booking))
-            {
-                ModelState.AddModelError("", "Sorry, this date for this car is already booked") ;
-                return View(booking);
-            }
+            ViewData["PlateNumber"] = Car.PlateNumber;
+            ViewData["City"] = Car.City;
+            ViewData["PickupLocation"] = Car.PickUpLocation;
+            ViewData["Brand"] = Car.Brand;
+            ViewData["Model"] = Car.Model;
+            ViewData["Price"] = Car.Price;
+            ViewData["RentalCompany"] = Car.RentalCompany;
             if (ModelState.IsValid)
             {
+                if (booking.BookedEndDate < booking.BookedStartDate)
+                {
+                    ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
+                    return View(booking);
+                }
+                if (booking.BookedStartDate < DateTime.Now.AddDays(-1))
+                {
+                    ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
+                    return View(booking);
+                }
+                if (BookingDatesIntersect(booking))
+                {
+                    ModelState.AddModelError("", "Sorry, this date for this car is already booked");
+                    return View(booking);
+                }
                 _context.CarBookings.Add(booking);
                 _context.SaveChanges();
                 return RedirectToAction("Search", new { CarId = booking.CarId });
             }
             return View(booking);
         }
+        [HttpGet]
+        public IActionResult Edit(int Id)
+        {
+
+            var booking = _context.CarBookings
+                        .Include(t => t.Car)
+                        .FirstOrDefault(t => t.Id == Id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            var Car = _context.Cars.Find(booking.CarId);
+            if (Car == null)
+            {
+                return NotFound();
+            }
+            ViewData["PlateNumber"] = Car.PlateNumber;
+            ViewData["City"] = Car.City;
+            ViewData["PickupLocation"] = Car.PickUpLocation;
+            ViewData["Brand"] = Car.Brand;
+            ViewData["Model"] = Car.Model;
+            ViewData["Price"] = Car.Price;
+            ViewData["RentalCompany"] = Car.RentalCompany;
+
+            return View(booking);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int Id, [Bind("Id","BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
+        {
+            if (Id != booking.Id)
+            {
+                return NotFound();
+            }
+            var Car = _context.Cars.Find(booking.CarId);
+            if (Car == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (booking.BookedEndDate < booking.BookedStartDate)
+                {
+                    ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
+                    return View(booking);
+                }
+                if (booking.BookedStartDate < DateTime.Now.AddDays(-1))
+                {
+                    ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
+                    return View(booking);
+                }
+				if (BookingDatesIntersect(booking))
+				{
+					ModelState.AddModelError("", "Sorry, this date for this car is already booked");
+					return View(booking);
+				}
+				_context.CarBookings.Update(booking);
+                _context.SaveChanges();
+                return RedirectToAction("Search", new { CarId = booking.CarId });
+            }
+            return View(booking);
+        }
+
         public IActionResult Delete(int id)
         {
             var CarBooking = _context.CarBookings.FirstOrDefault(cb => cb.Id == id);
@@ -152,11 +227,11 @@ namespace COMP2139_Assignment1.Controllers
                 if ((newBooking.BookedStartDate < existingBooking.BookedEndDate && newBooking.BookedStartDate < existingBooking.BookedEndDate) ||
                     (newBooking.BookedStartDate > existingBooking.BookedEndDate))
                 {
-                    return false; 
+                    return true; 
                 }
             }
 
-            return true; 
+            return false; 
         }
 
     }
