@@ -61,6 +61,7 @@ namespace COMP2139_Assignment1.Controllers
             if (BookingDatesIntersect(booking))
             {
                 ModelState.AddModelError("", "Sorry, this date for this car is already booked") ;
+                return View(booking);
             }
             if (ModelState.IsValid)
             {
@@ -148,14 +149,14 @@ namespace COMP2139_Assignment1.Controllers
 
             foreach (var existingBooking in existingBookings)
             {
-                if (newBooking.BookedStartDate < existingBooking.BookedEndDate ||
-                    newBooking.BookedEndDate > existingBooking.BookedStartDate)
+                if ((newBooking.BookedStartDate < existingBooking.BookedEndDate && newBooking.BookedStartDate < existingBooking.BookedEndDate) ||
+                    (newBooking.BookedStartDate > existingBooking.BookedEndDate))
                 {
-                    return true; 
+                    return false; 
                 }
             }
 
-            return false; 
+            return true; 
         }
 
     }

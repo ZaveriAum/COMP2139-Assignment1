@@ -23,9 +23,11 @@
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hotel)
+                <p>Details</p>
             </th>
-            <th></th>
+            <th>
+                <p>Book</p>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -41,12 +43,10 @@
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hotel.Description)
+                <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RoomId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RoomId">Delete</a>
+                <a asp-controller="RoomBookings" asp-action="Create" asp-route-roomId="@item.RoomId">Book</a>
             </td>
         </tr>
 }

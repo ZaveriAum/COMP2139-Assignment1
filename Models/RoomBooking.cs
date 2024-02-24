@@ -21,6 +21,6 @@ namespace COMP2139_Assignment1.Models
         public int RoomId { get; set; }
 
         [Required]
-        public Room? Car { get; set; }
+        public Room? Room { get; set; }
     }
 }
