@@ -12,8 +12,9 @@ namespace COMP2139_Assignment1.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int RoomId)
         {
+            ViewData["RoomId"] = RoomId;
             return View();
         }
 
@@ -25,25 +26,38 @@ namespace COMP2139_Assignment1.Controllers
             {
                 return NotFound();
             }
-            ViewData["roomId"] = roomId;
+            ViewData["RoomId"] = roomId;
             ViewData["Description"] = room.Description;
             ViewData["Price"] = room.Price;
             ViewData["Rating"] = room.Rating;
             ViewData["HotelId"] = room.HotelId;
-            ViewData["Hotel"] = room.Hotel;
-            return View(room);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("BookingStartDate", "BookingEndDate", "roomId")]RoomBooking roomBooking) 
+        public IActionResult Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")]RoomBooking roomBooking) 
         {
-            if(ModelState.IsValid)
+            Console.WriteLine($"BookedStartDate: {roomBooking.BookedStartDate}");
+            Console.WriteLine($"BookedEndDate: {roomBooking.BookedEndDate}");
+            if (roomBooking.BookedEndDate < roomBooking.BookedStartDate)
+            {
+                ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
+                return View(roomBooking);
+            }
+            if (roomBooking.BookedStartDate < DateTime.Now.AddDays(-1))
+            {
+                ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
+                return View(roomBooking);
+            }
+            if (ModelState.IsValid)
             {
                 _context.RoomBookings.Add(roomBooking);
                 _context.SaveChanges();
-                return RedirectToAction("Details");
+                return RedirectToAction("Index", new {RoomId = roomBooking.RoomId });
             }
-            return View("/Home/Index");
+            return View(roomBooking);
         }
+
+
     }
 }

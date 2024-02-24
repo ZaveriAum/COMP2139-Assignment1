@@ -61,21 +61,20 @@ namespace COMP2139_Assignment1.Controllers
             return View(room);
         }
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int hotelId)
         {
-            var room = _context.Rooms.Include(t => t.Hotel).FirstOrDefault(t => t.HotelId == id);
+            var room = _context.Rooms.Include(t => t.Hotel).FirstOrDefault(t => t.HotelId == hotelId);
             if (room == null)
             {
                 return NotFound();
             }
-            ViewBag.Projects = new SelectList(_context.Hotels, "ProjectId", "Name", room.HotelId);
             return View(room);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("RoomId", "Description","Price", "HotelId")] Room room)
+        public IActionResult Edit(int roomId, [Bind("RoomId", "Description","Price", "HotelId")] Room room)
         {
-            if (id != room.RoomId)
+            if (roomId != room.RoomId)
             {
                 return NotFound();
             }
