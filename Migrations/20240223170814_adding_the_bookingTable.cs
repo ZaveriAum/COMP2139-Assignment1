@@ -10,6 +10,10 @@ namespace COMP2139_Assignment1.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name:"IsAvailable",
+                table: "Rooms");
+
             migrationBuilder.CreateTable(
              name: "CarBookings",
              columns: table => new
