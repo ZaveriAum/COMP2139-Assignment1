@@ -59,8 +59,8 @@ namespace COMP2139_Assignment1.Models
 		[Required]
 		[Display(Name ="Destination")]
 		public string To { get; set; }
-		
 		// Number of seats offered by the flight
+		
 		[Required]
 		[Display(Name ="Seats")]
 		public int Seats { get; set; }

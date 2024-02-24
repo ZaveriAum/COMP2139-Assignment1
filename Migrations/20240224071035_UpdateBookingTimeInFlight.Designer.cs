@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240222175923_UpdatedPriceType")]
-    partial class UpdatedPriceType
+    [Migration("20240224071035_UpdateBookingTimeInFlight")]
+    partial class UpdateBookingTimeInFlight
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,11 @@ namespace COMP2139_Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
 
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -42,11 +47,6 @@ namespace COMP2139_Assignment1.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Make")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -66,8 +66,8 @@ namespace COMP2139_Assignment1.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<string>("RentalCompany")
                         .IsRequired()
@@ -77,6 +77,30 @@ namespace COMP2139_Assignment1.Migrations
                     b.HasKey("CarId");
 
                     b.ToTable("Cars");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BookedEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("BookedStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("CarBookings");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Flight", b =>
@@ -125,6 +149,35 @@ namespace COMP2139_Assignment1.Migrations
                     b.HasKey("FlightId");
 
                     b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.FlightBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BookingTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PassengerName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PassportNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlightId");
+
+                    b.ToTable("FlightBookings");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Hotel", b =>
@@ -286,12 +339,6 @@ namespace COMP2139_Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
-                    b.Property<DateTime>("AvailabilityEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("AvailabilityStartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -315,6 +362,52 @@ namespace COMP2139_Assignment1.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("COMP2139_Assignment1.Models.RoomBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BookedEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("BookedStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomBookings");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
+                {
+                    b.HasOne("COMP2139_Assignment1.Models.Car", "Car")
+                        .WithMany("CarBookings")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.FlightBooking", b =>
+                {
+                    b.HasOne("COMP2139_Assignment1.Models.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
+                });
+
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
                 {
                     b.HasOne("COMP2139_Assignment1.Models.Hotel", "Hotel")
@@ -324,6 +417,22 @@ namespace COMP2139_Assignment1.Migrations
                         .IsRequired();
 
                     b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.RoomBooking", b =>
+                {
+                    b.HasOne("COMP2139_Assignment1.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.Car", b =>
+                {
+                    b.Navigation("CarBookings");
                 });
 #pragma warning restore 612, 618
         }

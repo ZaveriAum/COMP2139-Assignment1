@@ -22,5 +22,7 @@ namespace COMP2139_Assignment1.Data
         public DbSet<PhotoRoom> PhotoRooms { get; set; }
         public DbSet<CarBooking> CarBookings {  get; set; }
         public DbSet<RoomBooking> RoomBookings {  get; set; }
+        public DbSet<FlightBooking> FlightBookings { get; set; }
+
     }
 }

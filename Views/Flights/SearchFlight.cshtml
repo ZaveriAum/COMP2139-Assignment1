@@ -29,6 +29,7 @@
                         <td>Price</td>
                         <td>Seats</td>
                         <td>Details</td>
+                        <td>Book</td>
                     </tr>
                 </thead>
 
@@ -44,6 +45,8 @@
                             <td>@flight.Price</td>
                             <td>@flight.Seats</td>
                             <td><a asp-action="Details" asp-route-flightId="@flight.FlightId"><i class="fa-solid fa-ticket"></i></a></td>
+                            <td><a asp-controller="FlightBookings" class="btn btn-primary" asp-action="Create" asp-route-flightId="@flight.FlightId">Book!</a></td>
+
                         </tr>
                     }
                 </tbody>

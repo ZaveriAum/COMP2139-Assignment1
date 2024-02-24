@@ -73,7 +73,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("CarId");
 
-                    b.ToTable("Cars", (string)null);
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
@@ -97,7 +97,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("CarBookings", (string)null);
+                    b.ToTable("CarBookings");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Flight", b =>
@@ -145,7 +145,36 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("FlightId");
 
-                    b.ToTable("Flights", (string)null);
+                    b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.FlightBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BookingTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PassengerName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PassportNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlightId");
+
+                    b.ToTable("FlightBookings");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Hotel", b =>
@@ -173,7 +202,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("HotelId");
 
-                    b.ToTable("Hotels", (string)null);
+                    b.ToTable("Hotels");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoCar", b =>
@@ -193,7 +222,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("PhotoCarId");
 
-                    b.ToTable("PhotoCars", (string)null);
+                    b.ToTable("PhotoCars");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoHotel", b =>
@@ -213,7 +242,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("PhotoHotelId");
 
-                    b.ToTable("PhotoHotels", (string)null);
+                    b.ToTable("PhotoHotels");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.PhotoRoom", b =>
@@ -233,7 +262,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("PhotoRoomId");
 
-                    b.ToTable("PhotoRooms", (string)null);
+                    b.ToTable("PhotoRooms");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewCar", b =>
@@ -254,7 +283,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("ReviewCarId");
 
-                    b.ToTable("ReviewCars", (string)null);
+                    b.ToTable("ReviewCars");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewHotel", b =>
@@ -275,7 +304,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("ReviewHotelId");
 
-                    b.ToTable("ReviewHotels", (string)null);
+                    b.ToTable("ReviewHotels");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.ReviewRoom", b =>
@@ -296,7 +325,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasKey("ReviewRoomId");
 
-                    b.ToTable("ReviewRooms", (string)null);
+                    b.ToTable("ReviewRooms");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
@@ -327,7 +356,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.RoomBooking", b =>
@@ -351,7 +380,7 @@ namespace COMP2139_Assignment1.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomBookings", (string)null);
+                    b.ToTable("RoomBookings");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.CarBooking", b =>
@@ -363,6 +392,17 @@ namespace COMP2139_Assignment1.Migrations
                         .IsRequired();
 
                     b.Navigation("Car");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Models.FlightBooking", b =>
+                {
+                    b.HasOne("COMP2139_Assignment1.Models.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Room", b =>
@@ -378,13 +418,13 @@ namespace COMP2139_Assignment1.Migrations
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.RoomBooking", b =>
                 {
-                    b.HasOne("COMP2139_Assignment1.Models.Room", "Car")
+                    b.HasOne("COMP2139_Assignment1.Models.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Car");
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Models.Car", b =>

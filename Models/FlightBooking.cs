@@ -18,16 +18,8 @@ namespace COMP2139_Assignment1.Models
         // Passport information (for international flights)
         public string? PassportNumber { get; set; }
 
-        [Required]
-        [Display(Name = "Seat Preference")]
-        public string SeatPreference { get; set; } // You might want to use an enum for seat preferences
+        public DateTime BookingTime { get; set; } = DateTime.Now;
 
-        // Additional services (e.g., extra baggage, in-flight meals)
-        [Display(Name = "Extra Baggage")]
-        public bool ExtraBaggage { get; set; }
-
-        [Display(Name = "In-flight Meal")]
-        public bool InFlightMeal { get; set; }
     }
 
 }
