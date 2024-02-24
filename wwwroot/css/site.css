@@ -24,3 +24,13 @@ body {
 .flight-action{
     display: inline-block;
 }
+.main-container{
+    min-height:70vh;
+}
+
+footer{
+
+}
+header{
+
+}
