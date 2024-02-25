@@ -11,15 +11,37 @@
 
     </head>
     <body>
-        <form class="d-flex" asp-action="Search" method="get">
-            <input class="form-control" type="text" placeholder="From" name="searchStringFrom" required/>
-            <input class="form-control" type="text" placeholder="Going to" name="searchStringTo" required/>
-            <input class="form-control" type="date" id="searchStringDepartureDate" name="searchStringDepartureDate" required />
-            <button class="btn btn-outline-success" type="Submit">Search</button>
-        </form>
+        <div class="center-screen fill-screen mt-5 ">
+        <h2 class="mt-5">Search For A Flight</h2>
+
+            <form class="d-flex flex-column form-one mb-5" asp-action="Search" method="get">
+                <input class="input-one w-250" type="text" placeholder="From" name="searchStringFrom" required />
+                <input class="input-one w-250" type="text" placeholder="Going to" name="searchStringTo" required />
+                <input class="input-one w-250" type="date" id="searchStringDepartureDate" name="searchStringDepartureDate" required />
+                <button class="bttn button-one mt-3 w-250" type="Submit">Search</button>
         <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">Add Flight</a>
+                    <a class ="bttn button-two mt-2 w-250" asp-area="" asp-action="Create">Add Flight</a>
         </p>
+            </form>
+
+            <h2 class="mt-5 mb-5">Or browse the following</h2>
+            <div class="show-model">
+                @foreach (var flight in Model)
+                {
+                    <div class="show-model-card">
+                        <h4>@flight.FlightNumber - @flight.Airline</h4>
+                        <p>@flight.From</p>
+                        <p>@flight.To</p>
+                        <p>@flight.DepartureDate</p>
+                        <div class="center-screen">
+                            <a asp-controller="Flights" class="bttn button-one w-250" asp-action="Details" asp-route-flightId="@flight.FlightId">View Details</a>
+                            <a asp-controller="FlightBookings" class="bttn button-two w-250 mt-2" asp-action="Create" asp-route-flightId="@flight.FlightId">Book This Flight!</a>
+                            <a asp-controller="FlightBookings" asp-action="Search" asp-route-flightId="@flight.FlightId" class="bttn button-three w-250 mt-2">View Bookings</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </body>
 </html>
 <script>

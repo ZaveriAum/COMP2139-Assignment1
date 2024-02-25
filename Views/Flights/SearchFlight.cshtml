@@ -16,11 +16,12 @@
     </head>
     <body>
         <h2>Flights</h2>
+        <div class="table-wrap">
 
         @if (Model.Any())
         {
-            <table class="table">
-                <thead>
+                <table class="table search-table">
+                    <thead>
                     <tr>
                         <td>Flight Number</td>
                         <td>Airline</td>
@@ -59,11 +60,13 @@
             }
             else
             {
-            <p>No Projects data</p>
+            <p>No Flight data</p>
             }
         }
+        </div>
+
         <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">Add Flight</a>
+            <a class="bttn button-one mt-3 w-250 btn-primary" asp-area="" asp-action="Create">Add Flight</a>
         </p>
     </body>
 </html>

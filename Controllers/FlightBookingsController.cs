@@ -31,9 +31,13 @@ namespace COMP2139_Assignment1.Controllers
             }
 
             int bookedSeats = _context.FlightBookings.Count(b => b.FlightId == FlightId);
+            ViewBag.ShowAlert = false;
+
             if (bookedSeats >= Flight.Seats)
             {
-                return NotFound("There is no more seats on this flight");
+                ViewBag.ShowAlert = true;
+                //return NotFound("There is no more seat for this flight");
+
             }
 
             ViewData["FlightId"] = FlightId;
