@@ -87,7 +87,10 @@ nav {
     }
 
 
-
+/*Index Page*/
+.igloo {
+    animation: colorChange 5s ease infinite;
+}
 .index-wrapper {
     display: flex;
     justify-items: center;
@@ -196,7 +199,7 @@ nav {
         color: #cccccc;
     }
 .button-danger {
-    background-color: #ff3f3f;
+    background-color: #d40000;
 }
 
 .button-one {
@@ -364,5 +367,17 @@ w-125{
 
     100% {
         transform: rotate(0deg);
+    }
+}
+@keyframes colorChange {
+    0% {
+        color: #9290C3;
+    }
+
+    50% {
+        color: #070F2B;
+    }
+    100% {
+        color: #9290C3;
     }
 }

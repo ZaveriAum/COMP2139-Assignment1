@@ -30,10 +30,10 @@
                 <input type="date" asp-for="BookedEndDate" class="form-control" />
                 <span asp-validation-for="BookedEndDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Confirm" class="btn btn-primary" />
-                <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@ViewData["CarId"]" class="btn btn-dark">Check booking availibility</a>
-                <a asp-controller="Cars" asp-action="Index" class="btn btn-info">Back to Search</a>
+            <div class="w-100 d-flex flex-column">
+                <input type="submit" value="Confirm" class="bttn button-one w-250 mt-2" />
+                <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@ViewData["CarId"]" class="bttn button-two w-250 mt-2">Check booking availibility</a>
+                <a asp-controller="Cars" asp-action="Index" class="bttn button-three w-250 mt-2">Back to Search</a>
             </div>
         </form>
 
