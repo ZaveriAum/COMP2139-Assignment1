@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Car>
+@{
     ViewData["Title"] = "Cars";
 }
 <DOCTYPE html>
@@ -8,22 +9,39 @@
 
     </head>
     <body>
-        <form class="d-flex" asp-action="Search" method="get">
-            <input class="form-control" type="text" name="City" placeholder="City" required/>
-            <input class="form-control" type="text" name="Brand" placeholder="Brand"/>
-            <input class="form-control" type="text" name="Model" placeholder="Model" />
-            <input class="form-control" type="number" name="MinPrice" placeholder="Minimum Price" />
-            <input class="form-control" type="number" name="MaxPrice" placeholder="Maximum Price" />
-            <button type="submit" class="btn btn-outline-primary">Search</button>
+        <div class="center-screen fill-screen mt-5 ">
+            <h2 class="mt-5">Search For A Car</h2>
+        <form class="d-flex flex-column form-one mb-5" asp-action="Search" method="get">
+            <input class="input-one w-250" type="text" name="City" placeholder="City" required/>
+                <input class="input-one mt-3 w-250" type="text" name="Brand" placeholder="Brand" />
+                <input class="input-one mt-3 w-250" type="text" name="Model" placeholder="Model" />
+                <div class="input-price-div w-250">
+                    <input class="input-price input-one mt-3 " min="0" type="number" name="MinPrice" placeholder="$Min Price" />
+                    <input class="input-price input-one mt-3 " min="0" type="number" name="MaxPrice" placeholder="$Max Price" />
+                </div>
+                <button type="submit" class="button-one mt-3 w-250">Search</button>
+                <a class="button-two mt-2 w-250" asp-area="" asp-action="Create">List a Car!</a>
+
         </form>
-        <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="Create">List a Car!</a>
-        </p>
+        <h2 class="mt-5 mb-5">Or browse the following</h2>
+        <div class="show-model">
+            @foreach(var car in Model)
+            {
+                <div class="show-model-card">
+                <h4>@car.Brand - @car.Model</h4>
+                <p>@car.Description</p>
+                <p>Availible in - @car.City at pick-up location @car.PickUpLocation</p>
+                <p>Offered by @car.RentalCompany</p>
+                <div class="center-screen">
+                <a asp-controller="CarBookings" class="button-one w-250" asp-action="Create" asp-route-carId="@car.CarId">Book This Car!</a>
+                <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="button-two w-250 mt-2">View Details</a>
+                        </div>
+                </div>
+            }
+            </div>
+        </div>
+
     </body>
 </html>
 
-<script>
-    // JavaScript code to set today's date as the placeholder
-    var today = new Date().toISOString().slice(0, 10);
-    document.getElementById("searchStringDate").setAttribute('value', today);
-</script>
+
