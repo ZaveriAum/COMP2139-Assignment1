@@ -53,6 +53,10 @@ namespace COMP2139_Assignment1.Models
         [StringLength(50, ErrorMessage ="Company name cannot exceed the limit of 50 characters.")]
         public string RentalCompany {  get; set; }
 
+        [Required]
+        [Display(Name = "Max Passenger")]
+        public int MaxPassenger { get; set; }
+
         [AllowNull]
         [Display(Name ="Rating")]
         [Range(0, 5)]

@@ -63,22 +63,31 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("CarId","PlateNumber","Brand","Model","City","Price","RentalCompany" ,"Description", "PickUpLocation")] Car car)
+        public IActionResult Edit(int CarId, [Bind("CarId","PlateNumber","Brand","Model","City","Price","MaxPassenger","RentalCompany" ,"Description", "PickUpLocation")] Car car)
         {
-            if (id != car.CarId)
+            if (CarId != car.CarId)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                var existingCar = _context.Cars.Find(id);
-                if (existingCar != null)
+                try
                 {
-                    return NotFound();
+                    _context.Update(car);
+                    _context.SaveChanges();
                 }
-                _context.Cars.Update(car);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                catch(DbUpdateConcurrencyException)
+                {
+                    if(!CarExists(car.CarId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
             }
             return View(car);
         }
@@ -115,7 +124,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(string City,string Model,string Brand,double MinPrice,double MaxPrice)
+        public async Task<IActionResult> Search(string City,string Model,string Brand,double MinPrice,double MaxPrice, int NumPassenger)
         {
             if (_context.Cars == null)
             {
@@ -126,6 +135,10 @@ namespace COMP2139_Assignment1.Controllers
 
             var Cars= from c in _context.Cars
                          select c;
+            if(NumPassenger > 0)
+            {
+                Cars = Cars.Where(s=>s.MaxPassenger >= NumPassenger);
+            }
 
             if (!String.IsNullOrEmpty(City))
             {
