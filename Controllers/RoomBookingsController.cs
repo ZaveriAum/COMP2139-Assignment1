@@ -1,6 +1,7 @@
 ﻿using COMP2139_Assignment1.Data;
 using COMP2139_Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace COMP2139_Assignment1.Controllers
 {
@@ -53,11 +54,27 @@ namespace COMP2139_Assignment1.Controllers
             {
                 _context.RoomBookings.Add(roomBooking);
                 _context.SaveChanges();
-                return RedirectToAction("Index", new {RoomId = roomBooking.RoomId });
+                return RedirectToAction("Search", new {RoomId = roomBooking.RoomId });
             }
             return View(roomBooking);
         }
 
 
+        public async Task<IActionResult> Search(int RoomId)
+        {
+            var Room = await _context.Rooms.FindAsync(RoomId);
+            if (Room == null) {
+                return NotFound();
+            }
+            var  RoomBookings = from rb in _context.RoomBookings select rb;
+            RoomBookings = RoomBookings.Where(c => c.RoomId == RoomId);
+            ViewData["RoomId"] = RoomId;
+            ViewData["Description"] = Room.Description;
+            ViewData["Price"] = Room.Price;
+            ViewData["Rating"] = Room.Rating;
+
+            var RoomBookingList = await RoomBookings.ToListAsync();
+            return View("Index", RoomBookingList);
+        }
     }
 }

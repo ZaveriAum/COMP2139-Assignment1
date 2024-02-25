@@ -41,10 +41,8 @@
 							$@finalPrice
 						</td>
 						<td>
-							@* 							<a asp-controller="Project" asp-action="Details" asp-route-id="@project.ProjectId" class="btn btn-info">Details</a> *@
-							@* 							<a asp-controller="Project" asp-action="Edit" asp-route-id="@project.ProjectId" class="btn btn-secondary">Edit Booking</a>
-						<a asp-controller="Project" asp-action="Delete" asp-route-id="@project.ProjectId" class="btn btn-danger">CancelBooking</a> *@
-
+							<a asp-controller="RoomBookings" class="bttn button-one w-125" asp-action="Edit" asp-route-id="@roomBooking.Id">Edit Booking</a>
+							@* <a asp-controller="RoomBookings" asp-action="Delete" asp-route-id="@project.ProjectId" class="btn btn-danger">Cancel Booking</a> *@
 						</td>
 
 					</tr>

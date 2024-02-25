@@ -20,7 +20,6 @@ namespace COMP2139_Assignment1.Models
         [Required]
         public int RoomId { get; set; }
 
-        [Required]
         public Room? Room { get; set; }
     }
 }
