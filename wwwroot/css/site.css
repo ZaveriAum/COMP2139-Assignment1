@@ -159,7 +159,7 @@ nav {
     .button-one:hover {
         transition: all .1s ease;
         box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1B1A55;
-        color: white
+        color: #cccccc;
     }
 .button-two {
     display: inline-block;
@@ -179,7 +179,7 @@ nav {
     .button-two:hover {
         transition: all .1s ease;
         box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1B1A55;
-        color:white;
+        color: #cccccc;
     }
                 
     .input-one {

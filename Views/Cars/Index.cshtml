@@ -30,11 +30,11 @@
                 <div class="show-model-card">
                 <h4>@car.Brand - @car.Model</h4>
                 <p>@car.Description</p>
-                <p>Availible in - @car.City at pick-up location @car.PickUpLocation</p>
-                <p>Offered by @car.RentalCompany</p>
+                <p>Availible in - @car.City at pick-up location @car.PickUpLocation!</p>
+                <p>Offered by @car.RentalCompany for a price of $@car.Price per day!</p></p>
                 <div class="center-screen">
                 <a asp-controller="CarBookings" class="button-one w-250" asp-action="Create" asp-route-carId="@car.CarId">Book This Car!</a>
-                <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="button-two w-250 mt-2">View Details</a>
+                <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="button-two w-250 mt-2">View Bookings</a>
                         </div>
                 </div>
             }
