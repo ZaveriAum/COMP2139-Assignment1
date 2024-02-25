@@ -52,17 +52,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RentalCompany)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
+
     </dl>
 </div>
 <div>
     <a asp-action="Edit" class="btn btn-warning" asp-route-carId="@Model?.CarId">Edit</a> |
     <a asp-action="Delete" class="btn btn-danger" asp-route-carId="@Model?.CarId">Delete</a> |
 
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
 </div>

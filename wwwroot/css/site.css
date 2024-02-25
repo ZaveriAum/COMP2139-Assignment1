@@ -137,8 +137,45 @@ nav {
     min-height:350px;
     padding: 20px;
 }
+.one-grid{
+    grid-template-columns:1fr;
+    margin:0 auto;
+    width:50%;
+}
+/*Search Table*/
+.table-wrap {
+    overflow-x: auto
+}
+.search-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+    .search-table thead tr {
+        background-color: #070F2B;
+        color: #ffffff;
+        text-align: left;
+    }
+.searc-table th,
+.search-table td {
+    padding: 12px 15px;
+}
+    .search-table tbody tr {
+        border-bottom: 1px solid #070F2B;
+    }
+
+    .search-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+        .search-table tbody tr:last-of-type {
+            border-bottom: 2px solid #070F2B;
+        }
 /*Utility*/
-.button-one {
+.bttn {
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -147,41 +184,31 @@ nav {
     padding: 12px 24px;
     border: 0;
     color: #fff;
-    background: #535C91;
     line-height: 1.15;
     font-size: 16px;
     text-decoration: none;
-    width: 200px;
     text-decoration: none;
     text-align: center;
+}
+    .bttn:hover {
+        transition: all .1s ease;
+        box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1B1A55;
+        color: #cccccc;
+    }
+.button-danger {
+    background-color: #ff3f3f;
 }
 
-    .button-one:hover {
-        transition: all .1s ease;
-        box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1B1A55;
-        color: #cccccc;
-    }
-.button-two {
-    display: inline-block;
-    outline: none;
-    cursor: pointer;
-    font-weight: 600;
-    border-radius: 3px;
-    padding: 12px 24px;
-    border: 0;
-    color: white;
-    background: #9290C3;
-    line-height: 1.15;
-    font-size: 16px;
-    text-decoration: none;
-    text-align: center;
+.button-one {
+    background: #535C91;
 }
-    .button-two:hover {
-        transition: all .1s ease;
-        box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1B1A55;
-        color: #cccccc;
-    }
-                
+.button-two {
+    background: #9290C3;
+}
+.button-three {
+    background: #b1b0d4;
+}
+
     .input-one {
     box-shadow: inset #abacaf 0 0 0 2px;
     border: 0;
