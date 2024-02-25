@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Car</h4>
+    <h4>For @Model.Brand @Model.Model</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -56,8 +56,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-warning" asp-route-carId="@Model?.CarId">Edit</a> |
-    <a asp-action="Delete" class="btn btn-danger" asp-route-carId="@Model?.CarId">Delete</a> |
-
-    <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+    <a asp-action="Edit" class="bttn button-one " asp-route-carId="@Model?.CarId">Edit</a>
+    <a href='javascript:history.go(-1)' class="bttn button-two ms-2">Back to List</a>
+    <a asp-action="Delete" class="bttn button-danger ms-2" asp-route-carId="@Model?.CarId">Delete</a>
 </div>
