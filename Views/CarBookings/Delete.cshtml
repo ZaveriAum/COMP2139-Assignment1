@@ -40,8 +40,8 @@
 <form asp-action="DeleteConfirmed" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @Html.HiddenFor(model => model.Id)
-    <input type="submit" value="Cancel Booking" class="btn btn-danger" />
-    <a asp-action="Search" asp-route-CarId="@Model.CarId" class="btn btn-warning">Go Back</a>
+    <input type="submit" value="Cancel Booking" class="bttn button-one mt-2 w-250" />
+    <a asp-action="Search" asp-route-CarId="@Model.CarId" class="bttn button-two mt-2 w-250">Go Back</a>
 </form>
 @section Scripts {
     @{

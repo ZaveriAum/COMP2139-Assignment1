@@ -119,7 +119,7 @@ namespace COMP2139_Assignment1.Controllers
         {
             if (_context.Cars == null)
             {
-                return Problem("Sorry, there are currently no cars availible at the moment!");
+                return Problem("Sorry, there are currently no cars available at the moment!");
             }
            
            // string SearchString =  City+ "&Brand="+ Brand + "&Model=" + Model +"&MinPrice="+MinPrice+"&MaxPrice=" + MaxPrice;

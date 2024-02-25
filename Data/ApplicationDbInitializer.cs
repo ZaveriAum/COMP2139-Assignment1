@@ -72,6 +72,56 @@ namespace COMP2139_Assignment1.Data
                     });
                     context.SaveChanges();
                 }
+                if (!context.CarBookings.Any())
+                {
+                    context.CarBookings.AddRange(new List<CarBooking>()
+                    {
+                        new CarBooking()
+                        {
+                            BookedStartDate = DateTime.Now,
+                            BookedEndDate= DateTime.Now.AddDays(4),
+                            CarId = 1 
+                        }, 
+                        new CarBooking()
+                        {
+                            BookedStartDate = DateTime.Now.AddDays(4),
+                            BookedEndDate= DateTime.Now.AddDays(5),
+                            CarId = 1
+                        },
+                        new CarBooking()
+                        {
+                            BookedStartDate = DateTime.Now.AddDays(5),
+                            BookedEndDate= DateTime.Now.AddDays(7),
+                            CarId = 2
+                        },
+                        new CarBooking()
+                        {
+                            BookedStartDate = DateTime.Now.AddDays(4),
+                            BookedEndDate= DateTime.Now.AddDays(6),
+                            CarId = 2
+                        },
+                        new CarBooking
+                        {
+                            BookedStartDate = DateTime.Now.AddDays(3),
+                            BookedEndDate = DateTime.Now.AddDays(8),
+                            CarId = 3
+                        },
+                        new CarBooking
+                        {   
+                        BookedStartDate = DateTime.Now.AddDays(6),
+                        BookedEndDate = DateTime.Now.AddDays(9),
+                        CarId = 4
+                        },
+                         new CarBooking
+                         {
+                        BookedStartDate = DateTime.Now.AddDays(2),
+                        BookedEndDate = DateTime.Now.AddDays(7),
+                        CarId = 5
+                        },
+
+                });
+                    context.SaveChanges();
+                }
             }
         }
     }

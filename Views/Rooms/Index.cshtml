@@ -1,54 +1,78 @@
 ﻿@model IEnumerable<COMP2139_Assignment1.Models.Room>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rooms";
 }
+<DOCTYPE html>
+    <html>
+        <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-<h1>Index</h1>
+        </head>
+        <body>
+            <div class="rooms-container">
+    <h2 class="rooms-heading">Rooms</h2>
+        <form class="rooms-form" asp-action="Search" method="get">
+        <div class="input-price-div w-250 inline-element">
+            <input class="input-price input-one mt-3 " min="0" type="number" name="MinPrice" placeholder="$Min Price" />
+            <input class="input-price input-one mt-3 " min="0" type="number" name="MaxPrice" placeholder="$Max Price" />
+        </div class="inline-element">
+            <button class="bttn button-one mt-3 w-250" type="Submit">Filter</button>
+        </form>
+        </div>
+    <div class="table-wrap">
+        @if(Model.Any())
+        {
+            <table class="table search-table">
 
+                <thead>
+                    <tr class="text-center">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                        <th>
+                            Details
+                        </th>
+                        <th>
+                            Make Book
+                        </th>
+                        <th>
+                            View Bookings
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+                    <tr class="text-center">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                                <a asp-action="Details" class="bttn button-one w-125" asp-route-id="@item.RoomId">Details</a>
+                        </td>
+                        <td>
+                                <a asp-controller="RoomBookings" class="bttn button-two w-125 " asp-action="Create" asp-route-roomId="@item.RoomId">Book Room</a>
+                        </td>
+                        <td>
+                                <a asp-controller="RoomBookings" asp-action="Search" asp-route-roomId="@item.RoomId" class="bttn button-three w-125 ">View Bookings</a>
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+        }
+        else{
+            <p>No Data for this Hotel.</p>
+        }
+        </div>
 <p>
-    <a asp-action="Create" asp-route-HotelId="@ViewBag.HotelId" class="btn btn-primary">Create New Room</a>
+    <a asp-action="Create" asp-route-HotelId="@ViewBag.HotelId" class="bttn button-one">Create New Room</a>
 </p>
-<table class="table">
-
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                <p>Details</p>
-            </th>
-            <th>
-                <p>Book</p>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
-            </td>
-            <td>
-                <a asp-controller="RoomBookings" asp-action="Create" asp-route-roomId="@item.RoomId">Book</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</body>
+</html>

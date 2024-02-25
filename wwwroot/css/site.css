@@ -5,10 +5,35 @@ html {
     font-size: 14px;
 }
 
+/*Filtering Room form css */
+.rooms-container {
+    display: flex; /* Use flexbox to align items */
+    justify-content: space-between; /* Space out the items horizontally */
+    align-items: center; /* Vertically center the items */
+    background-color: #f0f0f0; /* Optional: Add a background color */
+    padding: 10px; /* Optional: Add some padding */
+}
+
+/* Style for the heading */
+.rooms-heading {
+    margin: 0; /* Remove default margin */
+}
+
+/* Style for the form */
+.rooms-form {
+    display: flex; /* Use flexbox to align form elements */
+}
+
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
     }
+}
+
+/*Makes element inline*/
+.inline-element {
+    display: inline-block
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -192,6 +217,7 @@ nav {
     text-decoration: none;
     text-decoration: none;
     text-align: center;
+    margin-left:10px;
 }
     .bttn:hover {
         transition: all .1s ease;
@@ -249,6 +275,7 @@ nav {
 }
 .input-price-div{
     display:flex;
+    margin-left: 10px;
     justify-content:space-between;
 }
 .input-price{
@@ -294,6 +321,8 @@ w-125{
 .w-500 {
     width: 500px;
 }
+
+
 
 /*Media query*/
 @media (max-width: 576px) {

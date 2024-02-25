@@ -16,7 +16,7 @@
                 <h2 class="mt-5">Search For Hotel</h2>
             <form class="d-flex flex-column form-one mb-5" asp-action="Search" method="get">
                 <input class="input-one mt-3 w-250"  type="text" placeholder="HotelName" name="searchName" />
-                <input class="input-one mt-3 w-250" type="text" placeholder="HotelLocation" name="seacrhLocation" />
+                <input class="input-one mt-3 w-250" type="text" placeholder="HotelLocation" name="seacrhLocation" required/>
                 <button class ="bttn button-one mt-3 w-250" type="Submit">Search</button>
                 <a class="bttn button-two mt-2 w-250" asp-action="Create">Create New</a>
             </form>
