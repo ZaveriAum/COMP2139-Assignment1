@@ -64,6 +64,53 @@ namespace COMP2139_Assignment1.Controllers
             return View(booking);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int Id)
+        {
+            var booking = _context.FlightBookings.Include(f => f.Flight).FirstOrDefault(f => f.Id == Id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            var Flight = _context.Flights.Find(booking.FlightId);
+            if(Flight == null)
+            {
+                return NotFound();
+            }
+            ViewData["FlightNumber"] = Flight.FlightNumber;
+            ViewData["Airline"] = Flight.Airline;
+            ViewData["From"] = Flight.From;
+            ViewData["To"] = Flight.To;
+            ViewData["DepartureDate"] = Flight.DepartureDate;
+            ViewData["ArrivalDate"] = Flight.ArrivalDate;
+            ViewData["DepartureTime"] = Flight.DepartureTime;
+            ViewData["ArrivalTime"] = Flight.ArrivalTime;
+            ViewData["Price"] = Flight.Price;
+            ViewData["Seats"] = Flight.Seats;
+            return View(booking);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int Id, [Bind("Id", "PassengerName", "PassportNumber", "FlightNumber")] FlightBooking booking)
+        {
+            if (Id != booking.Id)
+            {
+                return NotFound();
+            }
+            var Flight = _context.Flights.Find(booking.FlightId);
+            if (Flight == null)
+            {
+                return NotFound();
+            }
+            if(ModelState.IsValid)
+            {
+                _context.Flights.Update(Flight);
+                _context.SaveChanges();
+                return RedirectToAction("Search", new {FlightId = booking.FlightId});
+            }
+            return View(booking);
+        }
         public async Task<IActionResult> Search(int FlightId)
         {
             var Flight = await _context.Flights.FindAsync(FlightId);

@@ -4,62 +4,37 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
 
-<form class="d-flex" asp-action="Search" method="get">
-    <input class="form-control" type="text" placeholder="HotelName" name="searchName" />
-    <input class="form-control" type="text" placeholder="HotelLocation" name="seacrhLocation" />
-    <button class="btn btn-outline-success" type="Submit">Search</button>
-</form>
-
-@* <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HotelName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HotelLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
- *@
-<p>
-    <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
-</p>
-
-<p>
-    <a asp-action="List">List All Hotel</a>
-</p>
+<DOCTYPE html>
+    <html>
+        <head>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        </head>
+        <body>
+            <div class="center-screen fill-screen mt-5">
+                <h2 class="mt-5">Search For Hotel</h2>
+            <form class="d-flex flex-column form-one mb-5" asp-action="Search" method="get">
+                <input class="input-one mt-3 w-250"  type="text" placeholder="HotelName" name="searchName" />
+                <input class="input-one mt-3 w-250" type="text" placeholder="HotelLocation" name="seacrhLocation" />
+                <button class ="bttn button-one mt-3 w-250" type="Submit">Search</button>
+                <a class="bttn button-two mt-2 w-250" asp-action="Create">Create New</a>
+            </form>
+            <h2 class="mt-5 mb-5">Or browse the following</h2>
+            <div class="show-model">
+                @foreach(var hotel in Model)
+                {
+                    <div class="show-model-card">
+                        <h4>@hotel.HotelName</h4>
+                        <p>@hotel.Description</p>
+                        <p>Location - @hotel.HotelLocation</p>
+                        <div class="center-screen">
+                            <a asp-controller="Hotels" class="bttn button-one w-250" asp-action="Details" asp-route-hotelId="@hotel.HotelId">View Details</a>
+                            <a asp-controller="Rooms" class="bttn button-one w-250 mt-2" asp-action="Index" asp-route-hotelId="@hotel.HotelId">View Rooms</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </body>
+</html>
