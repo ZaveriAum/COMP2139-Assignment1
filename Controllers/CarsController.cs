@@ -34,7 +34,7 @@ namespace COMP2139_Assignment1.Controllers
             {
                 _context.Cars.Add(car);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details" ,new {carId=car.CarId});
             }
             return View(car);
         }
@@ -71,22 +71,13 @@ namespace COMP2139_Assignment1.Controllers
             }
             if (ModelState.IsValid)
             {
-                try
+                var existingCar = _context.Cars.Find(id);
+                if (existingCar != null)
                 {
-                    _context.Update(car);
-                    _context.SaveChanges();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CarExists(car.CarId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Cars.Update(car);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(car);
