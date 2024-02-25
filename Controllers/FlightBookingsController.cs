@@ -53,14 +53,22 @@ namespace COMP2139_Assignment1.Controllers
             return View();
         }
 
-        public IActionResult Create([Bind("FlightId", "PassengerName", "PassportNumber")] FlightBooking booking)
+        public IActionResult Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
             Console.WriteLine($"FlightId: {booking.FlightId}");
             Console.WriteLine($"PassengerName: {booking.PassengerName}");
             Console.WriteLine($"PassportNumber: {booking.PassportNumber}");
+            Console.WriteLine($"NumberOfPassenger: {booking.NumberOfPassenger}");
 
             if (ModelState.IsValid)
             {
+                int bookedSeats = _context.FlightBookings.Count(b => b.FlightId == booking.FlightId);
+
+                if (booking.NumberOfPassenger+bookedSeats < booking.Flight.Seats)
+                {
+                    ModelState.AddModelError("", "There is not enough seats in this flight");
+                    return View(booking);
+                }
                 _context.FlightBookings.Add(booking);
                 _context.SaveChanges();
                 return RedirectToAction("Search", new { FlightId = booking.FlightId });
@@ -96,7 +104,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, [Bind("Id", "PassengerName", "PassportNumber", "FlightNumber")] FlightBooking booking)
+        public IActionResult Edit(int Id, [Bind("Id", "FlightId", "PassengerName", "PassportNumber")] FlightBooking booking)
         {
             if (Id != booking.Id)
             {
