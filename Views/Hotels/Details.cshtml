@@ -37,10 +37,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-warning" asp-route-hotelId="@Model?.HotelId">Edit</a> |
+    <a asp-action="Edit" class="bttn button-one" asp-route-hotelId="@Model?.HotelId">Edit</a> |
     <form asp-action="DeleteConfirmed" method="post" class="flight-action">
         @Html.HiddenFor(model => model.HotelId)
         <input type="submit" value="Delete" class="btn btn-danger" />
-    </form>
-    <a asp-action="Index">Back to List</a>
+    </form> |
+    <a href='javascript:history.go(-1)' class="bttn button-two ms-2">Back to List</a>
 </div>

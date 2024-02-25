@@ -33,7 +33,7 @@
             <div class="w-100 d-flex flex-column">
                 <input type="submit" value="Confirm" class="bttn button-one w-250 mt-2" />
                 <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@ViewData["CarId"]" class="bttn button-two w-250 mt-2">Check booking availibility</a>
-                <a asp-controller="Cars" asp-action="Index" class="bttn button-three w-250 mt-2">Back to Search</a>
+                <a href='javascript:history.go(-1)' class="bttn button-three w-250 mt-2">Back to List</a>
             </div>
         </form>
 

@@ -4,9 +4,9 @@
     ViewData["Title"] = "Add Booking";
 }
 
-<h1>Create</h1>
 
-<h4>RoomBooking</h4>
+<h1>Book the Room</h1>
+<h4>@ViewData["Description"]</h4>
 <hr />
     <p>
         Are you Sure you want to Book the room with Rating @ViewData["Rating"] and Price @ViewData["Price"].
@@ -28,8 +28,9 @@
                 <span asp-validation-for="BookedEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Confirm" class="btn btn-primary" />
-                <a asp-controller="RoomBookings" class="bttn button-three w-250 mt-2" asp-route-roomId="@ViewData["RoomId"] asp-action="Index">Back to List</a>
+                <input type="submit" value="Confirm" class="bttn button-one w-250 mt-2" />
+                <a asp-controller="RoomBookings" asp-action="Search" asp-route-RoomId="@ViewData["RoomId"]" class="bttn button-two w-250 mt-2">Check Booking Availibility</a>
+                <a href='javascript:history.go(-1)' class="bttn button-three w-250 mt-2">Back to List</a>
             </div>
         </form>
     </div>

@@ -10,45 +10,55 @@
 
 	</head>
 	<body>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Room Description</th>
-					<th>Start Date</th>
-					<th>Return Date</th>
-					<th>Price</th>
-					<th>Total Price Paid</th>
-				</tr>
-			</thead>
-
-			@foreach (var roomBooking in Model)
+		<h2>Rooms</h2>
+		<div class="table-wrap">
+			@if (Model.Any())
 			{
-				<tbody>
-					<tr>
-						<td>@ViewData["Description"]</td>
-						<td>@roomBooking.BookedStartDate</td>
-						<td>@roomBooking.BookedEndDate</td>
-						<td>@ViewData["Price"]</td>
-						<!--Calculating the total price -->
-						<td>
-							@{
-								double calculatedPrice = (Convert.ToDouble(ViewData["Price"]) * (roomBooking.BookedEndDate - roomBooking.BookedStartDate).TotalDays);
-								double @minimumPrice = Convert.ToDouble(ViewData["Price"]);
-								double finalPrice = Math.Max(calculatedPrice, minimumPrice);
-							}
-							$@finalPrice
-						</td>
-						<td>
-							<a asp-controller="RoomBookings" asp-action="Edit"  class="bttn button-one w-125" asp-route-id="@roomBooking.Id">Edit Booking</a>
-							<a asp-controller="RoomBookings" asp-action="Delete" class="bttn button-danger w-125"  asp-route-id="@roomBooking.Id">Cancel Booking</a>
-						</td>
+				<table class="table search-table">
+					<thead>
+						<tr class="text-center">
+							<th>Room Description</th>
+							<th>Start Date</th>
+							<th>Return Date</th>
+							<th>Price</th>
+							<th>Total Price Paid</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
 
-					</tr>
-				</tbody>
+					@foreach (var roomBooking in Model)
+					{
+						<tbody>
+							<tr class="text-center">
+								<td>@ViewData["Description"]</td>
+								<td>@roomBooking.BookedStartDate</td>
+								<td>@roomBooking.BookedEndDate</td>
+								<td>@ViewData["Price"]</td>
+								<!--Calculating the total price -->
+								<td>
+									@{
+										double calculatedPrice = (Convert.ToDouble(ViewData["Price"]) * (roomBooking.BookedEndDate - roomBooking.BookedStartDate).TotalDays);
+										double @minimumPrice = Convert.ToDouble(ViewData["Price"]);
+										double finalPrice = Math.Max(calculatedPrice, minimumPrice);
+									}
+									$@finalPrice
+								</td>
+								<td>
+									<a asp-controller="RoomBookings" asp-action="Edit"  class="bttn button-one w-125" asp-route-id="@roomBooking.Id">Edit Booking</a>
+									<a asp-controller="RoomBookings" asp-action="Delete" class="bttn button-danger w-125"  asp-route-id="@roomBooking.Id">Cancel Booking</a>
+								</td>
+
+							</tr>
+						</tbody>
+					}
+				</table>
 			}
-		</table>
+			else{
+				<p>There are no rooms for added for this hotel.</p>
+			}
+		</div>
 		<p>
-			<a class="btn btn-outline-primary" asp-action="Create" asp-route-RoomId="@ViewData["RoomId"]">Create a Room Booking!</a>
+			<a class="bttn button-one" asp-action="Create" asp-route-RoomId="@ViewData["RoomId"]">Create a Room Booking!</a>
 		</p>
 	</body>
 </html>

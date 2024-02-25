@@ -11,21 +11,23 @@
 <DOCTYPE html>
     <html>
     <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     </head>
     <body>
         <h2>Hotel</h2>
-
+        <div class="table-wrap">
         @if (Model.Any())
         {
-            <table class="table">
+            <table class="table search-table">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <td>Hotel Name</td>
                         <td>Hotel Location</td>
                         <td>Rating</td>
                         <td>Description</td>
-   
+                        <td>Details</td>
+                        <td>Rooms</td>
                     </tr>
                 </thead>
 
@@ -33,13 +35,13 @@
 
                     @foreach (var hotel in Model)
                     {
-                        <tr>
+                        <tr class="text-center">
                             <td>@hotel.HotelName</td>
                             <td>@hotel.HotelLocation</td>
                             <td>@hotel.Rating</td>
                             <td>@hotel.Description</td>
-                            <td><a asp-action="Details" asp-route-hotelId="@hotel.HotelId"><i class="fa-solid fa-ticket"></i></a></td>
-                            <td><a asp-action="Index" asp-controller="Rooms" asp-route-hotelId="@hotel.HotelId">Room</a></td>
+                                <td><a asp-action="Details" class="bttn button-two w-125 " asp-route-hotelId="@hotel.HotelId"><i class="fa-solid fa-ticket"></i></a></td>
+                                <td><a asp-action="Index" class="bttn button-three w-125 " asp-controller="Rooms" asp-route-hotelId="@hotel.HotelId">Room</a></td>
                         </tr>
                     }
                 </tbody>
@@ -55,8 +57,9 @@
             <p>No hotels data</p>
             }
         }
+        </div>
         <p>
-            <a class="btn btn-outline-primary" asp-area="" asp-action="AddHotel">Add Hotel</a>
+            <a class="bttn button-one mt-3 w-250 btn-primary" asp-area="" asp-action="Create">Add Hotel</a>
         </p>
     </body>
 </html>

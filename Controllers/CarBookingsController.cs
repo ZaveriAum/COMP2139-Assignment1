@@ -224,8 +224,8 @@ namespace COMP2139_Assignment1.Controllers
 
             foreach (var existingBooking in existingBookings)
             {
-                if ((newBooking.BookedStartDate <= existingBooking.BookedEndDate && newBooking.BookedStartDate <= existingBooking.BookedEndDate) ||
-                    (newBooking.BookedStartDate > existingBooking.BookedEndDate))
+                if ((newBooking.BookedStartDate <= existingBooking.BookedEndDate && newBooking.BookedStartDate >= existingBooking.BookedStartDate) ||
+                    (newBooking.BookedEndDate >= existingBooking.BookedStartDate) && (newBooking.BookedEndDate <= existingBooking.BookedEndDate))
                 {
                     return true; 
                 }
