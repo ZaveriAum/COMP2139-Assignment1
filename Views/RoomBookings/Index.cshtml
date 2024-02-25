@@ -13,7 +13,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Hotel</th>
 					<th>Room Description</th>
 					<th>Start Date</th>
 					<th>Return Date</th>
@@ -26,7 +25,6 @@
 			{
 				<tbody>
 					<tr>
-						<td>@ViewData["HotelName"]</td>
 						<td>@ViewData["Description"]</td>
 						<td>@roomBooking.BookedStartDate</td>
 						<td>@roomBooking.BookedEndDate</td>
@@ -41,8 +39,8 @@
 							$@finalPrice
 						</td>
 						<td>
-							<a asp-controller="RoomBookings" class="bttn button-one w-125" asp-action="Edit" asp-route-id="@roomBooking.Id">Edit Booking</a>
-							@* <a asp-controller="RoomBookings" asp-action="Delete" asp-route-id="@project.ProjectId" class="btn btn-danger">Cancel Booking</a> *@
+							<a asp-controller="RoomBookings" asp-action="Edit"  class="bttn button-one w-125" asp-route-id="@roomBooking.Id">Edit Booking</a>
+							<a asp-controller="RoomBookings" asp-action="Delete" class="bttn button-danger w-125"  asp-route-id="@roomBooking.Id">Cancel Booking</a>
 						</td>
 
 					</tr>
