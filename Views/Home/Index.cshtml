@@ -1,7 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">North Pole</h1>
+<div class="index-wrapper">
+    <div class="index-div d-flex flex-column text-center flex-md-row justify-content-around align-items-center w-100 ">
+        <div>
+            <p>Welcome To</p>
+            <h1 class=""><i class="fa-solid fa-igloo color-1"></i> <span class="color-2">The</span> <span class="color-3">North</span> <span class="color-4">Pole</span></h1>
+            <p>Your Personal Booking Site</p>
+        </div>
+        <div>
+            <p class="mt-3 mt-md-0">I want to book a:</p>
+            <div class="">
+                <ul class="home-ul">
+                    <li class="mt-2">
+                        <a class="button-one" asp-area="" asp-controller="Flights" asp-action="Index"><i class="fa-solid fa-plane"></i>   Flight</a>
+                    </li>
+                        <li class="mt-2">
+                        <a class="button-one" asp-area="" asp-controller="Hotels" asp-action="Index"><i class="fa-solid fa-hotel"></i>   Hotel</a>
+                    </li>
+                        <li class="mt-2">
+                        <a class="button-one" asp-area="" asp-controller="Cars" asp-action="Index"><i class="fa-solid fa-car"></i>   Car</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
