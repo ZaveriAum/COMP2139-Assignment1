@@ -42,6 +42,7 @@
 										double calculatedPrice = (Convert.ToDouble(ViewData["Price"]) * (carBooking.BookedEndDate - carBooking.BookedStartDate).TotalDays);
 										double @minimumPrice = Convert.ToDouble(ViewData["Price"]);
 										double finalPrice = Math.Max(calculatedPrice, minimumPrice);
+										finalPrice = Math.Round(finalPrice, 2);
 									}
 									$@finalPrice
 								</td>
