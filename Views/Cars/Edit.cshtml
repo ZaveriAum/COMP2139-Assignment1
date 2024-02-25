@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            @Html.HiddenFor(model=>model.CarId)
             <div class="form-group">
                 <label asp-for="PlateNumber" class="control-label"></label>
                 <input asp-for="PlateNumber" class="form-control" />
@@ -47,6 +47,11 @@
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxPassenger" class="control-label"></label>
+                <input asp-for="MaxPassenger" class="form-control" />
+                <span asp-validation-for="MaxPassenger" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RentalCompany" class="control-label"></label>

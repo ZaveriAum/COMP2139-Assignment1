@@ -16,6 +16,10 @@ namespace COMP2139_Assignment1.Models
         [Display(Name = "Price")]
         public double Price { get; set; }
 
+        [Required]
+        [Display(Name ="Max Guest")]
+        public int MaxGuest { get; set; }
+
         // foreign key for Hotel
         public int HotelId { get; set; }
         public Hotel? Hotel { get; set; }
