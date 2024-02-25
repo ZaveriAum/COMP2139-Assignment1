@@ -5,22 +5,20 @@
 namespace COMP2139_Assignment1.Migrations
 {
     /// <inheritdoc />
-    public partial class DropIsAvailableInRoom : Migration
+    public partial class RemoveHotelRating : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-               name: "IsAvailable",
-               table: "Rooms");
-            
 
+            migrationBuilder.DropColumn(
+               name: "Rating",
+               table: "Hotels");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }

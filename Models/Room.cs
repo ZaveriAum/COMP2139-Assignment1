@@ -16,9 +16,6 @@ namespace COMP2139_Assignment1.Models
         [Display(Name = "Price")]
         public double Price { get; set; }
 
-        [Required]
-        public int Rating { get; set; }
-
         // foreign key for Hotel
         public int HotelId { get; set; }
         public Hotel? Hotel { get; set; }

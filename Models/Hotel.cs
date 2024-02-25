@@ -14,8 +14,6 @@ namespace COMP2139_Assignment1.Models
         [Required]
         public string HotelLocation { get; set;}
 
-        public int? Rating { get; set;}
-
         [Required]
         public string Description { get; set;}
 

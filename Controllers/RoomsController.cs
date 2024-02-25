@@ -49,7 +49,7 @@ namespace COMP2139_Assignment1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Description", "Price","Rating","HotelId")] Room room)
+        public IActionResult Create([Bind("Description", "Price","HotelId")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -113,5 +113,24 @@ namespace COMP2139_Assignment1.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Search(double MinPrice, double MaxPrice) { 
+        
+            if(_context.Rooms == null)
+            {
+                return Problem("Sorry, there are currently no cars available at the moment!");
+            }
+            var Rooms = from r in _context.Rooms select r;
+
+            if(MinPrice > 0)
+            {
+                Rooms = Rooms.Where(c => c.Price >= MinPrice);
+            }
+            if(MaxPrice > 0)
+            {
+                Rooms = Rooms.Where(c => c.Price <= MaxPrice);
+            }
+            return View("Index", await Rooms.ToListAsync());
+        }
     }
 }

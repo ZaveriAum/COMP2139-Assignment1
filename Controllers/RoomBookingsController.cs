@@ -30,7 +30,6 @@ namespace COMP2139_Assignment1.Controllers
             ViewData["RoomId"] = roomId;
             ViewData["Description"] = room.Description;
             ViewData["Price"] = room.Price;
-            ViewData["Rating"] = room.Rating;
             ViewData["HotelId"] = room.HotelId;
             return View();
         }
@@ -79,7 +78,6 @@ namespace COMP2139_Assignment1.Controllers
             }
             ViewData["Description"] = Room.Description;
             ViewData["Price"] = Room.Price;
-            ViewData["Rating"] = Room.Rating;
             return View(booking);
         }
 
@@ -169,7 +167,6 @@ namespace COMP2139_Assignment1.Controllers
             ViewData["RoomId"] = RoomId;
             ViewData["Description"] = Room.Description;
             ViewData["Price"] = Room.Price;
-            ViewData["Rating"] = Room.Rating;
 
             var RoomBookingList = await RoomBookings.ToListAsync();
             return View("Index", RoomBookingList);
