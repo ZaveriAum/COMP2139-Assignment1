@@ -48,7 +48,7 @@
                             <td>@flight.Seats</td>
                             <td><a asp-action="Details" asp-route-flightId="@flight.FlightId"><i class="fa-solid fa-ticket"></i></a></td>
                             <td><a asp-controller="FlightBookings" class="btn btn-primary" asp-action="Create" asp-route-flightId="@flight.FlightId">Book!</a></td>
-                            <td><a asp-controller="FligtBookings" asp-action="Search" asp-route-flightId="@flight.FlightId">View Bookings</a></td>
+                            <td><a asp-controller="FlightBookings" asp-action="Search" asp-route-flightId="@flight.FlightId">View Bookings</a></td>
                         </tr>
                     }
                 </tbody>
