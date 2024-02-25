@@ -30,7 +30,9 @@ namespace COMP2139_Assignment1.Controllers
                 return NotFound();
             }
 
-            int bookedSeats = _context.FlightBookings.Count(b => b.FlightId == FlightId);
+            int bookedSeats = _context.FlightBookings
+                .Where(b => b.FlightId == FlightId)
+                .Sum(b => b.NumberOfPassenger);
             ViewBag.ShowAlert = false;
 
             if (bookedSeats >= Flight.Seats)
@@ -55,6 +57,8 @@ namespace COMP2139_Assignment1.Controllers
 
         public IActionResult Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
+            var flight = _context.Flights.Find(booking.FlightId);
+
             Console.WriteLine($"FlightId: {booking.FlightId}");
             Console.WriteLine($"PassengerName: {booking.PassengerName}");
             Console.WriteLine($"PassportNumber: {booking.PassportNumber}");
@@ -62,9 +66,11 @@ namespace COMP2139_Assignment1.Controllers
 
             if (ModelState.IsValid)
             {
-                int bookedSeats = _context.FlightBookings.Count(b => b.FlightId == booking.FlightId);
+                int bookedSeats = _context.FlightBookings
+                    .Where(b => b.FlightId == booking.FlightId)
+                    .Sum(b => b.NumberOfPassenger);
 
-                if (booking.NumberOfPassenger+bookedSeats < booking.Flight.Seats)
+                if (booking.NumberOfPassenger+bookedSeats > flight.Seats)
                 {
                     ModelState.AddModelError("", "There is not enough seats in this flight");
                     return View(booking);

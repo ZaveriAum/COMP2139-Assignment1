@@ -120,7 +120,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[HttpGet]
-		public async Task<IActionResult> Search(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate)
+		public async Task<IActionResult> Search(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate, int searchPassengerNum)
 		{
 			var flightsQuery = from f in _context.Flights select f;
 
@@ -137,7 +137,9 @@ namespace COMP2139_Assignment1.Controllers
 			ViewData["SearchStringFrom"] = searchStringFrom;
 			ViewData["SearchStringTo"] = searchStringTo;
 			ViewData["searchStringDepartureDate"] = searchStringDepartureDate;
-			return View("SearchFlight", flights);
+            ViewData["searchPassengerNum"] = searchPassengerNum;
+
+            return View("SearchFlight", flights);
 		}
 	}
 }
