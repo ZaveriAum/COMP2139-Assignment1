@@ -26,8 +26,9 @@
                 {
                     <div class="show-model-card">
                         <h4>@hotel.HotelName</h4>
-                        <p>@hotel.Description</p>
+                        <h4>City - @hotel.City</h4>
                         <p>Location - @hotel.HotelLocation</p>
+                        <p>@hotel.Description</p>
                         <div class="center-screen">
                             <a asp-controller="Hotels" class="bttn button-one w-250" asp-action="Details" asp-route-hotelId="@hotel.HotelId">View Details</a>
                             <a asp-controller="Rooms" class="bttn button-one w-250 mt-2" asp-action="Index" asp-route-hotelId="@hotel.HotelId">View Rooms</a>
