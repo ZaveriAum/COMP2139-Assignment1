@@ -125,13 +125,21 @@ namespace COMP2139_Assignment1.Controllers
 			var flightsQuery = from f in _context.Flights select f;
 
 			bool searchPerformed = !String.IsNullOrEmpty(searchStringFrom) || !String.IsNullOrEmpty(searchStringTo);
+            if (searchPerformed)
+            {
+                flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) &&
+                                                          f.To.Contains(searchStringTo) &&
+                                                          f.DepartureDate == searchStringDepartureDate);
+            }
 
-			if (searchPerformed)
+			if (searchPassengerNum > 0)
 			{
-				flightsQuery = flightsQuery.Where(f => f.From.Contains(searchStringFrom) &&
-													  f.To.Contains(searchStringTo) &&
-													  f.DepartureDate == searchStringDepartureDate);
+				flightsQuery = flightsQuery.Where(f => f.Seats - _context.FlightBookings
+															 .Where(b => b.FlightId == f.FlightId)
+															 .Sum(b => b.NumberOfPassenger) >= searchPassengerNum);
 			}
+
+
 			var flights = await flightsQuery.ToListAsync();
 			ViewData["SearchPerformed"] = searchPerformed;
 			ViewData["SearchStringFrom"] = searchStringFrom;
