@@ -110,7 +110,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, [Bind("Id", "FlightId", "PassengerName", "PassportNumber")] FlightBooking booking)
+        public IActionResult Edit(int Id, [Bind("Id", "FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
             if (Id != booking.Id)
             {

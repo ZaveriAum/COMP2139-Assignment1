@@ -34,7 +34,7 @@ namespace COMP2139_Assignment1.Controllers
             {
                 _context.Cars.Add(car);
                 _context.SaveChanges();
-                return RedirectToAction("Details" ,new {carId=car.CarId});
+                return RedirectToAction("Index");
             }
             return View(car);
         }

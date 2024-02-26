@@ -71,9 +71,9 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int hotelId, [Bind("HotelId", "HotelName", "City","HotelLocation", "Description")] Hotel hotel)
+        public IActionResult Edit(int HotelId, [Bind("HotelId", "HotelName", "City","HotelLocation", "Description")] Hotel hotel)
         {
-            if (hotelId != hotel.HotelId)
+            if (HotelId != hotel.HotelId)
             {
                 return NotFound();
             }

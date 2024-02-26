@@ -29,6 +29,11 @@
                 <span asp-validation-for="PassportNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="NumberOfPassenger" class="control-label"></label>
+                <input asp-for="NumberOfPassenger" class="form-control" />
+                <span asp-validation-for="NumberOfPassenger" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="bttn button-one mt-2 w-250" />
                 <a class="bttn button-two mt-2 w-250 inline-element" href="javascript:history.go(-1)">Back to List</a>
 
