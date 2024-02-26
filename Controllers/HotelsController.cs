@@ -71,7 +71,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int hotelId, [Bind("HotelId", "HotelName", "HotelLocation", "Description")] Hotel hotel)
+        public IActionResult Edit(int hotelId, [Bind("HotelId", "HotelName", "City","HotelLocation", "Description")] Hotel hotel)
         {
             if (hotelId != hotel.HotelId)
             {
@@ -121,21 +121,18 @@ namespace COMP2139_Assignment1.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Search(string searchName, string searchLocation, int searchRating)
+        public async Task<IActionResult> Search(string Name, string City)
         {
             var hotelQuery = from f in _db.Hotels select f;
 
-            bool searchPerformed = !String.IsNullOrEmpty(searchName) || !String.IsNullOrEmpty(searchLocation);
+            bool searchPerformed = !String.IsNullOrEmpty(Name) || !String.IsNullOrEmpty(City);
 
             if (searchPerformed)
             {
-                hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(searchName) ||
-                                                      f.HotelLocation.Contains(searchLocation));
+                hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(Name) ||
+                                                      f.City.Contains(City));
             }
             var hotels = await hotelQuery.ToListAsync();
-            ViewData["SearchPerformed"] = searchPerformed;
-            ViewData["SearchName"] = searchName;
-            ViewData["seacrhLocation"] = searchLocation;
             return View("Search", hotels);
         }
     }

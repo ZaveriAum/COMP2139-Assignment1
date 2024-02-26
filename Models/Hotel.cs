@@ -12,6 +12,10 @@ namespace COMP2139_Assignment1.Models
         public string HotelName { get; set;}
 
         [Required]
+        [Display(Name = "City")]
+        public string City { get; set;}
+
+        [Required]
         public string HotelLocation { get; set;}
 
         [Required]

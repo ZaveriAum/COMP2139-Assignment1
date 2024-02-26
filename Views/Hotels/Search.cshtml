@@ -23,6 +23,7 @@
                 <thead>
                     <tr class="text-center">
                         <td>Hotel Name</td>
+                        <td>City</td>
                         <td>Hotel Location</td>
                         <td>Description</td>
                         <td>Details</td>
@@ -36,6 +37,7 @@
                     {
                         <tr class="text-center">
                             <td>@hotel.HotelName</td>
+                            <td>@hotel.City</td>
                             <td>@hotel.HotelLocation</td>
                             <td>@hotel.Description</td>
                                 <td><a asp-action="Details" class="bttn button-two w-125 " asp-route-hotelId="@hotel.HotelId"><i class="fa-solid fa-ticket"></i></a></td>
