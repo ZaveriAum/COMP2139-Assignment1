@@ -8,6 +8,7 @@ html {
 /*Filtering Room form css */
 .rooms-container {
     display: flex; /* Use flexbox to align items */
+    flex-wrap: wrap;
     justify-content: space-between; /* Space out the items horizontally */
     align-items: center; /* Vertically center the items */
     background-color: #f0f0f0; /* Optional: Add a background color */
@@ -22,6 +23,8 @@ html {
 /* Style for the form */
 .rooms-form {
     display: flex; /* Use flexbox to align form elements */
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 

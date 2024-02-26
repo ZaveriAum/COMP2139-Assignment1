@@ -49,7 +49,7 @@ namespace COMP2139_Assignment1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Description", "Price","HotelId")] Room room)
+        public IActionResult Create([Bind("Description", "Price", "MaxGuest","HotelId")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace COMP2139_Assignment1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int roomId, [Bind("RoomId", "Description","Price", "HotelId")] Room room)
+        public IActionResult Edit(int roomId, [Bind("RoomId", "Description","Price","MaxGuest" ,"HotelId")] Room room)
         {
             if (roomId != room.RoomId)
             {
@@ -114,14 +114,17 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(double MinPrice, double MaxPrice) { 
+        public async Task<IActionResult> Search(double MinPrice, double MaxPrice, int NumGuest) { 
         
             if(_context.Rooms == null)
             {
                 return Problem("Sorry, there are currently no cars available at the moment!");
             }
             var Rooms = from r in _context.Rooms select r;
-
+            if (NumGuest > 0)
+            {
+                Rooms = Rooms.Where(c=>c.MaxGuest >= NumGuest);
+            }
             if(MinPrice > 0)
             {
                 Rooms = Rooms.Where(c => c.Price >= MinPrice);

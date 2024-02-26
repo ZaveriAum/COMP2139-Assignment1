@@ -12,13 +12,16 @@
         <body>
             <div class="rooms-container">
     <h2 class="rooms-heading">Rooms</h2>
-        <form class="rooms-form" asp-action="Search" method="get">
         <div class="input-price-div w-250 inline-element">
+
+        <form class="rooms-form" asp-action="Search" method="get">
             <input class="input-price input-one mt-3 " min="0" type="number" name="MinPrice" placeholder="$Min Price" />
             <input class="input-price input-one mt-3 " min="0" type="number" name="MaxPrice" placeholder="$Max Price" />
-        </div class="inline-element">
-            <button class="bttn button-one mt-3 w-250" type="Submit">Filter</button>
+            <input class="input-price input-one mt-3 " min="0" type="number" name="NumGuest" placeholder="Number of Guest" />
+            <button class="bttn button-one mt-3" type="Submit">Filter</button>
         </form>
+         </div class="inline-element">
+
         </div>
     <div class="table-wrap">
         @if(Model.Any())
@@ -32,6 +35,9 @@
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                        <th>
+                            Max Guests
                         </th>
                         <th>
                             Details
@@ -52,6 +58,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaxGuest)
                         </td>
                         <td>
                                 <a asp-action="Details" class="bttn button-one w-125" asp-route-id="@item.RoomId">Details</a>
