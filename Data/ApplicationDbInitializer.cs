@@ -127,6 +127,78 @@ namespace COMP2139_Assignment1.Data
                 });
                     context.SaveChanges();
                 }
+                if (!context.Flights.Any())
+                {
+                    context.Flights.AddRange(new List<Flight>()
+                    {
+                        new Flight()
+                        {
+                            FlightNumber = "AB112",
+                            Airline = "Canada Air",
+                            DepartureDate = new DateOnly(2024, 8, 8),
+                            DepartureTime = new TimeOnly(12, 30, 0),
+                            ArrivalDate = new DateOnly(2024, 8, 10),
+                            ArrivalTime = new TimeOnly(15, 45, 0),
+                            Price = 49.99,
+                            From =  "Toronto",
+                            To =  "Quebec",
+                            Seats = 10
+                        },
+                        new Flight()
+                        {
+                            FlightNumber = "CD223",
+                            Airline = "Maple Airlines",
+                            DepartureDate = new DateOnly(2024, 8, 15),
+                            DepartureTime = new TimeOnly(14, 0, 0),
+                            ArrivalDate = new DateOnly(2024, 8, 17),
+                            ArrivalTime = new TimeOnly(17, 30, 0),
+                            Price = 79.99,
+                            From = "Vancouver",
+                            To = "Montreal",
+                            Seats = 15
+                        },
+                        new Flight
+                        {
+                            FlightNumber = "EF334",
+                            Airline = "Polar Express",
+                            DepartureDate = new DateOnly(2024, 8, 20),
+                            DepartureTime = new TimeOnly(9, 45, 0),
+                            ArrivalDate = new DateOnly(2024, 8, 22),
+                            ArrivalTime = new TimeOnly(12, 15, 0),
+                            Price = 64.99,
+                            From = "Calgary",
+                            To = "Halifax",
+                            Seats = 20
+                        },
+                        new Flight
+                        {
+                            FlightNumber = "GH445",
+                            Airline = "Northern Lights Airways",
+                            DepartureDate = new DateOnly(2024, 8, 25),
+                            DepartureTime = new TimeOnly(18, 0, 0),
+                            ArrivalDate = new DateOnly(2024, 8, 27),
+                            ArrivalTime = new TimeOnly(21, 30, 0),
+                            Price = 89.99,
+                            From = "Edmonton",
+                            To = "Winnipeg",
+                            Seats = 25
+                        },
+                        new Flight
+                        {
+                            FlightNumber = "IJ556",
+                            Airline = "Rocky Mountain Flights",
+                            DepartureDate = new DateOnly(2023, 9, 1),
+                            DepartureTime = new TimeOnly(10, 30, 0),
+                            ArrivalDate = new DateOnly(2023, 9, 3),
+                            ArrivalTime = new TimeOnly(13, 45, 0),
+                            Price = 54.99,
+                            From = "Banff",
+                            To = "Saskatoon",
+                            Seats = 30
+                        }
+                    });
+                    context.SaveChanges();
+                }
             }
         }
     }

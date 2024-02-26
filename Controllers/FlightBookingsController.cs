@@ -30,7 +30,9 @@ namespace COMP2139_Assignment1.Controllers
                 return NotFound();
             }
 
-            int bookedSeats = _context.FlightBookings.Count(b => b.FlightId == FlightId);
+            int bookedSeats = _context.FlightBookings
+                .Where(b => b.FlightId == FlightId)
+                .Sum(b => b.NumberOfPassenger);
             ViewBag.ShowAlert = false;
 
             if (bookedSeats >= Flight.Seats)
@@ -53,14 +55,26 @@ namespace COMP2139_Assignment1.Controllers
             return View();
         }
 
-        public IActionResult Create([Bind("FlightId", "PassengerName", "PassportNumber")] FlightBooking booking)
+        public IActionResult Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
+            var flight = _context.Flights.Find(booking.FlightId);
+
             Console.WriteLine($"FlightId: {booking.FlightId}");
             Console.WriteLine($"PassengerName: {booking.PassengerName}");
             Console.WriteLine($"PassportNumber: {booking.PassportNumber}");
+            Console.WriteLine($"NumberOfPassenger: {booking.NumberOfPassenger}");
 
             if (ModelState.IsValid)
             {
+                int bookedSeats = _context.FlightBookings
+                    .Where(b => b.FlightId == booking.FlightId)
+                    .Sum(b => b.NumberOfPassenger);
+
+                if (booking.NumberOfPassenger+bookedSeats > flight.Seats)
+                {
+                    ModelState.AddModelError("", "There is not enough seats in this flight");
+                    return View(booking);
+                }
                 _context.FlightBookings.Add(booking);
                 _context.SaveChanges();
                 return RedirectToAction("Search", new { FlightId = booking.FlightId });
@@ -96,7 +110,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, [Bind("Id", "PassengerName", "PassportNumber", "FlightNumber")] FlightBooking booking)
+        public IActionResult Edit(int Id, [Bind("Id", "FlightId", "PassengerName", "PassportNumber")] FlightBooking booking)
         {
             if (Id != booking.Id)
             {

@@ -10,15 +10,10 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @{if (ViewBag.ShowAlert)
-        {
-            <script>alert("There are no more seats")</script>
-        }
-        else{
         <form asp-action="Create" asp-route-flightId="@ViewData["FlightId"]">
             <input type="hidden" asp-for="FlightId" />
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="PassengerName" class="control-label"></label>
                 <input asp-for="PassengerName" class="form-control" />
@@ -30,18 +25,20 @@
                 <span asp-validation-for="PassportNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-            <input type="submit" value="Confirm" class="btn btn-primary" />
-
+                <label asp-for="NumberOfPassenger" class="control-label"></label>
+                <input asp-for="NumberOfPassenger" class="form-control" />
+                <span asp-validation-for="NumberOfPassenger" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-        }}
-        <div class="form-group">
-            <a asp-controller="Flights" asp-action="Index" class="btn btn-info">Back to Search</a>
-
-        </div>
     </div>
 </div>
 
+<div>
+    <a class="bttn button-two w-250 mt-3" href="javascript:history.go(-1)">Back to List</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
