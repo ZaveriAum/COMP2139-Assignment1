@@ -159,7 +159,7 @@ namespace COMP2139_Assignment1.Data
                         },
                         new Flight
                         {
-                            FlightNumber = "EF334",
+                            FlightNumber = "EF324",
                             Airline = "Polar Express",
                             DepartureDate = new DateOnly(2024, 8, 20),
                             DepartureTime = new TimeOnly(9, 45, 0),
