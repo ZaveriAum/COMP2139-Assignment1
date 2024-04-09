@@ -1,4 +1,4 @@
-﻿using COMP2139_Assignment1.Models;
+﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using System.Drawing.Drawing2D;
 
 namespace COMP2139_Assignment1.Data

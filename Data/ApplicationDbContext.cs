@@ -1,4 +1,4 @@
-﻿using COMP2139_Assignment1.Models;
+﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace COMP2139_Assignment1.Data

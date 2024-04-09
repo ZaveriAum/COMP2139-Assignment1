@@ -1,0 +1,51 @@
+﻿@model FlightBooking
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>FlightBooking</h4>
+<hr />
+<div class="row">
+    <p>
+        Are you sure you want to Edit the booking for the flight with AirLine @ViewData["Airline"] on @ViewData["DepartureDate"] from @ViewData["From"] to  @ViewData["To"].
+    </p>
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.Id" >
+            <input type="hidden" asp-for="FlightId" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="PassengerName" class="control-label"></label>
+                <input asp-for="PassengerName" class="form-control" />
+                <span asp-validation-for="PassengerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PassportNumber" class="control-label"></label>
+                <input asp-for="PassportNumber" class="form-control" />
+                <span asp-validation-for="PassportNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPassenger" class="control-label"></label>
+                <input asp-for="NumberOfPassenger" class="form-control" />
+                <span asp-validation-for="NumberOfPassenger" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="bttn button-one mt-2 w-250" />
+                <a class="bttn button-two mt-2 w-250 inline-element" href="javascript:history.go(-1)">Back to List</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

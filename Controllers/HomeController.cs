@@ -1,4 +1,4 @@
-using COMP2139_Assignment1.Models;
+using COMP2139_Assignment1.Areas.NorthPole.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -21,16 +21,24 @@ namespace COMP2139_Assignment1.Controllers
         {
             return View();
         }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult NotFound(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (statusCode == 404)
+            {
+                return View("NotFound");
+            }
+            return View("Error");
         }
     }
 }

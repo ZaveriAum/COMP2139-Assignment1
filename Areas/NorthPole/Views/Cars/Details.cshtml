@@ -1,0 +1,68 @@
+﻿@model Car
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>For @Model.Brand @Model.Model</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlateNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlateNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxPassenger)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaxPassenger)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RentalCompany)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RentalCompany)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="bttn button-one " asp-route-carId="@Model?.CarId">Edit</a> |
+    <a href='javascript:history.go(-1)' class="bttn button-two ms-2">Back to List</a> |
+    <a asp-action="Delete" class="bttn button-danger ms-2" asp-route-carId="@Model?.CarId">Delete</a>
+</div>

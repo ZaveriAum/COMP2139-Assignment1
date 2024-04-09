@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Hotel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<DOCTYPE html>
+    <html>
+        <head>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        </head>
+        <body>
+            <div class="center-screen fill-screen mt-5">
+                <h2 class="mt-5">Search For Hotel</h2>
+            <form class="d-flex flex-column form-one mb-5" asp-action="Search" method="get">
+                <input class="input-one mt-3 w-250" name="Name" type="text" placeholder="HotelName" />
+                <input class="input-one mt-3 w-250" name="City" type="text" placeholder="City" required/>
+                <button class ="bttn button-one mt-3 w-250" type="Submit">Search</button>
+                <a class="bttn button-two mt-2 w-250" asp-action="Create">Create New</a>
+            </form>
+            <h2 class="mt-5 mb-5">Or browse the following</h2>
+            <div class="show-model">
+                @foreach(var hotel in Model)
+                {
+                    <div class="show-model-card">
+                        <h4>@hotel.HotelName</h4>
+                        <h4>City - @hotel.City</h4>
+                        <p>Location - @hotel.HotelLocation</p>
+                        <p>@hotel.Description</p>
+                        <div class="center-screen">
+                            <a asp-controller="Hotels" class="bttn button-one w-250" asp-action="Details" asp-route-hotelId="@hotel.HotelId">View Details</a>
+                            <a asp-controller="Rooms" class="bttn button-two w-250" asp-action="Index" asp-route-hotelId="@hotel.HotelId">View Rooms</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </body>
+</html>
