@@ -56,6 +56,9 @@ html {
 .flight-action {
     display: inline-block;
 }
+.h-100v{
+    height:70vh !important;
+}
 
 .main-container {
     min-height: 70vh;
@@ -220,7 +223,10 @@ nav {
     text-decoration: none;
     text-decoration: none;
     text-align: center;
-    margin-left:10px;
+
+}
+.padding{
+    padding:12px 20px !important;
 }
     .bttn:hover {
         transition: all .1s ease;
@@ -229,6 +235,12 @@ nav {
     }
 .button-danger {
     background-color: #d40000;
+}
+.button-green {
+    background-color: #539172;
+}
+.button-dark {
+    background-color: #272b45;
 }
 
 .button-one {
@@ -278,7 +290,7 @@ nav {
 }
 .input-price-div{
     display:flex;
-    margin-left: 10px;
+
     justify-content:space-between;
 }
 .input-price{
@@ -321,11 +333,18 @@ w-125{
 .w-250 {
     width: 250px;
 }
+.w-350 {
+    width: 350px;
+}
 .w-500 {
     width: 500px;
 }
 
+.reset{
+    border:0px;
+    background-color:transparent;
 
+}
 
 /*Media query*/
 @media (max-width: 576px) {
