@@ -327,6 +327,9 @@ nav {
 .fill-screen{
     min-height:70vh;
 }
+.fill-screen-sm {
+    min-height: 50vh;
+}
 w-125{
     width:125px;
 }
