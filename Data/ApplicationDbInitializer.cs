@@ -562,7 +562,7 @@ namespace COMP2139_Assignment1.Data
 
 
                     });
-                    context.SaveChanges();
+                        context.SaveChanges();
                 }
 
             }

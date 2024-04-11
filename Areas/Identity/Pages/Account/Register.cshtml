@@ -35,13 +35,28 @@
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control input-one" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
+                <input asp-for="Input.Country" class="form-control input-one" placeholder="Please enter your country." />
+                <label asp-for="Input.Country">Country</label>
+                <span asp-validation-for="Input.Country" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.City" class="form-control input-one" placeholder="Please enter your City." />
+                <label asp-for="Input.City">City</label>
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Address" class="form-control input-one" placeholder="Please enter your address." />
+                <label asp-for="Input.Address">Address</label>
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control input-one" autocomplete="new-password" aria-required="true" placeholder="password *" />
+                <label asp-for="Input.Password">Password *</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.ConfirmPassword" class="form-control input-one" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <label asp-for="Input.ConfirmPassword">Confirm Password *</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" style="width:100%;" class="bttn button-one">Register</button>
