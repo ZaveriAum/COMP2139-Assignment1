@@ -46,6 +46,7 @@ namespace COMP2139_Assignment1
                 // seed roles
                 await ContextSeed.SeedRolesAsync(userManager, roleManager);
                 // seed superAdmin
+                await ApplicationDbInitializer.SeedAsync(app,userManager);
                 await ContextSeed.SuperSeedRoleAsync(userManager, roleManager);
             }
             catch (Exception e)

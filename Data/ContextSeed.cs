@@ -15,10 +15,10 @@ namespace COMP2139_Assignment1.Data
         {
             var superUser = new NorthPoleUser
             {
-                UserName = "Elio",
-                Email = "fezollarielio@gmail.com",
+                UserName = "SuperAdmin",
+                Email = "zanrenoo@gmail.com",
                 FirstName = "Elio",
-                LastName = "Test",
+                LastName = "SuperAdmin",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 Address = "Random Address",
@@ -30,7 +30,7 @@ namespace COMP2139_Assignment1.Data
                 var user = await userManager.FindByEmailAsync(superUser.Email);
                 if (user == null)
                 {
-                    await userManager.CreateAsync(superUser, "P@ssword12$");
+                    await userManager.CreateAsync(superUser, "Passw@rd!23");
                     await userManager.AddToRoleAsync(superUser, Enum.Roles.Traveler.ToString());
                     await userManager.AddToRoleAsync(superUser, Enum.Roles.Admin.ToString());
                     await userManager.AddToRoleAsync(superUser, Enum.Roles.SuperAdmin.ToString());

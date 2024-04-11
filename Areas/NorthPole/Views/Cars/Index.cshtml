@@ -21,7 +21,7 @@
                     <input class="input-price input-one mt-3 " min="0" type="number" name="MaxPrice" placeholder="$Max Price" />
                 </div>
                 <button type="submit" class="bttn button-one mt-3 w-250">Search</button>
-                <a class="bttn button-two mt-2 w-250" asp-area="" asp-action="Create">List a Car!</a>
+                <a class="bttn button-two mt-2 w-250" asp-area="NorthPole" asp-action="Create">List a Car!</a>
 
         </form>
         <h2 class="mt-5 mb-5">Or browse the following</h2>
@@ -34,9 +34,9 @@
                     <p>Availible in - @car.City at pick-up location @car.PickUpLocation!</p>
                     <p>Offered by @car.RentalCompany for a price of $@car.Price per day!</p>
                     <div class="center-screen">
-                        <a asp-controller="Cars" class="bttn button-one w-250" asp-action="Details" asp-route-carId="@car.CarId">View Details</a>
-                        <a asp-controller="CarBookings" class="bttn button-two w-250 mt-2" asp-action="Create" asp-route-carId="@car.CarId">Book This Car!</a>
-                        <a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="bttn button-three w-250 mt-2">View Bookings</a>
+                            <a asp-area="NorthPole"  asp-controller="Cars" class="bttn button-one w-250" asp-action="Details" asp-route-carId="@car.CarId">View Details</a>
+                            <a asp-area="NorthPole"  asp-controller="CarBookings" class="bttn button-two w-250 mt-2" asp-action="Create" asp-route-carId="@car.CarId">Book This Car!</a>
+                        <a asp-area="NorthPole" asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="bttn button-three w-250 mt-2">View Bookings</a>
                     </div>
                  </div>
             }

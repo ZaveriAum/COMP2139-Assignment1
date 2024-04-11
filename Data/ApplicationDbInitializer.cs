@@ -1,16 +1,37 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
+using Microsoft.AspNetCore.Identity;
 using System.Drawing.Drawing2D;
 
 namespace COMP2139_Assignment1.Data
 {
     public class ApplicationDbInitializer
     {
-        public static void Seed(IApplicationBuilder applicationBuilder)
+        public static async Task SeedAsync(IApplicationBuilder applicationBuilder, UserManager<NorthPoleUser> userManager)
         {
+            
+
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 context.Database.EnsureCreated();
+                if (!context.Users.Any())
+                {
+                    var user = new NorthPoleUser()
+                    {
+                        UserName = "Elio",
+                        Email = "fezollarielio@gmail.com",
+                        FirstName = "Elio",
+                        LastName = "Test",
+                        EmailConfirmed = true,
+                        PhoneNumberConfirmed = true,
+                        Address = "Random Address",
+                        City = "Korce",
+                        Country = "Albania",
+
+                };
+                    await userManager.CreateAsync(user, "Passw@rd!23");
+                    await userManager.AddToRoleAsync(superUser, Enum.Roles.Traveler.ToString());
+                }
                 if (!context.Cars.Any())
                 {
                     context.Cars.AddRange(new List<Car>()

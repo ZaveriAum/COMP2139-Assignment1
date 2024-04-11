@@ -1,5 +1,6 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,12 +24,13 @@ namespace COMP2139_Assignment1.Controllers
             return View(_context.Cars.ToList());
         }
 
-       
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Car car)
@@ -52,7 +54,7 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public IActionResult Edit(int carId)
         {
@@ -63,7 +65,7 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int CarId, [Bind("CarId","PlateNumber","Brand","Model","City","Price","MaxPassenger","RentalCompany" ,"Description", "PickUpLocation")] Car car)
@@ -95,7 +97,7 @@ namespace COMP2139_Assignment1.Controllers
             return View(car);
         }
 
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Delete(int Carid)
         {
             var car = _context.Cars.FirstOrDefault(p => p.CarId == Carid);
@@ -105,7 +107,7 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int CarId)

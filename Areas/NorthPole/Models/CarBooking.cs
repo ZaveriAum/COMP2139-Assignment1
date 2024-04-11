@@ -16,6 +16,10 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Models
         public DateTime BookedEndDate { get; set; }
         [Required]
         public int CarId { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        public NorthPoleUser? User { get; set; }
         public Car? Car { get; set; }
+       
     }
 }
