@@ -73,7 +73,7 @@ public class RegisterModel : PageModel
     {
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "First Name *")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -82,13 +82,16 @@ public class RegisterModel : PageModel
         /// </summary>
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last Name *")]
         public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email *")]
         public string Email { get; set; }
+
+        [Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
 
 
         /// <summary>
@@ -131,12 +134,14 @@ public class RegisterModel : PageModel
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
             MailAddress address = new MailAddress(Input.Email);
             string username = address.User;
+            var phoneNumber = Input.PhoneNumber;
             user = new NorthPoleUser
             {
                 UserName = username,
                 FirstName = Input.FirstName,
                 LastName = Input.LastName,
                 Email = Input.Email,
+                PhoneNumber = phoneNumber,
             };
 
 
