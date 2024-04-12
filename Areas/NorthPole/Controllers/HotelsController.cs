@@ -21,22 +21,20 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         public IActionResult List()
         {
-
-
             return View(_db.Hotels.ToList());
         }
 
         public IActionResult Index()
         {
-
-
             return View(_db.Hotels.ToList());
         }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Create()
         {
             return View();
         }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]

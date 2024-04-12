@@ -18,11 +18,22 @@ namespace COMP2139_Assignment1.Services
             try
             {
                 var client = new SendGridClient(_sendGridKey);
-                var from = new EmailAddress("elio.fezollari@georgebrown.ca", "Project Collaborator");
+                var from = new EmailAddress("aumzaveri06@gmail.com", "Project Collaborator");
                 var to = new EmailAddress(email);
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
-                await client.SendEmailAsync(msg);
-            }
+                var response = await client.SendEmailAsync(msg);
+
+				if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
+				{
+					Console.WriteLine("Email sent successfully!");
+				}
+				else
+				{
+					Console.WriteLine($"Failed to send email. Status code: {response.StatusCode}");
+					string responseContent = await response.Body.ReadAsStringAsync();
+					Console.WriteLine($"Response content: {responseContent}");
+				}
+			}
             catch (Exception ex)
             {
                 // Log the exception or handle it as per your application's requirements
