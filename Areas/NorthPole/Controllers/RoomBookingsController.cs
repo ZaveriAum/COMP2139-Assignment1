@@ -2,6 +2,7 @@
 using COMP2139_Assignment1.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 {
@@ -15,16 +16,16 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(int RoomId)
+        public async Task<IActionResult> Index(int RoomId)
         {
             ViewData["RoomId"] = RoomId;
             return View();
         }
 
         [HttpGet]
-        public IActionResult Create(int roomId)
+        public async Task<IActionResult> Create(int roomId)
         {
-            var room = _context.Rooms.Find(roomId);
+            var room = await _context.Rooms.FindAsync(roomId);
             if (room == null)
             {
                 return NotFound();
@@ -37,7 +38,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
+        public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
             Console.WriteLine($"BookedStartDate: {booking.BookedStartDate}");
             Console.WriteLine($"BookedEndDate: {booking.BookedEndDate}");
@@ -58,22 +59,22 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             if (ModelState.IsValid)
             {
-                _context.RoomBookings.Add(booking);
-                _context.SaveChanges();
+                await _context.RoomBookings.AddAsync(booking);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Search", new { booking.RoomId });
             }
             return View(booking);
         }
 
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public async Task<IActionResult> Edit(int Id)
         {
-            var booking = _context.RoomBookings.Include(r => r.Room).FirstOrDefault(r => r.Id == Id);
+            var booking = await _context.RoomBookings.Include(r => r.Room).FirstOrDefaultAsync(r => r.Id == Id);
             if (booking == null)
             {
                 return NotFound();
             }
-            var Room = _context.Rooms.Find(booking.RoomId);
+            var Room = await _context.Rooms.FindAsync(booking.RoomId);
             if (Room == null)
             {
                 return NotFound();
@@ -85,13 +86,13 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, [Bind("Id", "BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
+        public async Task<IActionResult> Edit(int Id, [Bind("Id", "BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
             if (Id != booking.Id)
             {
                 return NotFound();
             }
-            var Room = _context.Rooms.Find(booking.RoomId);
+            var Room = await _context.Rooms.FindAsync(booking.RoomId);
             if (Room == null)
             {
                 return NotFound();
@@ -114,22 +115,22 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                     return View(booking);
                 }
                 _context.RoomBookings.Update(booking);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Search", new { booking.RoomId });
             }
             return View(booking);
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var RoomBooking = _context.RoomBookings.FirstOrDefault(rb => rb.Id == id);
+            var RoomBooking = await _context.RoomBookings.FirstOrDefaultAsync(rb => rb.Id == id);
 
             if (RoomBooking == null)
             {
                 return NotFound();
             }
-            var Room = _context.Rooms.FirstOrDefault(r => r.RoomId == RoomBooking.RoomId);
+            var Room = await _context.Rooms.FirstOrDefaultAsync(r => r.RoomId == RoomBooking.RoomId);
             if (Room == null)
             {
                 return NotFound();
@@ -140,9 +141,9 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var RoomBooking = _context.RoomBookings.Find(id);
+            var RoomBooking = await _context.RoomBookings.FindAsync(id);
 
             if (RoomBooking != null)
             {
@@ -152,7 +153,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                     return View("Delete", RoomBooking);
                 }
                 _context.RoomBookings.Remove(RoomBooking);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Search", new { roomId = RoomBooking.RoomId });
             }
             return NotFound();

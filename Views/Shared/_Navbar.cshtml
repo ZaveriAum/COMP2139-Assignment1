@@ -14,6 +14,16 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex ">
             <ul class="navbar-nav align-items-center flex-grow-1 justify-content-end">
+                <!--Search-->
+                @* <form class="d-flex" asp-controller="Home" asp-action="GeneralSearch" method="get">
+                    <input class="form-control" type="text" placeholder="Seach" name="searchString">
+                    <select class="form-control btn btn-secondary dropdown-toggle" name="searchType">
+                        <option value="Flights">Flights</option>
+                        <option value="Cars">Cars</option>
+                        <option value="Hotels">Hotels</option>
+                    </select>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> *@
                 <li class="nav-item">
                     <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a>
                 </li>

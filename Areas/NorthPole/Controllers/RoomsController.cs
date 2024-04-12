@@ -17,16 +17,16 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult Index(int hotelId)
+        public async Task<IActionResult> Index(int hotelId)
         {
-            var rooms = _context.Rooms.Where(f => f.HotelId == hotelId).ToList();
+            var rooms = await _context.Rooms.Where(f => f.HotelId == hotelId).ToListAsync();
             ViewBag.HotelId = hotelId;
             return View(rooms);
         }
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var room = _context.Rooms.Include(f => f.Hotel).FirstOrDefault(f => f.RoomId == id);
+            var room = await _context.Rooms.Include(f => f.Hotel).FirstOrDefaultAsync(f => f.RoomId == id);
             if (room == null)
             {
                 return NotFound();
@@ -35,9 +35,9 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(int hotelId)
+        public async Task<IActionResult> Create(int hotelId)
         {
-            var hotel = _context.Hotels.Find(hotelId);
+            var hotel = await _context.Hotels.FindAsync(hotelId);
             if (hotel == null)
             {
                 return NotFound();
@@ -51,21 +51,21 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Description", "Price", "MaxGuest", "HotelId")] Room room)
+        public async Task<IActionResult> Create([Bind("Description", "Price", "MaxGuest", "HotelId")] Room room)
         {
             if (ModelState.IsValid)
             {
-                _context.Rooms.Add(room);
-                _context.SaveChanges();
+                await _context.Rooms.AddAsync(room);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { hotelId = room.HotelId });
             }
             ViewBag.Hotels = new SelectList(_context.Hotels, "HotelId", "HotelName", room.HotelId);
             return View(room);
         }
         [HttpGet]
-        public IActionResult Edit(int hotelId)
+        public async Task<IActionResult> Edit(int hotelId)
         {
-            var room = _context.Rooms.Include(t => t.Hotel).FirstOrDefault(t => t.HotelId == hotelId);
+            var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == hotelId);
             if (room == null)
             {
                 return NotFound();
@@ -74,7 +74,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
+        public async Task<IActionResult> Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
         {
             if (roomId != room.RoomId)
             {
@@ -83,7 +83,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             if (ModelState.IsValid)
             {
                 _context.Update(room);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { hotelId = room.HotelId });
             }
             ViewBag.Projects = new SelectList(_context.Hotels, "ProjectId", "HotelName", room.HotelId);
@@ -91,9 +91,9 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var room = _context.Rooms.Include(t => t.Hotel).FirstOrDefault(t => t.HotelId == id);
+            var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == id);
             if (room == null)
             {
                 return NotFound();
@@ -103,13 +103,13 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int roomId)
+        public async Task<IActionResult> DeleteConfirmed(int roomId)
         {
-            var room = _context.Rooms.Find(roomId);
+            var room = await _context.Rooms.FindAsync(roomId);
             if (room != null)
             {
                 _context.Rooms.Remove(room);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { hotelId = room.HotelId });
             }
             return NotFound();

@@ -20,16 +20,18 @@ namespace COMP2139_Assignment1.Controllers
 
 
 		[HttpGet]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-
-            return View(_context.Flights.ToList());
+			var flights = await _context.Flights.ToListAsync();
+            return View(flights);
 		}
 
 		[HttpGet]
-		public IActionResult SearchFlight()
+		public async Task<IActionResult> SearchFlight()
 		{
-			return View(_context.Flights.ToList());
+			var flights = await _context.Flights.ToListAsync();
+
+            return View(flights);
 		}
 
 		[HttpGet("Create")]
@@ -40,22 +42,22 @@ namespace COMP2139_Assignment1.Controllers
 
 		[HttpPost("Create")]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create(Flight flight)
+		public async Task<IActionResult> Create(Flight flight)
 		{
             Type type = flight.Price.GetType();
 			if (ModelState.IsValid)
 			{
-				_context.Flights.Add(flight);
-				_context.SaveChanges();
+				await _context.Flights.AddAsync(flight);
+				await _context.SaveChangesAsync();
 				return RedirectToAction("Index");
 			}
 			return View(flight);
 		}
 
 		[HttpGet]
-		public IActionResult Details(int flightId)
+		public async Task<IActionResult> Details(int flightId)
 		{
-			var flight = _context.Flights.FirstOrDefault(f=>f.FlightId == flightId);
+			var flight = await _context.Flights.FirstOrDefaultAsync(f=>f.FlightId == flightId);
 			if (flight == null)
 			{
 				return NotFound();
@@ -74,7 +76,7 @@ namespace COMP2139_Assignment1.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Edit(int flightId, [Bind("FlightId", "FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
+		public async Task<IActionResult> Edit(int flightId, [Bind("FlightId", "FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
 		{
 			if(flightId != flight.FlightId)
 			{
@@ -85,11 +87,11 @@ namespace COMP2139_Assignment1.Controllers
 				try
 				{
 					_context.Update(flight);
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 				}
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FlightExists(flight.FlightId))
+                    if (!await FlightExists(flight.FlightId))
                     {
                         return NotFound();
                     }
@@ -102,20 +104,20 @@ namespace COMP2139_Assignment1.Controllers
             }
 			return View(flight);
 		}
-        private bool FlightExists(int flightId)
+        private async Task<bool> FlightExists(int flightId)
         {
-            return _context.Flights.Any(e => e.FlightId == flightId);
+            return await _context.Flights.AnyAsync(e => e.FlightId == flightId);
         }
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Delete(int flightId)
+		public async Task<IActionResult> Delete(int flightId)
 		{
-			var flight = _context.Flights.Find(flightId);
+			var flight = await _context.Flights.FindAsync(flightId);
             if (flight != null)
             {
                 _context.Flights.Remove(flight);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
             }
 			return NotFound();

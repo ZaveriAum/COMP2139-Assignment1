@@ -18,9 +18,10 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_context.Cars.ToList());
+            var cars = await _context.Cars.ToListAsync();
+            return View(cars);
         }
 
        
@@ -31,21 +32,21 @@ namespace COMP2139_Assignment1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Car car)
+        public async Task<IActionResult> Create(Car car)
         {
             if (ModelState.IsValid)
             {
-                _context.Cars.Add(car);
-                _context.SaveChanges();
+                await _context.Cars.AddAsync(car);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(car);
         }
 
         [HttpGet]
-        public IActionResult Details(int carId)
+        public async Task<IActionResult> Details(int carId)
         {
-            var car = _context.Cars.FirstOrDefault(c => c.CarId == carId);
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == carId);
             if (car == null)
             {
                 return NotFound();
@@ -54,9 +55,9 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int carId)
+        public async Task<IActionResult> Edit(int carId)
         {
-            var car = _context.Cars.Find(carId);
+            var car = await _context.Cars.FindAsync(carId);
             if (car == null)
             {
                 return NotFound();
@@ -66,7 +67,7 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int CarId, [Bind("CarId","PlateNumber","Brand","Model","City","Price","MaxPassenger","RentalCompany" ,"Description", "PickUpLocation")] Car car)
+        public async Task<IActionResult> Edit(int CarId, [Bind("CarId","PlateNumber","Brand","Model","City","Price","MaxPassenger","RentalCompany" ,"Description", "PickUpLocation")] Car car)
         {
             if (CarId != car.CarId)
             {
@@ -77,11 +78,11 @@ namespace COMP2139_Assignment1.Controllers
                 try
                 {
                     _context.Update(car);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 catch(DbUpdateConcurrencyException)
                 {
-                    if(!CarExists(car.CarId))
+                    if(!await CarExists(car.CarId))
                     {
                         return NotFound();
                     }
@@ -96,9 +97,9 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 
-        public IActionResult Delete(int Carid)
+        public async Task<IActionResult> Delete(int Carid)
         {
-            var car = _context.Cars.FirstOrDefault(p => p.CarId == Carid);
+            var car = await _context.Cars.FirstOrDefaultAsync(p => p.CarId == Carid);
             if (car == null)
             {
                 return NotFound();
@@ -108,22 +109,22 @@ namespace COMP2139_Assignment1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int CarId)
+        public async Task<IActionResult> DeleteConfirmed(int CarId)
         {
             var car = _context.Cars.Find(CarId);
             if (car != null)
             {
                 _context.Cars.Remove(car);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return NotFound();
         }
 
 
-        private bool CarExists(int carId)
+        private async Task<bool> CarExists(int carId)
         {
-            return _context.Cars.Any(c=> c.CarId == carId);
+            return await _context.Cars.AnyAsync(c=> c.CarId == carId);
         }
 
         [HttpGet]

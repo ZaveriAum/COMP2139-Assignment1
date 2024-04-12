@@ -20,16 +20,16 @@ namespace COMP2139_Assignment1.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(int CarId)
+        public async Task<IActionResult> Index(int CarId)
         {
             ViewData["CarId"] = CarId;
             return View();
         }
 
         [HttpGet]
-        public IActionResult Create(int CarId)
+        public async Task<IActionResult> Create(int CarId)
         {
-            var Car = _context.Cars.Find(CarId);
+            var Car =await _context.Cars.FindAsync(CarId);
             if (Car == null)
             {
                 return NotFound();
@@ -46,9 +46,9 @@ namespace COMP2139_Assignment1.Controllers
 
             return View();
         }
-        public IActionResult Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
+        public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
-            var Car = _context.Cars.Find(booking.CarId);
+            var Car =await _context.Cars.FindAsync(booking.CarId);
             if (Car == null)
             {
                 return NotFound();
@@ -71,30 +71,32 @@ namespace COMP2139_Assignment1.Controllers
                 {
                     ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
                     return View(booking);
-                }
-                if (BookingDatesIntersect(booking))
+                    
+
+                }//Booking date intersect configure await 
+                if (await BookingDatesIntersect(booking).ConfigureAwait(false))
                 {
                     ModelState.AddModelError("", "Sorry, this date for this car is already booked");
                     return View(booking);
                 }
-                _context.CarBookings.Add(booking);
-                _context.SaveChanges();
+                await _context.CarBookings.AddAsync(booking);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Search", new { CarId = booking.CarId });
             }
             return View(booking);
         }
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public async Task<IActionResult> Edit(int Id)
         {
 
-            var booking = _context.CarBookings
+            var booking = await _context.CarBookings
                         .Include(t => t.Car)
-                        .FirstOrDefault(t => t.Id == Id);
+                        .FirstOrDefaultAsync(t => t.Id == Id);
             if (booking == null)
             {
                 return NotFound();
             }
-            var Car = _context.Cars.Find(booking.CarId);
+            var Car = await _context.Cars.FindAsync(booking.CarId);
             if (Car == null)
             {
                 return NotFound();
@@ -112,13 +114,13 @@ namespace COMP2139_Assignment1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, [Bind("Id","BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
+        public async Task<ActionResult> Edit(int Id, [Bind("Id","BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
             if (Id != booking.Id)
             {
                 return NotFound();
             }
-            var Car = _context.Cars.Find(booking.CarId);
+            var Car = await _context.Cars.FindAsync(booking.CarId);
             if (Car == null)
             {
                 return NotFound();
@@ -136,28 +138,28 @@ namespace COMP2139_Assignment1.Controllers
                     ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
                     return View(booking);
                 }
-				if (BookingDatesIntersect(booking))
+				if (await BookingDatesIntersect(booking).ConfigureAwait(false))
 				{
 					ModelState.AddModelError("", "Sorry, this date for this car is already booked");
 					return View(booking);
 				}
 				_context.CarBookings.Update(booking);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Search", new { CarId = booking.CarId });
             }
             return View(booking);
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var CarBooking = _context.CarBookings.FirstOrDefault(cb => cb.Id == id);
+            var CarBooking = await _context.CarBookings.FirstOrDefaultAsync(cb => cb.Id == id);
 
             if (CarBooking == null)
             {
                 return NotFound();
             }
 
-            var Car = _context.Cars.FirstOrDefault(c => c.CarId == CarBooking.CarId);
+            var Car = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == CarBooking.CarId);
             if (Car == null)
             {
                 return NotFound(); 
@@ -169,9 +171,9 @@ namespace COMP2139_Assignment1.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult DeleteConfirmed(int id)
+		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var CarBooking = _context.CarBookings.Find(id);
+			var CarBooking = await _context.CarBookings.FindAsync(id);
 
 
             if (CarBooking != null)
@@ -183,7 +185,7 @@ namespace COMP2139_Assignment1.Controllers
                 }
 
                 _context.CarBookings.Remove(CarBooking);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
                 return RedirectToAction("Search", new { carId = CarBooking.CarId });
             }
 			return NotFound();
@@ -218,11 +220,11 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
         // Helper function to only book if there is currently not a booking for said item
-        private bool BookingDatesIntersect(CarBooking newBooking)
+        private async Task<bool> BookingDatesIntersect(CarBooking newBooking)
         {
-            var existingBookings = _context.CarBookings
+            var existingBookings = await _context.CarBookings
                 .Where(b => b.CarId == newBooking.CarId && b.Id != newBooking.Id)
-                .ToList();
+                .ToListAsync();
 
             foreach (var existingBooking in existingBookings)
             {
