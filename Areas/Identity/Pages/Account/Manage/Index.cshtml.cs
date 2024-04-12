@@ -70,6 +70,13 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             public string FirstName { get; set; }
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+            [StringLength(56, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+            [Display(Name = "City")]
+            public string City { get; set; }
+            [Display(Name = "Address")]
+            public string Address { get; set; }
             [Display(Name = "Profile Picture")]
             public byte[] ProfilePicture { get; set; }
         }
@@ -81,6 +88,9 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             var firstName = user.FirstName;
             var lastName = user.LastName;
             var profilePicture = user.ProfilePicture;
+            var country = user.Country;
+            var city = user.City;  
+            var address = user.Address;
             Username = userName;
             Input = new InputModel
             {
@@ -88,7 +98,11 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
                 FirstName = firstName,
                 LastName = lastName,
                 PhoneNumber = phoneNumber,
-                ProfilePicture = profilePicture
+                ProfilePicture = profilePicture,
+                Country = country,
+                City = city,    
+                Address = address,
+
             };
         }
 
@@ -163,6 +177,24 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             if (Input.LastName != lastName)
             {
                 user.LastName = Input.LastName;
+                await _userManager.UpdateAsync(user);
+            }
+            var country = user.Country;
+            if (Input.Country != country)
+            {
+                user.Country = Input.Country;
+                await _userManager.UpdateAsync(user);
+            }
+            var city = user.City;
+            if (Input.City != city)
+            {
+                user.City = Input.City;
+                await _userManager.UpdateAsync(user);
+            }
+            var address = user.Address;
+            if (Input.Address != address)
+            {
+                user.Address = Input.Address;
                 await _userManager.UpdateAsync(user);
             }
             if (Request.Form.Files.Count > 0)

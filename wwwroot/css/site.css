@@ -284,6 +284,9 @@ nav {
         box-shadow: 0 0 0 0 #fff inset, #535C91 0 0 0 3px;
     }
 
+.m-auto{
+    margin:0 auto;
+}
 .form-one{
     display:flex;
     flex-direction:column;
@@ -437,4 +440,10 @@ w-125{
     100% {
         color: #9290C3;
     }
+}
+.ml-1 {
+    margin-left: 10px;
+}
+.mt-5{
+    margin-top:50px;
 }

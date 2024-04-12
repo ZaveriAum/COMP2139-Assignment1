@@ -14,6 +14,15 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex ">
             <ul class="navbar-nav align-items-center flex-grow-1 justify-content-end">
+                @if(SignInManager.IsSignedIn(User)){
+                    <li class="nav-item d-flex align-items-center">
+                        @if (await UserManager.GetUserAsync(User) != null && UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                        {
+                            <img id="profilePicture" style="width:30px; height:30px; border-radius:20px; margin-right:2px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" />
+                        }
+                        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage your account">Hello @User.Identity?.Name </a>
+                    </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a>
                 </li>
@@ -27,16 +36,9 @@
                     <a class="nav-link " asp-area="NorthPole" asp-controller="Cars" asp-action="Index"><i class="fa-solid fa-car"></i>Car</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="About"><i class="fa-solid fa-circle-question"></i> About</a>
+                    <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="About"><i class="fa-solid fa-circle-question"></i> About</a></li>
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <li class="nav-item d-flex align-items-center">
-                        @if(await UserManager.GetUserAsync(User) != null && UserManager.GetUserAsync(User).Result.ProfilePicture != null)
-                        {
-                            <img id="profilePicture" style="width:40px; height:40px; border-radius:20px; margin-right:2px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" />
-                        }
-                        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage your account">Hello @User.Identity?.Name </a>
-                    </li>
                 
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                         <input type="submit" class="bttn button-dark padding" value="Log Out"  style="cursor:pointer" />
