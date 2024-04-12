@@ -75,10 +75,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-warning flight-action" asp-route-flightId="@Model?.FlightId">Edit</a> |
-    <form asp-action="Delete" method="post" class="flight-action">
-        @Html.HiddenFor(model => model.FlightId)
+         @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" class="btn btn-warning flight-action" asp-route-flightId="@Model?.FlightId">Edit</a>
+        <form asp-action="Delete" method="post" class="flight-action">
+            @Html.HiddenFor(model => model.FlightId)
         <input type="submit" value="Delete" class="btn btn-danger"/>
-    </form> | 
+    </form> }
     <a asp-action="Index" class="btn btn-secondary flight-action">Back to List</a>
 </div>

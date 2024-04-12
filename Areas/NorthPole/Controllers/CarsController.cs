@@ -3,6 +3,7 @@ using COMP2139_Assignment1.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace COMP2139_Assignment1.Controllers
 {

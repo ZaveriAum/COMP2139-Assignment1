@@ -1,5 +1,6 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Evaluation;
 using Microsoft.EntityFrameworkCore;
@@ -31,14 +32,14 @@ namespace COMP2139_Assignment1.Controllers
 		{
 			return View(_context.Flights.ToList());
 		}
-
-		[HttpGet("Create")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpGet("Create")]
 		public IActionResult Create() 
 		{
 			return View();
 		}
-
-		[HttpPost("Create")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpPost("Create")]
 		[ValidateAntiForgeryToken]
 		public IActionResult Create(Flight flight)
 		{
@@ -62,8 +63,8 @@ namespace COMP2139_Assignment1.Controllers
 			}
 			return View(flight);
 		}
-
-		[HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpGet]
 		public IActionResult Edit(int flightId)
 		{
 			var flight = _context.Flights.Find(flightId);
@@ -71,8 +72,8 @@ namespace COMP2139_Assignment1.Controllers
 				return NotFound();
 			return View(flight);
 		}
-
-		[HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(int flightId, [Bind("FlightId", "FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
 		{
@@ -106,8 +107,8 @@ namespace COMP2139_Assignment1.Controllers
         {
             return _context.Flights.Any(e => e.FlightId == flightId);
         }
-
-		[HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Delete(int flightId)
 		{

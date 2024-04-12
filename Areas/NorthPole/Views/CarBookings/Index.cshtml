@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Car Bookings";
 }
+@using COMP2139_Assignment1.Areas.NorthPole.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<NorthPoleUser> UserManager
 <DOCTYPE html>
     <html>
     <head>
@@ -13,7 +16,7 @@
 		@if (Model.Any())
 		{
 			<div class="table-wrap">
-				<table class="search-table">
+				<table class="search-table w-100">
 					<thead>
 						<tr class="text-center">
 							<th>Start Date</th>
@@ -22,8 +25,6 @@
 							<th>Model</th>
 							<th>License Plate</th>
 							<th>Rented From</th>
-							<th>Total Price Paid</th>
-							<th>Actions</th>
 						</tr>
 					</thead>
 
@@ -37,19 +38,7 @@
 								<td>@ViewData["Model"]</td>
 								<td>@ViewData["PlateNumber"]</td>
 								<td>@ViewData["RentalCompany"]</td>
-								<!--Calculating the total price -->
-								<td>@{
-										double calculatedPrice = (Convert.ToDouble(ViewData["Price"]) * (carBooking.BookedEndDate - carBooking.BookedStartDate).TotalDays);
-										double @minimumPrice = Convert.ToDouble(ViewData["Price"]);
-										double finalPrice = Math.Max(calculatedPrice, minimumPrice);
-										finalPrice = Math.Round(finalPrice, 2);
-									}
-									$@finalPrice
-								</td>
-								<td>
-									<a asp-controller="CarBookings" class="bttn button-one w-125" asp-route-id="@carBooking.Id" asp-action="Edit">Edit Booking</a>
-									<a asp-controller="CarBookings" class="bttn button-danger w-125" asp-route-id="@carBooking.Id" asp-action="Delete">Cancel Booking</a> 
-								</td>
+
 
 							</tr>
 						</tbody>
