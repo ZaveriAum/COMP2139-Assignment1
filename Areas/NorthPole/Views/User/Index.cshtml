@@ -1,4 +1,28 @@
-﻿@model NorthPoleUser
+﻿@using Microsoft.AspNetCore.Identity
+  @inject UserManager<NorthPoleUser> UserManager
+@model NorthPoleUser
 
-
-<
+<div class="d-flex  justify-content-center align-items-center">
+    <div class="h-70v d-flex justify-content-center align-items-center">
+@if (await UserManager.GetUserAsync(User) != null && UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+{
+    
+    <img id="profilePicture" style="width:300px; height:300px; border-radius:50%; margin-right:2px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" />
+}
+else
+{
+    <img id="profilePicture" style="width:300px; height:300px; border-radius:50%; margin-right:2px; object-fit:cover" src="~/img/NoPic.webp" />
+}
+    </div>
+        <div class="h-70v user-details d-flex justify-content-around align-items-center flex-column mt-4">
+    <p><span class="fw-bold">User UserName: </span>@Model.UserName</p>
+    <p><span class="fw-bold">User First Name: </span>@Model.FirstName</p>
+    <p><span class="fw-bold">User Last Name:</span> @Model.LastName</p>
+    <p><span class="fw-bold">User Email: </span>@Model.LastName</p>
+    <p><span class="fw-bold">User Phone Number: </span>@Model.PhoneNumber</p>
+    <p><span class="fw-bold">User Country: </span>@Model.Country</p>
+    <p><span class="fw-bold">User City: </span>@Model.City</p>
+    <p><span class="fw-bold">User Address: </span>@Model.Address</p>
+        <a asp-controller="User" asp-action="Delete" class="bttn button-danger" asp-route-userId=@Model.Id>Delete User</a>
+    </div>
+    </div>

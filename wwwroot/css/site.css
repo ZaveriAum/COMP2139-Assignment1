@@ -59,7 +59,8 @@ html {
 .h-70v{
     height:70vh !important;
 }
-
+.user-details p{
+}
 .main-container {
     min-height: 70vh;
 }

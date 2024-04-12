@@ -3,6 +3,7 @@ using COMP2139_Assignment1.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 {
@@ -30,5 +31,31 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 				return NotFound();
 			}
 		}
-	}
+        public async Task<IActionResult> Delete(string userId)
+        {
+            var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+
+            return View(User);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+
+            if (User != null)
+            {
+                _context.Users.Remove(User);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return NotFound();
+        }
+    }
 }
