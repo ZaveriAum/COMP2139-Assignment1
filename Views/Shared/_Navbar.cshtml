@@ -14,16 +14,6 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex ">
             <ul class="navbar-nav align-items-center flex-grow-1 justify-content-end">
-                <!--Search-->
-                @* <form class="d-flex" asp-controller="Home" asp-action="GeneralSearch" method="get">
-                    <input class="form-control" type="text" placeholder="Seach" name="searchString">
-                    <select class="form-control btn btn-secondary dropdown-toggle" name="searchType">
-                        <option value="Flights">Flights</option>
-                        <option value="Cars">Cars</option>
-                        <option value="Hotels">Hotels</option>
-                    </select>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> *@
                 <li class="nav-item">
                     <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a>
                 </li>
@@ -36,11 +26,18 @@
                 <li class="nav-item">
                     <a class="nav-link " asp-area="NorthPole" asp-controller="Cars" asp-action="Index"><i class="fa-solid fa-car"></i>Car</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="About"><i class="fa-solid fa-circle-question"></i> About</a>
                 @if (SignInManager.IsSignedIn(User))
                 {
-                                    <li class="nav-item">
-                    <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="About"><i class="fa-solid fa-circle-question"></i> About</a>
-                </li>
+                    <li class="nav-item d-flex align-items-center">
+                        @if(await UserManager.GetUserAsync(User) != null && UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                        {
+                            <img id="profilePicture" style="width:40px; height:40px; border-radius:20px; margin-right:2px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" />
+                        }
+                        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage your account">Hello @User.Identity?.Name </a>
+                    </li>
+                
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                         <input type="submit" class="bttn button-dark padding" value="Log Out"  style="cursor:pointer" />
                     </form>
