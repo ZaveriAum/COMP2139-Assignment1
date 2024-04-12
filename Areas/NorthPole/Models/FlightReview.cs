@@ -2,7 +2,7 @@
 
 namespace COMP2139_Assignment1.Areas.NorthPole.Models
 {
-    public class Review
+    public class FlightReview
     {
         [Key]
         public int Id { get; set; }
@@ -10,6 +10,12 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Models
         [Required]
         public int Rating { get; set; }
         [Range(0, 500, ErrorMessage = "Comment must be between 0 and 500")]
-        public string? Comment {  get; set; }
+        public string? Comment { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        public NorthPoleUser? User { get; set; }
+        [Required]
+        public int FlightId { get; set; }
+        public Flight? Flight { get; set; }
     }
 }

@@ -18,7 +18,9 @@ namespace COMP2139_Assignment1.Data
         public DbSet<CarBooking> CarBookings {  get; set; }
         public DbSet<RoomBooking> RoomBookings {  get; set; }
         public DbSet<FlightBooking> FlightBookings { get; set; }
-        public DbSet<Review> Review { get; set; }
+        public DbSet<CarReview> CarReviews { get; set; }
+        public DbSet<HotelReview> HotelReviews { get; set; }
+        public DbSet<FlightReview> FlightReviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
