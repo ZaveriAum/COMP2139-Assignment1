@@ -310,6 +310,25 @@ namespace COMP2139_Assignment1.Migrations
                     b.ToTable("User", "Identity");
                 });
 
+            modelBuilder.Entity("COMP2139_Assignment1.Areas.NorthPole.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Review", "Identity");
+                });
+
             modelBuilder.Entity("COMP2139_Assignment1.Areas.NorthPole.Models.Room", b =>
                 {
                     b.Property<int>("RoomId")

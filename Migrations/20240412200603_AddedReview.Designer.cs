@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2139_Assignment1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412200500_AddedReview")]
+    [Migration("20240412200603_AddedReview")]
     partial class AddedReview
     {
         /// <inheritdoc />
@@ -311,6 +311,25 @@ namespace COMP2139_Assignment1.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("User", "Identity");
+                });
+
+            modelBuilder.Entity("COMP2139_Assignment1.Areas.NorthPole.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Review", "Identity");
                 });
 
             modelBuilder.Entity("COMP2139_Assignment1.Areas.NorthPole.Models.Room", b =>
