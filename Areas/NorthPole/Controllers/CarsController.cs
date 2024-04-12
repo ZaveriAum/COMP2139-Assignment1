@@ -100,7 +100,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public IActionResult Delete(int Carid)
+        public async Task<IActionResult> Delete(int Carid)
         {
             var car = await _context.Cars.FirstOrDefaultAsync(p => p.CarId == Carid);
             if (car == null)

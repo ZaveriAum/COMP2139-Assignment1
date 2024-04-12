@@ -66,7 +66,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public IActionResult Edit(int hotelId)
+        public async Task<IActionResult> Edit(int hotelId)
         {
             var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == hotelId);
             if (room == null)
@@ -78,7 +78,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public IActionResult Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
+        public async Task<IActionResult> Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
         {
             if (roomId != room.RoomId)
             {
@@ -96,7 +96,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == id);
             if (room == null)

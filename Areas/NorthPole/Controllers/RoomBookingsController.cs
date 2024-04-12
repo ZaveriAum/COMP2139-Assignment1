@@ -53,7 +53,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
                 return View(booking);
             }
-            if (BookingDatesIntersect(booking))
+            if (await BookingDatesIntersect(booking))
             {
                 ModelState.AddModelError("", "Sorry, this date for this car is already booked");
                 return View(booking);
@@ -111,7 +111,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                     ModelState.AddModelError("BookedStartDate", "Start date cannot be earlier than today's date");
                     return View(booking);
                 }
-                if (BookingDatesIntersect(booking))
+                if (await BookingDatesIntersect(booking))
                 {
                     ModelState.AddModelError("", "Sorry, this date for this car is already booked");
                     return View(booking);
@@ -178,11 +178,11 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return View("Index", RoomBookingList);
         }
 
-        private bool BookingDatesIntersect(RoomBooking newBooking)
+        private async Task<bool> BookingDatesIntersect(RoomBooking newBooking)
         {
-            var existingBookings = _context.RoomBookings
+            var existingBookings = await _context.RoomBookings
                 .Where(b => b.RoomId == newBooking.RoomId && b.Id != newBooking.Id)
-                .ToList();
+                .ToListAsync();
 
             foreach (var existingBooking in existingBookings)
             {
