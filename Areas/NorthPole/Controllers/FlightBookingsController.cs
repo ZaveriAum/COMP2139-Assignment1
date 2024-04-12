@@ -1,8 +1,10 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mono.TextTemplating;
+using System.Security.Claims;
 
 namespace COMP2139_Assignment1.Controllers
 {
@@ -10,12 +12,13 @@ namespace COMP2139_Assignment1.Controllers
     [Route("[area]/[controller]/[action]")]
     public class FlightBookingsController : Controller
     {
-
+        private readonly UserManager<NorthPoleUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public FlightBookingsController(ApplicationDbContext context)
+        public FlightBookingsController(ApplicationDbContext context, UserManager<NorthPoleUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index(int FlightId)
@@ -60,13 +63,8 @@ namespace COMP2139_Assignment1.Controllers
 
         public async Task<IActionResult> Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
-            var flight = await _context.Flights.FindAsync(booking.FlightId);
-
-            Console.WriteLine($"FlightId: {booking.FlightId}");
-            Console.WriteLine($"PassengerName: {booking.PassengerName}");
-            Console.WriteLine($"PassportNumber: {booking.PassportNumber}");
-            Console.WriteLine($"NumberOfPassenger: {booking.NumberOfPassenger}");
-
+            var flight = _context.Flights.Find(booking.FlightId);
+            booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
                 int bookedSeats = _context.FlightBookings

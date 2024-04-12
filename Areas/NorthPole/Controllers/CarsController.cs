@@ -1,7 +1,9 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace COMP2139_Assignment1.Controllers
 {
@@ -24,12 +26,13 @@ namespace COMP2139_Assignment1.Controllers
             return View(cars);
         }
 
-       
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Car car)
@@ -53,7 +56,7 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int carId)
         {
@@ -64,7 +67,7 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int CarId, [Bind("CarId","PlateNumber","Brand","Model","City","Price","MaxPassenger","RentalCompany" ,"Description", "PickUpLocation")] Car car)
@@ -96,8 +99,8 @@ namespace COMP2139_Assignment1.Controllers
             return View(car);
         }
 
-
-        public async Task<IActionResult> Delete(int Carid)
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public IActionResult Delete(int Carid)
         {
             var car = await _context.Cars.FirstOrDefaultAsync(p => p.CarId == Carid);
             if (car == null)
@@ -106,7 +109,7 @@ namespace COMP2139_Assignment1.Controllers
             }
             return View(car);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int CarId)

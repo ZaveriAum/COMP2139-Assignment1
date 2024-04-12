@@ -21,5 +21,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Models
         public int RoomId { get; set; }
 
         public Room? Room { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        public NorthPoleUser? User { get; set; }
     }
 }

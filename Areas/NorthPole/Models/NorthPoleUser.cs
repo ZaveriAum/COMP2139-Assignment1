@@ -7,6 +7,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int UsernameChangeLimit { get; set; }
-        public byte[]? ProfilePicture { get; set; }
+        public string? Address { get; set; }
+        public string? Country { get; set; }
+        public string? City { get; set; }
     }
 }

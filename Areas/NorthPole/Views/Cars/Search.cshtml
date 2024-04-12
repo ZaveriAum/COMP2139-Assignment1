@@ -55,8 +55,10 @@
                 <p>There are currently cars under your search conditions, click on the button below to add the first!</p>
         }
         </div>
-        <p>
-            <a asp-area="" class="bttn button-one mt-3 w-250 btn-primary" asp-action="Create">List another car!</a>
-        </p>
+                        @if (User.IsInRole("Admin"))
+        {
+            <p>
+                <a asp-area="" class="bttn button-one mt-3 w-250 btn-primary" asp-action="Create">List another car!</a>
+        </p>}
     </body>
 </html>

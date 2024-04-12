@@ -1,5 +1,6 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,11 +32,12 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
             return View(_db.Hotels.ToList());
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Hotel hotel)
@@ -59,7 +61,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(hotel);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public IActionResult Edit(int hotelId)
         {
@@ -70,7 +72,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(hotel);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int HotelId, [Bind("HotelId", "HotelName", "City", "HotelLocation", "Description")] Hotel hotel)
@@ -106,7 +108,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
             return _db.Hotels.Any(e => e.HotelId == hotelId);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int HotelId)

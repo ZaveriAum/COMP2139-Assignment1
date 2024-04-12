@@ -1,8 +1,9 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
+using System.Security.Claims;
 
 namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 {
@@ -10,11 +11,13 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
     [Route("[area]/[controller]/[action]")]
     public class RoomBookingsController : Controller
     {
+        private readonly UserManager<NorthPoleUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public RoomBookingsController(ApplicationDbContext context)
+        public RoomBookingsController(ApplicationDbContext context,UserManager<NorthPoleUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index(int RoomId)
         {
@@ -40,8 +43,6 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
-            Console.WriteLine($"BookedStartDate: {booking.BookedStartDate}");
-            Console.WriteLine($"BookedEndDate: {booking.BookedEndDate}");
             if (booking.BookedEndDate < booking.BookedStartDate)
             {
                 ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
@@ -57,6 +58,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 ModelState.AddModelError("", "Sorry, this date for this car is already booked");
                 return View(booking);
             }
+            booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
                 await _context.RoomBookings.AddAsync(booking);

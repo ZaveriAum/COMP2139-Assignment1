@@ -2,11 +2,13 @@
 using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
 using Humanizer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace COMP2139_Assignment1.Controllers
 {
@@ -14,11 +16,13 @@ namespace COMP2139_Assignment1.Controllers
     [Route("[area]/[controller]/[action]")]
     public class CarBookingsController : Controller
     {
+        private readonly UserManager<NorthPoleUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public CarBookingsController(ApplicationDbContext context)
+        public CarBookingsController(ApplicationDbContext context,UserManager<NorthPoleUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index(int CarId)
         {
@@ -53,6 +57,7 @@ namespace COMP2139_Assignment1.Controllers
             {
                 return NotFound();
             }
+            booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["PlateNumber"] = Car.PlateNumber;
             ViewData["City"] = Car.City;
             ViewData["PickupLocation"] = Car.PickUpLocation;
@@ -60,6 +65,9 @@ namespace COMP2139_Assignment1.Controllers
             ViewData["Model"] = Car.Model;
             ViewData["Price"] = Car.Price;
             ViewData["RentalCompany"] = Car.RentalCompany;
+
+            
+
             if (ModelState.IsValid)
             {
                 if (booking.BookedEndDate < booking.BookedStartDate)

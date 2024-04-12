@@ -10,7 +10,7 @@ namespace COMP2139_Assignment1
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
@@ -35,24 +35,25 @@ namespace COMP2139_Assignment1
             using var scope = app.Services.CreateScope();
             var loggerFactory = scope.ServiceProvider.GetService<ILoggerFactory>();
 
-            //try
-            //{
-            //    // Get Services needed for role seeding
-            //    // scope.ServiceProvider - used to access instances of registered services
-            //    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            try
+            {
+                // Get Services needed for role seeding
+                // scope.ServiceProvider - used to access instances of registered services
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<NorthPoleUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            //    // seed roles
-            //    //await ContextSeed.SeedRolesAsync(userManager, roleManager);
-            //    // seed superAdmin
-            //    //await ContextSeed.SuperSeedRoleAsync(userManager, roleManager);
-            //}
-            //catch (Exception e)
-            //{
-            //    var logger = loggerFactory.CreateLogger<Program>();
-            //    logger.LogError(e, "An error occurred when attempting to seed the roles for the system.");
-            //}
+                // seed roles
+                await ContextSeed.SeedRolesAsync(userManager, roleManager);
+                // seed superAdmin
+                await ApplicationDbInitializer.SeedAsync(app,userManager);
+                await ContextSeed.SuperSeedRoleAsync(userManager, roleManager);
+            }
+            catch (Exception e)
+            {
+                var logger = loggerFactory.CreateLogger<Program>();
+                logger.LogError(e, "An error occurred when attempting to seed the roles for the system.");
+            }
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();

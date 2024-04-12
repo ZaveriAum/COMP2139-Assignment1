@@ -73,7 +73,7 @@ public class RegisterModel : PageModel
     {
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "First Name *")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -82,13 +82,27 @@ public class RegisterModel : PageModel
         /// </summary>
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last Name *")]
         public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email *")]
         public string Email { get; set; }
+        [Phone]
+        [Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
+
+        [StringLength(56, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
 
 
         /// <summary>
@@ -129,14 +143,21 @@ public class RegisterModel : PageModel
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-            MailAddress address = new MailAddress(Input.Email);
-            string username = address.User;
+            MailAddress EmailAddress = new MailAddress(Input.Email);
+            string username = EmailAddress.User;
+            var phoneNumber = Input.PhoneNumber;
+            var address = Input.Address;
+            var country = Input.Country;
             user = new NorthPoleUser
             {
                 UserName = username,
                 FirstName = Input.FirstName,
                 LastName = Input.LastName,
                 Email = Input.Email,
+                PhoneNumber = phoneNumber,
+                Address = Input.Address,
+                Country = Input.Country,
+                City = Input.City
             };
 
 
@@ -145,7 +166,7 @@ public class RegisterModel : PageModel
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
-                //_userManager.AddToRoleAsync(user, Enum.Roles.Basic.ToString());
+                await _userManager.AddToRoleAsync(user, Enum.Roles.Traveler.ToString());
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

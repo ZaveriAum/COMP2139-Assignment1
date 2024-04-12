@@ -1,5 +1,6 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
 using COMP2139_Assignment1.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(room);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public async Task<IActionResult> Create(int hotelId)
         {
@@ -49,6 +50,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             };
             return View(room);
         }
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Description", "Price", "MaxGuest", "HotelId")] Room room)
@@ -63,7 +65,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return View(room);
         }
         [HttpGet]
-        public async Task<IActionResult> Edit(int hotelId)
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public IActionResult Edit(int hotelId)
         {
             var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == hotelId);
             if (room == null)
@@ -74,7 +77,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public IActionResult Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
         {
             if (roomId != room.RoomId)
             {
@@ -91,7 +95,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public IActionResult Delete(int id)
         {
             var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == id);
             if (room == null)
@@ -100,7 +105,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(room);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int roomId)

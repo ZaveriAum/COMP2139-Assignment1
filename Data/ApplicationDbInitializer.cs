@@ -1,16 +1,34 @@
 ﻿using COMP2139_Assignment1.Areas.NorthPole.Models;
+using Microsoft.AspNetCore.Identity;
 using System.Drawing.Drawing2D;
 
 namespace COMP2139_Assignment1.Data
 {
     public class ApplicationDbInitializer
     {
-        public static void Seed(IApplicationBuilder applicationBuilder)
+        public static async Task SeedAsync(IApplicationBuilder applicationBuilder, UserManager<NorthPoleUser> userManager)
         {
+
+            var user = new NorthPoleUser()
+            {
+                UserName = "Elio",
+                Email = "fezollarielio@gmail.com",
+                FirstName = "Elio",
+                LastName = "Test",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                Address = "Random Address",
+                City = "Korce",
+                Country = "Albania"
+            };
+            await userManager.CreateAsync(user, "Passw@rd!23");
+            await userManager.AddToRoleAsync(user, Enum.Roles.Traveler.ToString());
+
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 context.Database.EnsureCreated();
+
                 if (!context.Cars.Any())
                 {
                     context.Cars.AddRange(new List<Car>()
@@ -85,43 +103,50 @@ namespace COMP2139_Assignment1.Data
                         {
                             BookedStartDate = DateTime.Now,
                             BookedEndDate= DateTime.Now.AddDays(4),
-                            CarId = 1 
+                            CarId = 1 ,
+                            UserId = user.Id,
                         }, 
                         new CarBooking()
                         {
                             BookedStartDate = DateTime.Now.AddDays(4),
                             BookedEndDate= DateTime.Now.AddDays(5),
-                            CarId = 1
+                            CarId = 1,
+                            UserId = user.Id,
                         },
                         new CarBooking()
                         {
                             BookedStartDate = DateTime.Now.AddDays(5),
                             BookedEndDate= DateTime.Now.AddDays(7),
-                            CarId = 2
+                            CarId = 2,
+                            UserId = user.Id,
                         },
                         new CarBooking()
                         {
                             BookedStartDate = DateTime.Now.AddDays(4),
                             BookedEndDate= DateTime.Now.AddDays(6),
-                            CarId = 2
+                            CarId = 2,
+                            UserId = user.Id,
                         },
                         new CarBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(3),
                             BookedEndDate = DateTime.Now.AddDays(8),
-                            CarId = 3
+                            CarId = 3,
+                            UserId = user.Id,
                         },
                         new CarBooking
                         {   
                         BookedStartDate = DateTime.Now.AddDays(6),
                         BookedEndDate = DateTime.Now.AddDays(9),
-                        CarId = 4
+                        CarId = 4,
+                        UserId = user.Id,
                         },
                          new CarBooking
                          {
                         BookedStartDate = DateTime.Now.AddDays(2),
                         BookedEndDate = DateTime.Now.AddDays(7),
-                        CarId = 5
+                        CarId = 5,
+                        UserId = user.Id,
                         },
 
                 });
@@ -208,42 +233,48 @@ namespace COMP2139_Assignment1.Data
                             FlightId = 1,
                             PassengerName = "Adam Keyes",
                             PassportNumber = "7577H123BHF",
-                            NumberOfPassenger = 2
+                            NumberOfPassenger = 2,
+                            UserId = user.Id,
                         },
                         new FlightBooking
                         {
                             FlightId = 2,
                             PassengerName = "Emily Johnson",
                             PassportNumber = "ABC456DEF",
-                            NumberOfPassenger = 1
+                            NumberOfPassenger = 1,
+                            UserId = user.Id,
                         },
                         new FlightBooking
                         {
                             FlightId = 3,
                             PassengerName = "Michael Davis",
                             PassportNumber = null, // No passport for this booking
-                            NumberOfPassenger = 3
+                            NumberOfPassenger = 3,
+                            UserId = user.Id,
                         },
                         new FlightBooking
                         {
                             FlightId = 4,
                             PassengerName = "Sophia Smith",
                             PassportNumber = "XYZ789UVW",
-                            NumberOfPassenger = 1
+                            NumberOfPassenger = 1,
+                            UserId = user.Id,
                         },
                         new FlightBooking
                         {
                             FlightId = 5,
                             PassengerName = "Daniel White",
                             PassportNumber = "JKL321MNO",
-                            NumberOfPassenger = 4
+                            NumberOfPassenger = 4,
+                            UserId = user.Id,
                         },
                         new FlightBooking
                         {
                             FlightId = 3,
                             PassengerName = "Olivia Brown",
                             PassportNumber = null, // No passport for this booking
-                            NumberOfPassenger = 2
+                            NumberOfPassenger = 2,
+                            UserId = user.Id,
                         }
                     });
                     context.SaveChanges();
@@ -522,47 +553,54 @@ namespace COMP2139_Assignment1.Data
                             BookedStartDate = DateTime.Now.AddDays(5),
                             BookedEndDate = DateTime.Now.AddDays(7),
                             RoomId = 1,
+                            UserId = user.Id,
                         },
                         new RoomBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(10),
                             BookedEndDate = DateTime.Now.AddDays(12),
                             RoomId = 2,
+                            UserId = user.Id,
                         },
                         new RoomBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(15),
                             BookedEndDate = DateTime.Now.AddDays(17),
                             RoomId = 3,
+                            UserId = user.Id,
                         },
                         new RoomBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(20),
                             BookedEndDate = DateTime.Now.AddDays(22),
                             RoomId = 4,
+                            UserId = user.Id,
                         },
                         new RoomBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(25),
                             BookedEndDate = DateTime.Now.AddDays(27),
                             RoomId = 5,
+                            UserId = user.Id,
                         },
                         new RoomBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(30),
                             BookedEndDate = DateTime.Now.AddDays(32),
                             RoomId = 6,
+                            UserId = user.Id,
                         },
                         new RoomBooking
                         {
                             BookedStartDate = DateTime.Now.AddDays(35),
                             BookedEndDate = DateTime.Now.AddDays(37),
                             RoomId = 7,
+                            UserId = user.Id,
                         }
 
 
                     });
-                    context.SaveChanges();
+                        context.SaveChanges();
                 }
 
             }
