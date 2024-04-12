@@ -357,6 +357,7 @@ w-125{
 
 /*Media query*/
 @media (max-width: 576px) {
+
     .index-div {
         padding: 20px;
     }
