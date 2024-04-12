@@ -207,7 +207,10 @@ namespace COMP2139_Assignment1.Controllers
                 var CarBookings = from cb in _context.CarBookings
                                   select cb;
 
-                CarBookings = CarBookings.Where(c => c.CarId == CarId);
+                CarBookings = CarBookings
+                    .Include(cb => cb.User)
+			        .Where(c => c.CarId == CarId); 
+                // Select User from Carbookings.UserId and store it in CarBookings.User
                 ViewData["CarId"] = CarId;
                 ViewData["PlateNumber"] = Car.PlateNumber;
                 ViewData["City"] = Car.City;

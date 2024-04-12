@@ -5,7 +5,7 @@
     @inject UserManager<NorthPoleUser> UserManager
     @using Microsoft.AspNetCore.Identity
 }
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
+<nav class="navbar navbar-expand-lg navbar-toggleable-lg box-shadow mb-3">
     <div class="container-fluid">
         <a class="navbar-brand " asp-area="" asp-controller="Home" asp-action="Index"><img class="nav-image" src="~/img/Logo2.png" alt="Logo" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -37,13 +37,19 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " asp-area="NorthPole" asp-controller="Home" asp-action="About"><i class="fa-solid fa-circle-question"></i> About</a></li>
-                @if (SignInManager.IsSignedIn(User))
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="bttn button-two" id="admin-button" asp-area="NorthPole" asp-controller="AdminViews" asp-action="Index">Admin Dashboard</a>
+                }
+                    
+                    @if (SignInManager.IsSignedIn(User))
                 {
                 
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                        <input type="submit" class="bttn button-dark padding" value="Log Out"  style="cursor:pointer" />
+                        <input type="submit" class="ms-2 bttn button-dark " value="Log Out" style="cursor:pointer" />
                     </form>
                 }
+
                 else
                 {
                     <li class="nav-item">

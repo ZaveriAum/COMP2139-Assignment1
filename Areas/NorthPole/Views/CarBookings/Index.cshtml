@@ -25,6 +25,13 @@
 							<th>Model</th>
 							<th>License Plate</th>
 							<th>Rented From</th>
+							@if (User.IsInRole("Admin"))
+							{
+								<th>Rented By</th>
+								<th>Price Paid</th>
+								<th>Renter Email</th>
+								<th>View Renter</th>
+							}
 						</tr>
 					</thead>
 
@@ -38,6 +45,20 @@
 								<td>@ViewData["Model"]</td>
 								<td>@ViewData["PlateNumber"]</td>
 								<td>@ViewData["RentalCompany"]</td>
+								@if (User.IsInRole("Admin"))
+								{
+									<td>@carBooking.User.FirstName @carBooking.User.LastName</td>
+									<td>
+										@{
+											double calculatedPrice = (Convert.ToDouble(ViewData["Price"]) * (carBooking.BookedEndDate - carBooking.BookedStartDate).TotalDays);
+											double @minimumPrice = Convert.ToDouble(ViewData["Price"]);
+											double finalPrice = Math.Max(calculatedPrice, minimumPrice);
+											finalPrice = Math.Round(finalPrice, 2);
+										}
+										$@finalPrice
+									</td>
+									<td>@carBooking.User.Email</td>
+								}
 
 
 							</tr>

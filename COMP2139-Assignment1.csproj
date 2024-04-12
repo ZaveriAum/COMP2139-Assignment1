@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="Areas\NorthPole\Data\" />
     <Folder Include="Areas\NorthPole\Views\Shared\" />
-    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>

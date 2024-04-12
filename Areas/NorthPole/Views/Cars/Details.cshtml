@@ -68,6 +68,6 @@
      @if (User.IsInRole("Admin"))
     {
         <a asp-action="Edit" class="bttn button-one " asp-route-carId="@Model?.CarId">Edit</a>
-        <a asp-action="Delete" class="bttn button-danger ms-2" asp-route-carId="@Model?.CarId">Delete</a>
+        <a asp-action="Delete" class="bttn button-danger" asp-route-carId="@Model?.CarId">Delete</a>
     }
 </div>
