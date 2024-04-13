@@ -43,6 +43,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
+            booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (booking.BookedEndDate < booking.BookedStartDate)
             {
                 ModelState.AddModelError("BookedEndDate", "End date must be equal or later than start date");
@@ -58,7 +59,6 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 ModelState.AddModelError("", "Sorry, this date for this car is already booked");
                 return View(booking);
             }
-            booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
                 await _context.RoomBookings.AddAsync(booking);

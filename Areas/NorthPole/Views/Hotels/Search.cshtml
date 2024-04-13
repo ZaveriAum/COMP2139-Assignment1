@@ -19,16 +19,20 @@
         <div class="table-wrap">
         @if (Model.Any())
         {
-            <table class="table search-table">
-                <thead>
-                    <tr class="text-center">
-                        <td>Hotel Name</td>
-                        <td>City</td>
-                        <td>Hotel Location</td>
-                        <td>Description</td>
-                        <td>Details</td>
-                        <td>Rooms</td>
-                    </tr>
+                <table class="table search-table">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Hotel Name</td>
+                            <td>City</td>
+                            <td>Hotel Location</td>
+                            <td>Description</td>
+                            <td>Details</td>
+                            <td>Rooms</td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td>Delete</td>
+                            }
+                        </tr>
                 </thead>
 
                 <tbody>
@@ -40,8 +44,12 @@
                             <td>@hotel.City</td>
                             <td>@hotel.HotelLocation</td>
                             <td>@hotel.Description</td>
-                                <td><a asp-action="Details" class="bttn button-two w-125 " asp-route-hotelId="@hotel.HotelId"><i class="fa-solid fa-ticket"></i></a></td>
-                                <td><a asp-action="Index" class="bttn button-three w-125 " asp-controller="Rooms" asp-route-hotelId="@hotel.HotelId">Room</a></td>
+                                <td><a asp-action="Details" class="bttn button-one w-125 " asp-route-hotelId="@hotel.HotelId">Details</a></td>
+                                <td><a asp-action="Index" class="bttn button-two w-125 " asp-controller="Rooms" asp-route-hotelId="@hotel.HotelId">Rooms</a></td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td><a asp-action="Delete" class="bttn button-danger" asp-route-hotelId="@hotel.HotelId">Delete</a></td>
+                                }
                         </tr>
                     }
                 </tbody>

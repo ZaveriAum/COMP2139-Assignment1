@@ -12,13 +12,13 @@
         <body>
             <div class="rooms-container">
     <h2 class="rooms-heading">Rooms</h2>
-        <div class="input-price-div w-250 inline-element">
+        <div class="input-price-div w-500 inline-element">
 
         <form class="rooms-form" asp-action="Search" method="get">
             <input class="input-price input-one mt-3 " min="0" type="number" name="MinPrice" placeholder="$Min Price" />
-            <input class="input-price input-one mt-3 " min="0" type="number" name="MaxPrice" placeholder="$Max Price" />
-            <input class="input-price input-one mt-3 " min="0" type="number" name="NumGuest" placeholder="Number of Guest" />
-            <button class="bttn button-one mt-3" type="Submit">Filter</button>
+            <input class="input-price input-one mt-3 ms-2 " min="0" type="number" name="MaxPrice" placeholder="$Max Price" />
+            <input class="input-price input-one mt-3 ms-2" min="0" type="number" name="NumGuest" placeholder="Number of Guest" />
+            <button class="bttn button-one mt-3 ms-2" type="Submit">Filter</button>
         </form>
          </div class="inline-element">
 
@@ -48,6 +48,9 @@
                         <th>
                             View Bookings
                         </th>
+                        @(User.IsInRole("Admin")){
+                            <th>Delete</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -71,6 +74,10 @@
                         <td>
                                 <a asp-controller="RoomBookings" asp-action="Search" asp-route-roomId="@item.RoomId" class="bttn button-three w-125 ">View Bookings</a>
                         </td>
+                                                        @if (User.IsInRole("Admin"))
+                                {
+                                    <td><a asp-action="Delete" class="bttn button-danger" asp-route-roomId="@item.RoomId">Delete</a></td>
+                                }
                     </tr>
             }
                 </tbody>
