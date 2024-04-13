@@ -96,9 +96,9 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int roomId)
         {
-            var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.HotelId == id);
+            var room = await _context.Rooms.Include(t => t.Hotel).FirstOrDefaultAsync(t => t.RoomId == roomId);
             if (room == null)
             {
                 return NotFound();

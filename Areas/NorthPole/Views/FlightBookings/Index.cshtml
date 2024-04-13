@@ -4,40 +4,60 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+
 
 <table class="table">
     <thead>
         <tr>
             <th>
-               Flight
+                Flight
             </th>
-            <th>
-                PassengerName
-            </th>
-            <th>
-               PassportNumber
-            </th>
-            <th>Number Of Passengers</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    PassengerName
+                </th>
+                <th>
+                    PassportNumber
+                </th>
+                <th>
+                    Rented by
+                </th>
+                <th>
+                    Renter Email
+                </th>
+                <th>
+                    View Renter
+                </th>
+            }   
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Flight.Airline)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PassengerName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PassportNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfPassenger)
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Flight.Airline)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                <td>
+                    @Html.DisplayFor(modelItem => item.PassengerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PassportNumber)
+                    </td>
+                }
+                <td>
+                   @item.User.FirstName  @item.User.LastName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td><a class="bttn button-one" asp-area="NorthPole" asp-controller="User" asp-action="Index" asp-route-userId="@item.User.Id">View User</a></td>
+                
+            </tr>
+        }
     </tbody>
 </table>
 

@@ -23,17 +23,21 @@
         {
                 <table class="table search-table">
                     <thead>
-                    <tr>
-                        <td>Flight Number</td>
-                        <td>Airline</td>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Price</td>
-                        <td>Seats</td>
-                        <td>Details</td>
-                        <td>Book</td>
-                        <td>Past Bookings</td>
-                    </tr>
+                        <tr class="text-center">
+                            <td>Flight Number</td>
+                            <td>Airline</td>
+                            <td>From</td>
+                            <td>To</td>
+                            <td>Price</td>
+                            <td>Seats</td>
+                            <td>Details</td>
+                            <td>Book</td>
+                            <td>Past Bookings</td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td>Delete Posting</td>
+                            }
+                        </tr>
                 </thead>
 
                 <tbody>
@@ -47,9 +51,13 @@
                             <td>@flight.To</td>
                             <td>@flight.Price</td>
                             <td>@flight.Seats</td>
-                            <td><a asp-action="Details" asp-route-flightId="@flight.FlightId"><i class="fa-solid fa-ticket"></i></a></td>
-                            <td><a asp-controller="FlightBookings" class="btn btn-primary" asp-action="Create" asp-route-flightId="@flight.FlightId">Book!</a></td>
-                            <td><a asp-controller="FlightBookings" asp-action="Search" asp-route-flightId="@flight.FlightId">View Bookings</a></td>
+                                <td><a asp-action="Details" class="bttn button-one w-125" asp-route-flightId="@flight.FlightId">Details</a></td>
+                                <td><a asp-controller="FlightBookings" class="bttn button-two w-125" asp-action="Create" asp-route-flightId="@flight.FlightId">Book!</a></td>
+                                <td><a asp-controller="FlightBookings" class="bttn button-three w-125" asp-action="Search" asp-route-flightId="@flight.FlightId">View Bookings</a></td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td><a asp-action="Delete" class="bttn button-danger" asp-route-flightId="@flight.FlightId">Delete</a></td>
+                                }
                         </tr>
                     }
                 </tbody>

@@ -3,6 +3,7 @@ using COMP2139_Assignment1.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 using System;
 
 //update
@@ -106,6 +107,18 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
             return _db.Hotels.Any(e => e.HotelId == hotelId);
         }
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public async Task<IActionResult> Delete(int hotelId)
+        {
+            var hotel = await _db.Hotels.FindAsync(hotelId);
+            if (hotel == null)
+            {
+                return NotFound();
+            }
+            return View(hotel);
+        }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]

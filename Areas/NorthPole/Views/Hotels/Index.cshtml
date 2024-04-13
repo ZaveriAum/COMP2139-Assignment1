@@ -18,7 +18,8 @@
                 <input class="input-one mt-3 w-250" name="Name" type="text" placeholder="HotelName" />
                 <input class="input-one mt-3 w-250" name="City" type="text" placeholder="City" required/>
                 <button class ="bttn button-one mt-3 w-250" type="Submit">Search</button>
-                <a class="bttn button-two mt-2 w-250" asp-action="Create">Create New</a>
+                @if(User.IsInRole("Admin")){
+                <a class="bttn button-two mt-2 w-250" asp-action="Create">Create New</a>}
             </form>
             <h2 class="mt-5 mb-5">Or browse the following</h2>
             <div class="show-model">
@@ -31,7 +32,7 @@
                         <p>@hotel.Description</p>
                         <div class="center-screen">
                             <a asp-controller="Hotels" class="bttn button-one w-250" asp-action="Details" asp-route-hotelId="@hotel.HotelId">View Details</a>
-                            <a asp-controller="Rooms" class="bttn button-two w-250" asp-action="Index" asp-route-hotelId="@hotel.HotelId">View Rooms</a>
+                            <a asp-controller="Rooms" class="bttn button-two w-250 mt-2" asp-action="Index" asp-route-hotelId="@hotel.HotelId">View Rooms</a>
                         </div>
                     </div>
                 }

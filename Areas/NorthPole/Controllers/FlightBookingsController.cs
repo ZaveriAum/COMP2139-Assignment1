@@ -139,7 +139,7 @@ namespace COMP2139_Assignment1.Controllers
                 var FlightBooking = from fb in _context.FlightBookings
                                   select fb;
 
-                FlightBooking = FlightBooking.Where(f => f.FlightId == FlightId);
+                FlightBooking = FlightBooking.Include(fb => fb.User).Where(f => f.FlightId == FlightId);
                 ViewData["FlightId"] = FlightId;
                 ViewData["FlightNumber"] = Flight.FlightNumber;
                 ViewData["Airline"] = Flight.Airline;

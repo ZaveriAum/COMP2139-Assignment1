@@ -44,12 +44,12 @@
                             <td>@car.Description</td>
                             <td>$@car.Price</td>
                             <td>@car.MaxPassenger</td>
-                            <td><a asp-controller="Cars" class="bttn button-one w-125" asp-action="Details" asp-route-carId="@car.CarId">View Details</a></td>
+                            <td><a asp-controller="Cars" class="bttn button-one w-125" asp-action="Details" asp-route-carId="@car.CarId">Details</a></td>
                             <td>
-                                <a asp-controller="CarBookings" class="bttn button-two w-125 " asp-action="Create" asp-route-carId="@car.CarId">Book Car!</a></td>
-                                <td><a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="bttn button-three w-125 ">View Bookings</a>
+                                <a asp-controller="CarBookings" class="bttn button-two w-125 " asp-action="Create" asp-route-carId="@car.CarId">Book!</a></td>
+                                <td><a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="bttn button-three w-125 ">ViewBookings</a>
                             </td>
-                                @if (User.IsInRole("Admin")){<td><a asp-action="Delete" class="bttn button-danger" asp-route-carId="@car.CarId">Delete Posting</a></td>}
+                                @if (User.IsInRole("Admin")){<td><a asp-action="Delete" class="bttn button-danger" asp-route-carId="@car.CarId">Delete</a></td>}
                             </tr>
                     }
                 </tbody>

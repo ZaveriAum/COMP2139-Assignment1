@@ -42,10 +42,7 @@
         Back to List</a> 
          @if (User.IsInRole("Admin"))
     {
-        <form asp-action="DeleteConfirmed" method="post" class="flight-action">
-            @Html.HiddenFor(model => model.RoomId)
-            <input type="submit" value="Delete" class="bttn button-danger ms-2" />
-        </form>
+        <a asp-action="Delete" class="bttn button-danger" asp-route-roomId="@Model?.RoomId">Delete</a>
         <a asp-action="Edit" asp-route-hotelId="@Model?.HotelId" class="bttn button-one">Edit</a>
     }
 </div>

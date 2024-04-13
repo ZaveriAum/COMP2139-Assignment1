@@ -77,10 +77,7 @@
 <div>
          @if (User.IsInRole("Admin"))
     {
-        <a asp-action="Edit" class="btn btn-warning flight-action" asp-route-flightId="@Model?.FlightId">Edit</a>
-        <form asp-action="Delete" method="post" class="flight-action">
-            @Html.HiddenFor(model => model.FlightId)
-        <input type="submit" value="Delete" class="btn btn-danger"/>
-    </form> }
-    <a asp-action="Index" class="btn btn-secondary flight-action">Back to List</a>
+        <a asp-action="Edit" class="bttn button-one flight-action" asp-route-flightId="@Model?.FlightId">Edit</a>
+        <a asp-action="Delete" class="bttn button-danger" asp-route-flightId="@Model?.FlightId">Delete</a>}
+    <a href='javascript:history.go(-1)' class="bttn button-two">Back to List</a>
 </div>

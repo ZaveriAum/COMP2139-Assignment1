@@ -64,10 +64,11 @@
 <div>
 
     
-    <a href='javascript:history.go(-1)' class="bttn button-two ms-2">Back to List</a> 
+
      @if (User.IsInRole("Admin"))
     {
         <a asp-action="Edit" class="bttn button-one " asp-route-carId="@Model?.CarId">Edit</a>
         <a asp-action="Delete" class="bttn button-danger" asp-route-carId="@Model?.CarId">Delete</a>
     }
+    <a href='javascript:history.go(-1)' class="bttn button-two ">Back to List</a>
 </div>
