@@ -58,7 +58,7 @@ html {
     display: inline-block;
 }
 .h-70v{
-    height:70vh !important;
+    min-height:70vh !important;
 }
 .user-details p{
 }
@@ -362,11 +362,17 @@ w-125{
 
 /*Media query*/
 @media (max-width: 576px) {
+    #admin-main{
+        flex-direction:column;
+    }
     #admin-button {
         margin-bottom: 5px;
     }
     .index-div {
         padding: 20px;
+    }
+    #admin-main div {
+        margin-top: 20px;
     }
 
         .index-div h1 {
@@ -382,6 +388,9 @@ w-125{
 }
 
 @media (min-width: 576px) {
+    #admin-main {
+        flex-direction: column;
+    }
     #admin-button {
         margin-bottom: 5px;
     }
@@ -395,18 +404,33 @@ w-125{
         .index-div p{
             font-size:20px;
         }
+    #admin-main div {
+        margin-top: 20px;
+    }
 }
 
 @media (min-width: 768px) {
+    #admin-main {
+        flex-direction: column;
+    }
     #admin-button {
         margin-bottom: 5px;
     }
     .index-div {
         padding: 50px;
     }
+    #admin-main div {
+        margin-top: 20px;
+    }
 }
 
 @media (min-width: 992px) {
+    #admin-main {
+        flex-direction: row;
+    }
+    #admin-main  div{
+        margin-top:0px;
+    }
     .index-div {
         padding: 80px;
     }
