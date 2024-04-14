@@ -1,0 +1,7 @@
+﻿@model IEnumerable<CarReview>
+
+@foreach(var carReview in Model)
+{
+	<h1>@carReview.Rating</h1>
+	<h1>@carReview.Comment</h1>
+}

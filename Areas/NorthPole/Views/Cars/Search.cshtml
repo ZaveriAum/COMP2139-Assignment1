@@ -26,6 +26,7 @@
                         <td>Details</td>
                         <td>Add Booking</td>
                         <td>View Bookings</td>
+                        <td>Read Reviews</td>
                             @if (User.IsInRole("Admin"))
                             {
                                 <td>Delete Posting</td>
@@ -49,6 +50,9 @@
                                 <a asp-controller="CarBookings" class="bttn button-two w-125 " asp-action="Create" asp-route-carId="@car.CarId">Book!</a></td>
                                 <td><a asp-controller="CarBookings" asp-action="Search" asp-route-CarId="@car.CarId" class="bttn button-three w-125 ">ViewBookings</a>
                             </td>
+                            <td>
+                                <a asp-controller="CarReviews" class="bttn button-four w-125" asp-action="Index" asp-route-CarId="@car.CarId">Reviews</a>
+                            </td>
                                 @if (User.IsInRole("Admin")){<td><a asp-action="Delete" class="bttn button-danger" asp-route-carId="@car.CarId">Delete</a></td>}
                             </tr>
                     }
@@ -63,7 +67,7 @@
                         @if (User.IsInRole("Admin"))
         {
             <p>
-                <a asp-area="" class="bttn button-one mt-3 w-250 btn-primary" asp-action="Create">List another car!</a>
+                <a asp-area="" class="bttn button-one mt-3 w-250" asp-action="Create">List another car!</a>
         </p>}
     </body>
 </html>

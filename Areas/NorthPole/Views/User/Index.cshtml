@@ -4,6 +4,7 @@
 
 <div class="d-flex  justify-content-center align-items-center">
     <div class="h-70v d-flex justify-content-center align-items-center">
+        <div><h2 class="text-center">User Profile</h2>
 @if (await UserManager.GetUserAsync(User) != null && UserManager.GetUserAsync(User).Result.ProfilePicture != null)
 {
     
@@ -13,6 +14,7 @@ else
 {
     <img id="profilePicture" style="width:300px; height:300px; border-radius:50%; margin-right:2px; object-fit:cover" src="~/img/NoPic.webp" />
 }
+        </div>
     </div>
         <div class="h-70v user-details d-flex justify-content-around align-items-center flex-column mt-4">
     <p><span class="fw-bold">User UserName: </span>@Model.UserName</p>
@@ -23,6 +25,7 @@ else
     <p><span class="fw-bold">User Country: </span>@Model.Country</p>
     <p><span class="fw-bold">User City: </span>@Model.City</p>
     <p><span class="fw-bold">User Address: </span>@Model.Address</p>
-        <a asp-controller="User" asp-action="Delete" class="bttn button-danger" asp-route-userId=@Model.Id>Delete User</a>
+        <a asp-controller="User" asp-action="Delete" class="bttn button-danger w-250" asp-route-userId=@Model.Id>Delete User</a>
+        <a href='javascript:history.go(-1)' class="bttn button-two w-250 mt-2">Go Back!</a>
     </div>
     </div>
