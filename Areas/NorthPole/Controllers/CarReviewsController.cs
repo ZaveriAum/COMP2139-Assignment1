@@ -21,7 +21,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
 			var carReviews = await _context.CarReviews
 				.Where(cr => cr.CarId == CarId)
-				.ToListAsync();
+                .Include(cr => cr.User)
+                .ToListAsync();
 			return View(carReviews);
         }
     }

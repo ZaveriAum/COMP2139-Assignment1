@@ -1,7 +1,45 @@
 ﻿@model IEnumerable<CarReview>
+<div class="d-flex justify-content-center align-items-center h-70v flex-column">
+@{
+    double totalRating = 0;
+    int totalReviews = Model.Count();
+    
+    if (totalReviews > 0)
+    {
+        foreach (var carReview in Model)
+        {
+            totalRating += carReview.Rating;
+        }
+        double averageRating = totalRating / totalReviews;
+        averageRating = Math.Round(averageRating, 2);
+        <div class="text-center">
+        <h2>Number of Total Reviews - @totalReviews</h2>
+        <h3>Average Rating - @averageRating</h3>
+        </div>
+            
+    }
+    else
+    {
+        <h2>No reviews available</h2>
+
+    }
+}
 
 @foreach(var carReview in Model)
 {
-	<h1>@carReview.Rating</h1>
-	<h1>@carReview.Comment</h1>
-}
+	<div>
+            <p>@carReview.Rating out of 10 </p>
+    </div>
+        @if(carReview.isAnonymous == false)
+        {
+            <p>@carReview.User.FirstName @carReview.User.LastName - @carReview.DatePosted</p>
+        }
+        else
+        {
+            <p>
+                Posted anonymously - @carReview.DatePosted
+            </p>
+        }
+        <p>@carReview.Comment</p>
+    }
+</div>
