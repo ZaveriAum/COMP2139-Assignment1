@@ -24,8 +24,7 @@
 
         </div>
     <div class="table-wrap">
-        @if(Model.Any())
-        {
+        @if(Model.Any()){
             <table class="table search-table">
 
                 <thead>
@@ -48,7 +47,7 @@
                         <th>
                             View Bookings
                         </th>
-                        @(User.IsInRole("Admin")){
+                        @if(User.IsInRole("Admin")){
                             <th>Delete</th>
                         }
                     </tr>
@@ -74,8 +73,7 @@
                         <td>
                                 <a asp-controller="RoomBookings" asp-action="Search" asp-route-roomId="@item.RoomId" class="bttn button-three w-125 ">View Bookings</a>
                         </td>
-                                                        @if (User.IsInRole("Admin"))
-                                {
+                        @if(User.IsInRole("Admin")){
                                     <td><a asp-action="Delete" class="bttn button-danger" asp-route-roomId="@item.RoomId">Delete</a></td>
                                 }
                     </tr>

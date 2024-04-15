@@ -33,6 +33,7 @@
                             <td>Details</td>
                             <td>Book</td>
                             <td>Past Bookings</td>
+                            <td>Read Reviews</td>
                             @if (User.IsInRole("Admin"))
                             {
                                 <td>Delete Posting</td>
@@ -54,6 +55,9 @@
                                 <td><a asp-action="Details" class="bttn button-one w-125" asp-route-flightId="@flight.FlightId">Details</a></td>
                                 <td><a asp-controller="FlightBookings" class="bttn button-two w-125" asp-action="Create" asp-route-flightId="@flight.FlightId">Book!</a></td>
                                 <td><a asp-controller="FlightBookings" class="bttn button-three w-125" asp-action="Search" asp-route-flightId="@flight.FlightId">View Bookings</a></td>
+                                <td>
+                                    <a asp-controller="FlightReviews" class="bttn button-four w-125" asp-action="Index" asp-route-FlightId="@flight.FlightId">Reviews</a>
+                                </td>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td><a asp-action="Delete" class="bttn button-danger" asp-route-flightId="@flight.FlightId">Delete</a></td>

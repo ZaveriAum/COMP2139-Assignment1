@@ -33,6 +33,7 @@
                         <div class="center-screen">
                             <a asp-controller="Hotels" class="bttn button-one w-250" asp-action="Details" asp-route-hotelId="@hotel.HotelId">View Details</a>
                             <a asp-controller="Rooms" class="bttn button-two w-250 mt-2" asp-action="Index" asp-route-hotelId="@hotel.HotelId">View Rooms</a>
+                            <a asp-controller="HotelReviews" class="bttn button-four w-250 mt-2" asp-action="Index" asp-route-HotelId="@hotel.HotelId">Read Reviews</a>
                         </div>
                     </div>
                 }

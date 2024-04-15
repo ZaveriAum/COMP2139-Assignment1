@@ -28,6 +28,7 @@
                             <td>Description</td>
                             <td>Details</td>
                             <td>Rooms</td>
+                            <td>Read Reviews</td>
                             @if (User.IsInRole("Admin"))
                             {
                                 <td>Delete</td>
@@ -46,6 +47,9 @@
                             <td>@hotel.Description</td>
                                 <td><a asp-action="Details" class="bttn button-one w-125 " asp-route-hotelId="@hotel.HotelId">Details</a></td>
                                 <td><a asp-action="Index" class="bttn button-two w-125 " asp-controller="Rooms" asp-route-hotelId="@hotel.HotelId">Rooms</a></td>
+                                <td>
+                                    <a asp-controller="HotelReviews" class="bttn button-four w-125" asp-action="Index" asp-route-HotelId="@hotel.HotelId">Reviews</a>
+                                </td>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td><a asp-action="Delete" class="bttn button-danger" asp-route-hotelId="@hotel.HotelId">Delete</a></td>

@@ -9,7 +9,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Models
         [Range(0, 10, ErrorMessage = "Value must be between 0 and 10")]
         [Required]
         public int Rating { get; set; }
-        [Range(0, 500, ErrorMessage = "Comment must be between 0 and 500")]
+        [StringLength(500, ErrorMessage = "Comment must be at most 500 characters long.")]
         public string? Comment { get; set; }
         [Required]
         [Display(Name = "Date Posted")]

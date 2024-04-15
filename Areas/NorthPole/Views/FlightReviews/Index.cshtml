@@ -1,0 +1,78 @@
+﻿@model IEnumerable<FlightReview>
+
+@{
+    double totalRating = 0;
+    int totalReviews = Model.Count();
+
+    if (totalReviews > 0)
+    {
+        foreach (var flightReview in Model)
+        {
+            totalRating += flightReview.Rating;
+        }
+        double averageRating = totalRating / totalReviews;
+        averageRating = Math.Round(averageRating, 2);
+        <div class="text-center mt-5">
+            <h1>Reviews for @ViewBag.Airline / Flight Nr @ViewBag.Number</h1>
+            <h2>Number of Total Reviews - @totalReviews</h2>
+            <h3>Average Rating - @averageRating / 10</h3>
+            <a class="bttn button-dark" asp-action="Create" asp-route-flightId="@ViewBag.FlightId">Leave a Review</a>
+        </div>
+
+    }
+    else
+    {
+        <h2>No reviews available</h2>
+        <a class="bttn button-dark" asp-action="Create" asp-route-flightId="@ViewBag.FlightId">Be the first to leave one!</a>
+
+    }
+}
+<div class="justify-content-center align-items-center h-70v flex-column car-review-module">
+    @foreach (var flightReview in Model)
+    {
+
+        <div class="car-review-card">
+            <div class="d-flex justify-content-between w-100">
+                <p>@flightReview.Rating out of 10 </p>
+                @if (flightReview.User.ProfilePicture != null && !flightReview.isAnonymous)
+                {
+                    <img id="profilePicture" style="width:30px; height:30px; border-radius:50%; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(flightReview.User.ProfilePicture))" />
+                }
+                else
+                {
+                    <img id="profilePicture" style="width:30px; height:30px; border-radius:50%; object-fit:cover" src="~/img//NoPic.webp" />
+                }
+            </div>
+            <hr />
+            @if (flightReview.isAnonymous == false)
+            {
+                if (!User.IsInRole("Admin"))
+                {
+                    <p>@flightReview.User.FirstName @flightReview.User.LastName - @flightReview.DatePosted</p>
+                }
+
+                if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="User" asp-action="Index" asp-route-userId="@flightReview.User.Id">@flightReview.User.FirstName @flightReview.User.LastName -</a> @flightReview.DatePosted
+                }
+            }
+            else
+            {
+
+                <div class="d-flex justify-content-between w-100">
+                    <p>
+                        Posted anonymously - @flightReview.DatePosted
+                    </p>
+                </div>
+            }
+            <p>Commented: @flightReview.Comment</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Delete" class="bttn button-danger" asp-route-reviewId="@flightReview.Id">Delete</a>
+            }
+        </div>
+    }
+</div>
+<div class="d-flex justify-content-center align-content-center w-100">
+    <a href='javascript:history.go(-1)' class=" bttn button-two ">Back to List</a>
+</div>

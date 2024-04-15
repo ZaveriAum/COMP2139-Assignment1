@@ -362,6 +362,19 @@ w-125{
     background-color:transparent;
 
 }
+.car-review-card {
+    border: 1px solid #D3D3D3;
+    border-radius: 2px;
+    padding: 20px;
+    background-color: #F6F6F6;
+}
+
+.car-review-module {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 50px;
+    margin:30px 0;
+}
 #admin-button{
     margin-bottom:0;
 }
@@ -370,6 +383,9 @@ w-125{
 @media (max-width: 576px) {
     #admin-main{
         flex-direction:column;
+    }
+    .car-review-module {
+        grid-template-columns: 1fr;
     }
     #admin-button {
         margin-bottom: 5px;
@@ -413,6 +429,9 @@ w-125{
     #admin-main div {
         margin-top: 20px;
     }
+    .car-review-module {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (min-width: 768px) {
@@ -427,6 +446,9 @@ w-125{
     }
     #admin-main div {
         margin-top: 20px;
+    }
+    .car-review-module {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -447,6 +469,9 @@ w-125{
         .index-div p {
             font-size: 20px;
         }
+    .car-review-module {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -479,17 +504,7 @@ w-125{
         transform: rotate(0deg);
     }
 }
-.car-review-card {
-    border: 1px solid #D3D3D3;
-    border-radius: 2px;
-    padding: 20px;
-    background-color: #F6F6F6;
-}
-.car-review-module{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:50px;
-}
+
 @keyframes colorChange {
     0% {
         color: #9290C3;
