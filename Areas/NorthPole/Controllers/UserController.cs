@@ -13,49 +13,76 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 	public class UserController : Controller
 	{
 		private readonly ApplicationDbContext _context;
+        private readonly ILogger<UserController> _logger;
 
-		public UserController(ApplicationDbContext context)
+		public UserController(ApplicationDbContext context, ILogger<UserController> logger)
 		{
 			_context = context;
+            _logger = logger;
 		}
+
 		public async Task<IActionResult> Index(string userId)
 		{
-			NorthPoleUser user = await _context.Users.FindAsync(userId);
+            _logger.LogInformation($"Index page called for user with user id: {userId}.");
+            try
+            {
+                NorthPoleUser user = await _context.Users.FindAsync(userId);
 
-			if (user != null)
-			{
-				return View(user);
-			}
-			else
-			{
-				return NotFound();
-			}
-		}
+                if (user != null)
+                {
+                    return View(user);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
         public async Task<IActionResult> Delete(string userId)
         {
-            var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            _logger.LogInformation($"Delete action invoked with userId: {userId}");
+            try {
+                var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
-            if (User == null)
+                if (User == null)
+                {
+                    return NotFound();
+                }
+
+                return View(User);
+            }catch(Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-
-            return View(User);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-
-            if (User != null)
+            _logger.LogInformation($"Deleting user with: user id {id}.");
+            try
             {
-                _context.Users.Remove(User);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+
+                if (User != null)
+                {
+                    _context.Users.Remove(User);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                return NotFound();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            return NotFound();
         }
     }
 }
