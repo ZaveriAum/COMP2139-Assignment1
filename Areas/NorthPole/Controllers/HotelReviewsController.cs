@@ -53,6 +53,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return NotFound();
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Create(int hotelId)
         {
             ViewBag.hotelId = hotelId;
@@ -60,6 +61,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(int hotelId, HotelReview review)
         {
             Console.WriteLine(review.Rating);

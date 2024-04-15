@@ -10,6 +10,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 {
     [Area("NorthPole")]
     [Route("[area]/[controller]/[action]")]
+
     public class CarReviewsController : Controller
     {
         private readonly UserManager<NorthPoleUser> _userManager;
@@ -54,6 +55,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return NotFound();
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Create(int carId)
         {
             ViewBag.carId = carId;
@@ -61,9 +63,9 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(int carId, CarReview review)
         {
-            Console.WriteLine(review.Rating);
             review.CarId= carId;
             if(review.Comment == null)
             {

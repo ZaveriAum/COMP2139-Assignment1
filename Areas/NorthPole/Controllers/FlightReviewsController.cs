@@ -54,6 +54,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return NotFound();
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Create(int flightId)
         {
             ViewBag.flightId = flightId;
@@ -61,6 +62,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(int flightId, FlightReview review)
         {
             review.FlightId = flightId;
