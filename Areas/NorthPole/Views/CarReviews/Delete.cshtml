@@ -51,6 +51,6 @@
     <form asp-action="DeleteConfirmed" method="post">
         @Html.HiddenFor(model => model.Id)
         <input type="submit" value="Delete" class="bttn button-danger" />
-        <a asp-action="Index" class="bttn button-one">Back to reviews</a>
+        <a class="bttn button-two w-250 mt-3" href="javascript:history.go(-1)">Back to Reviews</a>
     </form>
 </div>

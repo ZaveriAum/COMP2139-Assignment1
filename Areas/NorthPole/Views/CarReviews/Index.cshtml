@@ -13,8 +13,9 @@
         double averageRating = totalRating / totalReviews;
         averageRating = Math.Round(averageRating, 2);
         <div class="text-center mt-5">
+            <h1>Reviews for @ViewBag.carModel @ViewBag.carBrand</h1>
         <h2>Number of Total Reviews - @totalReviews</h2>
-        <h3>Average Rating - @averageRating</h3>
+        <h3>Average Rating - @averageRating / 10</h3>
         <a class="bttn button-dark" asp-action="Create" asp-route-carId="@ViewBag.CarId">Leave a Review</a>
         </div>
             

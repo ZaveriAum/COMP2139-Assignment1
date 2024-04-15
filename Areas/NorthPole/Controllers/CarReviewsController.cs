@@ -21,12 +21,15 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
         public async Task<IActionResult> Index(int CarId)
         {
-			var carReviews = await _context.CarReviews
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == CarId);
+            var carReviews = await _context.CarReviews
 				.Where(cr => cr.CarId == CarId)
                 .Include(cr => cr.User)
                 .ToListAsync();
             ViewBag.CarId = CarId;
-			return View(carReviews);
+            ViewBag.carModel = car?.Model;
+            ViewBag.carBrand = car?.Brand;
+            return View(carReviews);
         }
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
@@ -54,6 +57,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         public async Task<IActionResult> Create(int carId)
         {
             ViewBag.carId = carId;
+            ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View();
         }
         [HttpPost]
@@ -61,8 +65,6 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
             Console.WriteLine(review.Rating);
             review.CarId= carId;
-            review.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Console.WriteLine(review.UserId);
             if(review.Comment == null)
             {
                 review.Comment = "No Comment Added";
