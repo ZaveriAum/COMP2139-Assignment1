@@ -10,6 +10,7 @@
     <div class=" center-screen">
     <form asp-action="Create" class="d-flex flex-column col col-md-3 mx-auto">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="d-flex flex-column">
             <label asp-for="PlateNumber" class="control-label mt-3"></label>
             <input asp-for="PlateNumber" class="input-one col-12 " />
@@ -59,7 +60,6 @@
         <div class="form-group mt-3 center-screen">
             <input type="submit" value="List Car" class="bttn button-one w-250" /> 
             <a class="bttn button-two w-250 mt-3" href="javascript:history.go(-1)">Back to List</a>
-
         </div>
     </form>
         

@@ -60,6 +60,9 @@ html {
 .h-70v{
     min-height:70vh !important;
 }
+h-30v{
+    min-height:30vh !important;
+}
 .user-details p{
 }
 .main-container {
@@ -476,6 +479,17 @@ w-125{
         transform: rotate(0deg);
     }
 }
+.car-review-card {
+    border: 1px solid #D3D3D3;
+    border-radius: 2px;
+    padding: 20px;
+    background-color: #F6F6F6;
+}
+.car-review-module{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:50px;
+}
 @keyframes colorChange {
     0% {
         color: #9290C3;
@@ -493,4 +507,10 @@ w-125{
 }
 .mt-5{
     margin-top:50px;
+}
+.input[type="range"], input[type='range']::-webkit-slider-runnable-track, input[type='range']::-webkit-slider-thumb {
+    background-color: #272b45;
+    margin-top: -1px;
+    height:10px;
+    border-radius:100px;
 }

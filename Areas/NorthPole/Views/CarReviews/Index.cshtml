@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<CarReview>
-<div class="d-flex justify-content-center align-items-center h-70v flex-column">
+
 @{
     double totalRating = 0;
     int totalReviews = Model.Count();
@@ -12,34 +12,65 @@
         }
         double averageRating = totalRating / totalReviews;
         averageRating = Math.Round(averageRating, 2);
-        <div class="text-center">
+        <div class="text-center mt-5">
         <h2>Number of Total Reviews - @totalReviews</h2>
         <h3>Average Rating - @averageRating</h3>
+        <a class="bttn button-dark" asp-action="Create" asp-route-carId="@ViewBag.CarId">Leave a Review</a>
         </div>
             
     }
     else
     {
         <h2>No reviews available</h2>
+        <a class="bttn button-dark" asp-action="Create" asp-route-carId="@ViewBag.CarId">Be the first to leave one!</a>
 
     }
 }
-
+<div class="justify-content-center align-items-center h-70v flex-column car-review-module">
 @foreach(var carReview in Model)
 {
-	<div>
+    
+        <div class="car-review-card">
+	<div class="d-flex justify-content-between w-100">
             <p>@carReview.Rating out of 10 </p>
+                @if (carReview.User.ProfilePicture != null && !carReview.isAnonymous )
+                {
+                    <img id="profilePicture" style="width:30px; height:30px; border-radius:50%; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(carReview.User.ProfilePicture))" />
+                }
+                else
+                {
+                    <img id="profilePicture" style="width:30px; height:30px; border-radius:50%; object-fit:cover" src="~/img//NoPic.webp" />
+                }
     </div>
+            <hr />
         @if(carReview.isAnonymous == false)
         {
-            <p>@carReview.User.FirstName @carReview.User.LastName - @carReview.DatePosted</p>
-        }
+                if (!User.IsInRole("Admin"))
+                {
+                    <p>@carReview.User.FirstName @carReview.User.LastName - @carReview.DatePosted</p>
+                }
+
+                if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="User" asp-action="Index" asp-route-userId="@carReview.User.Id">@carReview.User.FirstName @carReview.User.LastName -</a> @carReview.DatePosted
+                }
+            }
         else
         {
+
+                <div class="d-flex justify-content-between w-100">
             <p>
                 Posted anonymously - @carReview.DatePosted
             </p>
+                </div>
         }
-        <p>@carReview.Comment</p>
+        <p>Commented: @carReview.Comment</p>
+        @if(User.IsInRole("Admin")){
+                <a asp-action="Delete" class="bttn button-danger" asp-route-reviewId="@carReview.Id">Delete</a>
+            }
+        </div>
     }
+</div>
+<div class="d-flex justify-content-center align-content-center w-100">
+<a  href='javascript:history.go(-1)' class=" bttn button-two ">Back to List</a>
 </div>
