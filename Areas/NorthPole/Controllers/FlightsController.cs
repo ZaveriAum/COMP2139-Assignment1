@@ -22,7 +22,7 @@ namespace COMP2139_Assignment1.Controllers
 		}
 
 
-		[HttpGet]
+		[HttpGet("Index")]
 		public async Task<IActionResult> Index()
 		{
 			_logger.LogInformation("Search page for available flight");
@@ -37,7 +37,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-		[HttpGet]
+		[HttpGet("SearchFlight")]
 		public async Task<IActionResult> SearchFlight()
 		{
 			_logger.LogInformation("Search flights page.");
@@ -51,6 +51,7 @@ namespace COMP2139_Assignment1.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet("Create")]
 		public IActionResult Create() 
@@ -88,7 +89,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-		[HttpGet]
+		[HttpGet("Create/{flightId:int}")]
 		public async Task<IActionResult> Details(int flightId)
 		{
 			_logger.LogInformation("Details page for flight entity.");
@@ -107,7 +108,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpGet]
+		[HttpGet("Edit/{flightId:int}")]
 		public IActionResult Edit(int flightId)
 		{
 			_logger.LogInformation("Edit page for flight entity.");
@@ -124,7 +125,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpPost]
+		[HttpPost("Edit/{flightId:int}")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int flightId, [Bind("FlightId", "FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
 		{
@@ -175,7 +176,7 @@ namespace COMP2139_Assignment1.Controllers
 		}
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpGet]
+		[HttpGet("Delete/{flightId:int}")]
 		public async Task<IActionResult> Delete(int flightId)
 		{
 			_logger.LogInformation("Delete page for flight entity.");
@@ -194,7 +195,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpPost]
+		[HttpPost("DeleteConfirmed/{flightId:int}")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int flightId)
 		{
@@ -215,8 +216,8 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-		[HttpGet]
-		public async Task<IActionResult> Search(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate, int searchPassengerNum)
+        [HttpGet("Search/{searchStringFrom}/{searchStringTo}/{searchStringDepartureDate}/{searchPassengerNum:int}")]
+        public async Task<IActionResult> Search(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate, int searchPassengerNum)
 		{
 			_logger.LogInformation($"Search for information: searchStringTo: {searchStringTo}, searchStringFrom: {searchStringFrom}");
 			try {

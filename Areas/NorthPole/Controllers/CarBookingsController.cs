@@ -20,12 +20,14 @@ namespace COMP2139_Assignment1.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ILogger<CarBookingsController> _logger;
 
-        public CarBookingsController(ApplicationDbContext context,UserManager<NorthPoleUser> userManager, ILogger<CarBookingsController> logger)
+        public CarBookingsController(ApplicationDbContext context, UserManager<NorthPoleUser> userManager, ILogger<CarBookingsController> logger)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
         }
+
+        [HttpGet("Index/{CarId:int}")]
         public async Task<IActionResult> Index(int CarId)
         {
             _logger.LogInformation("Listing all the cars searched by the user.");
@@ -33,7 +35,7 @@ namespace COMP2139_Assignment1.Controllers
             {
                 ViewData["CarId"] = CarId;
                 return View();
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
@@ -41,7 +43,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Create/{CarId:int}")]
         public async Task<IActionResult> Create(int CarId)
         {
             _logger.LogInformation("Calling Create car booking page.");
@@ -63,12 +65,14 @@ namespace COMP2139_Assignment1.Controllers
                 ViewData["SearchString"] = TempData["SearchString"];
 
                 return View();
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
             _logger.LogInformation("Book a car.");
@@ -114,14 +118,14 @@ namespace COMP2139_Assignment1.Controllers
                     return RedirectToAction("Search", new { CarId = booking.CarId });
                 }
                 return View(booking);
-            }catch (Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
 
-        [HttpGet]
+        [HttpGet("Edit/{id:int}")]
         public async Task<IActionResult> Edit(int Id)
         {
             _logger.LogInformation("Calling Edit page for Booked Car.");
@@ -148,15 +152,16 @@ namespace COMP2139_Assignment1.Controllers
                 ViewData["RentalCompany"] = Car.RentalCompany;
 
                 return View(booking);
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        [HttpPost]
+
+        [HttpPost("Edit/{Id:int}")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int Id, [Bind("Id","BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
+        public async Task<ActionResult> Edit(int Id, [Bind("Id", "BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
             _logger.LogInformation("Edit the booked car");
             try
@@ -193,7 +198,7 @@ namespace COMP2139_Assignment1.Controllers
                     return RedirectToAction("Search", new { CarId = booking.CarId });
                 }
                 return View(booking);
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
@@ -201,6 +206,7 @@ namespace COMP2139_Assignment1.Controllers
 
         }
 
+        [HttpGet("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation("Callding Delete page for Booked car.");
@@ -220,7 +226,7 @@ namespace COMP2139_Assignment1.Controllers
 
                 CarBooking.Car = Car;
                 return View(CarBooking);
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
@@ -228,10 +234,10 @@ namespace COMP2139_Assignment1.Controllers
 
         }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
-		{
+        [HttpPost("DeleteConfirmed/{id:int}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
             _logger.LogInformation("Deleting booked car.");
             try
             {
@@ -251,12 +257,14 @@ namespace COMP2139_Assignment1.Controllers
                     return RedirectToAction("Search", new { carId = CarBooking.CarId });
                 }
                 return NotFound();
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("Search/{CarId:int}")]
 		public async Task<IActionResult> Search(int CarId)
         {
             _logger.LogInformation("Calling Search function for car");
@@ -298,6 +306,7 @@ namespace COMP2139_Assignment1.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
+        
         // Helper function to only book if there is currently not a booking for said item
         private async Task<bool> BookingDatesIntersect(CarBooking newBooking)
         {

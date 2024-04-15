@@ -14,6 +14,7 @@ namespace COMP2139_Assignment1.Controllers
             _logger = logger;
         }
 
+        [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Calling Home Page.");
@@ -27,6 +28,8 @@ namespace COMP2139_Assignment1.Controllers
                 return View(null);
             }
         }
+
+        [HttpGet("About")]
         public IActionResult About()
         {
             _logger.LogInformation("Calling About Page.");
@@ -41,6 +44,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
+        [HttpGet("Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error()
         {
@@ -56,6 +60,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
+        [HttpGet("NotFound")]
         public async Task<IActionResult> NotFound(int statusCode)
         {
             _logger.LogInformation("Calling Not Found Page.");

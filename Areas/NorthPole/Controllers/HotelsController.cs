@@ -22,6 +22,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
         }
 
+        [HttpGet("List")]
         public IActionResult List()
         {
             _logger.LogInformation("List the hotels");
@@ -35,6 +36,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             _logger.LogInformation("Calling the list of hotels.");
@@ -47,6 +49,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
+        [HttpGet("Create")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Create()
         {
@@ -61,7 +64,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Hotel hotel)
         {
@@ -81,7 +84,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Details/{hotelId:int}")]
         public IActionResult Details(int hotelId)
         {
             _logger.LogInformation("Details page for hotel entity.");
@@ -101,7 +104,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpGet]
+        [HttpGet("Edit/{hotelId:int}")]
         public IActionResult Edit(int hotelId)
         {
             _logger.LogInformation($"Edit page for hotel with hotel id: {hotelId}");
@@ -120,7 +123,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost]
+        [HttpPost("Edit/{HotelId:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int HotelId, [Bind("HotelId", "HotelName", "City", "HotelLocation", "Description")] Hotel hotel)
         {
@@ -169,7 +172,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Delete/{hotelId:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int hotelId)
         {
@@ -189,7 +192,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost, ActionName("DeleteConfirmed")]
+        [HttpPost("DeleteConfirmed/{HotelId:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int HotelId)
         {
@@ -211,7 +214,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Search/{Name}/{City}")]
         public async Task<IActionResult> Search(string Name, string City)
         {
             _logger.LogInformation($"Search for Hotel base on name: {Name}, city: {City}.");

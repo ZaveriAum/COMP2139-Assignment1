@@ -19,6 +19,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+        [HttpGet("Index/{HotelId:int}")]
         public async Task<IActionResult> Index(int HotelId)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.HotelId== HotelId);
@@ -30,6 +32,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             ViewBag.HotelName = hotel.HotelName;
             return View(hotelReviews);
         }
+
+        [HttpGet("Delete/{reviewId:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
@@ -40,6 +44,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(hotelReview);
         }
+
+        [HttpPost("DeleteConfirmed/{Id:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
@@ -52,7 +58,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return NotFound();
         }
-        [HttpGet]
+
+        [HttpGet("Create/{hotelId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int hotelId)
         {
@@ -60,7 +67,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View();
         }
-        [HttpPost]
+
+        [HttpPost("Create/{hotelId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int hotelId, HotelReview review)
         {

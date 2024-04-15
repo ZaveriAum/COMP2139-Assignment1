@@ -6,6 +6,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
     {
         [Area("NorthPole")]
         [Route("[area]/[controller]/[action]")]
+
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View();

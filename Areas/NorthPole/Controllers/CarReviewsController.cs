@@ -20,6 +20,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+        [HttpGet("Index/{CarId:int}")]
         public async Task<IActionResult> Index(int CarId)
         {
             var car = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == CarId);
@@ -32,6 +34,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             ViewBag.carBrand = car?.Brand;
             return View(carReviews);
         }
+
+        [HttpGet("Delete/{reviewId: int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
@@ -42,6 +46,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(carReview);
         }
+
+        [HttpPost("DeleteConfirmed/{Id:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
@@ -54,7 +60,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return NotFound();
         }
-        [HttpGet]
+
+        [HttpGet("Create/{carId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int carId)
         {
@@ -62,7 +69,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View();
         }
-        [HttpPost]
+
+        [HttpPost("Create/{carId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int carId, CarReview review)
         {

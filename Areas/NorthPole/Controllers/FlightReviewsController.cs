@@ -19,6 +19,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+        [HttpGet("Index/{FlightId:int}")]
         public async Task<IActionResult> Index(int FlightId)
         {
             var flight = await _context.Flights.FirstOrDefaultAsync(f => f.FlightId == FlightId);
@@ -31,6 +33,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             ViewBag.Number = flight?.FlightNumber;
             return View(flightReviews);
         }
+
+        [HttpGet("Delete/{reviewId:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
@@ -41,6 +45,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return View(flightReview);
         }
+
+        [HttpPost("DeleteConfirmed/{Id:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
@@ -53,7 +59,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
             return NotFound();
         }
-        [HttpGet]
+
+        [HttpGet("Create/{flightId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int flightId)
         {
@@ -61,7 +68,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View();
         }
-        [HttpPost]
+
+        [HttpPost("Create/{flightId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int flightId, FlightReview review)
         {

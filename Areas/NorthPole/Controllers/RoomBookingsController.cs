@@ -22,6 +22,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
         }
 
+        [HttpGet("Index/{RoomId:int}")]
         public async Task<IActionResult> Index(int RoomId)
         {
             _logger.LogInformation($"Room Booking page for roomId: {RoomId}");
@@ -35,7 +36,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Create/{roomId:int}")]
         public async Task<IActionResult> Create(int roomId)
         {
             _logger.LogInformation($"Create booking page for roomId: {roomId}");
@@ -57,7 +58,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
             _logger.LogInformation($"Create room booking for car booking: {booking.BookedStartDate} : {booking.BookedEndDate} with room Id: {booking.RoomId}");
@@ -92,7 +93,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Edit/{Id:int}")]
         public async Task<IActionResult> Edit(int Id)
         {
             _logger.LogInformation($"Edit page the car id with carId: {Id}");
@@ -117,7 +118,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("Edit/{Id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int Id, [Bind("Id", "BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
@@ -160,7 +161,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        [HttpGet]
+        [HttpGet("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation($"Delete page for room booking controller: {id}.");
@@ -184,7 +185,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        [HttpPost]
+
+        [HttpPost("DeleteConfirmed/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -211,6 +213,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
+        [HttpGet("Search/{RoomId:int}")]
         public async Task<IActionResult> Search(int RoomId)
         {
             _logger.LogInformation($"Searching for room booking with id: {RoomId}");

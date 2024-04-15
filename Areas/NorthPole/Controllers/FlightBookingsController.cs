@@ -23,6 +23,7 @@ namespace COMP2139_Assignment1.Controllers
             _logger = logger;
         }
 
+        [HttpGet("Index/{FlightId:int}")]
         public async Task<IActionResult> Index(int FlightId)
         {
             _logger.LogInformation("Flight booking page for flight.");
@@ -36,7 +37,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Create/{FlightId:int}")]
         public async Task<IActionResult> Create(int FlightId)
         {
             _logger.LogInformation("Create page for flight booking");
@@ -78,6 +79,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
             _logger.LogInformation("Create a car booking for user for the car entity.");
@@ -107,7 +109,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("Edit/{id:int}")]
         public async Task<IActionResult> Edit(int Id)
         {
             _logger.LogInformation("Edit page the booking made");
@@ -140,7 +142,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("Edit/{Id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int Id, [Bind("Id", "FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
         {
@@ -169,6 +171,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
+        [HttpGet("Search/{FlightId:int}")]
         public async Task<IActionResult> Search(int FlightId)
         {
             _logger.LogInformation("Seach for booked flight.");
@@ -209,6 +212,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
+        [HttpGet("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation("Delete Page for fligt booking.");
@@ -235,7 +239,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("DeleteConfirmed/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
