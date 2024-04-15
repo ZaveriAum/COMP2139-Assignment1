@@ -14,26 +14,50 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
     public class HotelsController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly ILogger<HotelsController> _logger;
 
-        public HotelsController(ApplicationDbContext db)
+        public HotelsController(ApplicationDbContext db, ILogger<HotelsController> logger)
         {
             _db = db;
+            _logger = logger;
         }
 
         public IActionResult List()
         {
-            return View(_db.Hotels.ToList());
+            _logger.LogInformation("List the hotels");
+            try
+            {
+                return View(_db.Hotels.ToList());
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         public IActionResult Index()
         {
-            return View(_db.Hotels.ToList());
+            _logger.LogInformation("Calling the list of hotels.");
+            try {
+                return View(_db.Hotels.ToList());
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
         public IActionResult Create()
         {
-            return View();
+            _logger.LogInformation("Create page for hotel entity.");
+            try {
+                return View();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
@@ -41,82 +65,127 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Hotel hotel)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation("Create page for hotel entity.");
+            try {
+                if (ModelState.IsValid)
+                {
+                    _db.Hotels.Add(hotel);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(hotel);
+            }catch(Exception ex)
             {
-                _db.Hotels.Add(hotel);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            return View(hotel);
         }
 
         [HttpGet]
         public IActionResult Details(int hotelId)
         {
-            var hotel = _db.Hotels.FirstOrDefault(p => p.HotelId == hotelId);
-            if (hotel == null)
+            _logger.LogInformation("Details page for hotel entity.");
+            try
             {
-                return NotFound();
+                var hotel = _db.Hotels.FirstOrDefault(p => p.HotelId == hotelId);
+                if (hotel == null)
+                {
+                    return NotFound();
+                }
+                return View(hotel);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            return View(hotel);
         }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
         public IActionResult Edit(int hotelId)
         {
-            var hotel = _db.Hotels.Find(hotelId);
-            if (hotel == null)
+            _logger.LogInformation($"Edit page for hotel with hotel id: {hotelId}");
+            try {
+                var hotel = _db.Hotels.Find(hotelId);
+                if (hotel == null)
+                {
+                    return NotFound();
+                }
+                return View(hotel);
+            }catch(Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            return View(hotel);
         }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int HotelId, [Bind("HotelId", "HotelName", "City", "HotelLocation", "Description")] Hotel hotel)
         {
-            if (HotelId != hotel.HotelId)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                try
+            _logger.LogInformation($"Edit page for hotel entity for hotel id: {HotelId}.");
+            try {
+                if (HotelId != hotel.HotelId)
                 {
-                    _db.Update(hotel);
-                    _db.SaveChanges();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                if (ModelState.IsValid)
                 {
-                    if (!HotelExists(hotel.HotelId))
+                    try
                     {
-                        return NotFound();
+                        _db.Update(hotel);
+                        _db.SaveChanges();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!HotelExists(hotel.HotelId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                return View(hotel);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            return View(hotel);
         }
-
         private bool HotelExists(int hotelId)
         {
-            return _db.Hotels.Any(e => e.HotelId == hotelId);
+            _logger.LogInformation($"Check if the hotel exists with the id: {hotelId}.");
+            try {
+                return _db.Hotels.Any(e => e.HotelId == hotelId);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
         }
+
         [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int hotelId)
         {
-            var hotel = await _db.Hotels.FindAsync(hotelId);
-            if (hotel == null)
+            _logger.LogInformation($"Delete page for hotel with id: {hotelId}");
+            try {
+                var hotel = await _db.Hotels.FindAsync(hotelId);
+                if (hotel == null)
+                {
+                    return NotFound();
+                }
+                return View(hotel);
+            }catch(Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            return View(hotel);
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
@@ -124,31 +193,46 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int HotelId)
         {
-            var hotel = _db.Hotels.Find(HotelId);
-            if (hotel != null)
-            {
-                _db.Hotels.Remove(hotel);
-                _db.SaveChanges();
-                return RedirectToAction(nameof(Index));
+            _logger.LogInformation($"Delete function to hotel with hotel id: {HotelId}");
+            try {
+                var hotel = _db.Hotels.Find(HotelId);
+                if (hotel != null)
+                {
+                    _db.Hotels.Remove(hotel);
+                    _db.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                return NotFound();
             }
-            return NotFound();
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Search(string Name, string City)
         {
-            var hotelQuery = from f in _db.Hotels select f;
-
-            bool searchPerformed = !string.IsNullOrEmpty(Name) || !string.IsNullOrEmpty(City);
-
-            if (searchPerformed)
+            _logger.LogInformation($"Search for Hotel base on name: {Name}, city: {City}.");
+            try
             {
-                hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(Name) ||
-                                                      f.City.Contains(City));
+                var hotelQuery = from f in _db.Hotels select f;
+
+                bool searchPerformed = !string.IsNullOrEmpty(Name) || !string.IsNullOrEmpty(City);
+
+                if (searchPerformed)
+                {
+                    hotelQuery = hotelQuery.Where(f => f.HotelName.Contains(Name) ||
+                                                          f.City.Contains(City));
+                }
+                var hotels = await hotelQuery.ToListAsync();
+                return View("Search", hotels);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-            var hotels = await hotelQuery.ToListAsync();
-            return View("Search", hotels);
         }
     }
 }

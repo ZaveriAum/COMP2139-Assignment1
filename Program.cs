@@ -5,6 +5,7 @@ using COMP2139_Assignment1.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System;
 using COMP2139_Assignment1.Areas.NorthPole.Models;
+using Serilog;
 
 namespace COMP2139_Assignment1
 {
@@ -28,6 +29,11 @@ namespace COMP2139_Assignment1
             builder.Services.AddRazorPages();
 
             builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
+            builder.Host.UseSerilog((hostContext, services, configuration) =>
+            {
+                configuration.ReadFrom.Configuration(hostContext.Configuration);
+            });
 
             var app = builder.Build();
 
@@ -64,6 +70,7 @@ namespace COMP2139_Assignment1
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSerilogRequestLogging();
             app.MapRazorPages();
             //app.MapControllerRoute(
             //    name: "area",

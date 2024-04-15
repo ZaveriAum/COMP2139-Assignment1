@@ -16,30 +16,62 @@ namespace COMP2139_Assignment1.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            _logger.LogInformation("Calling Home Page.");
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View(null);
+            }
         }
-        public async Task<IActionResult> About()
+        public IActionResult About()
         {
-            return View();
+            _logger.LogInformation("Calling About Page.");
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View(null);
+            }
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public async Task<IActionResult> Privacy()
-        {
-            return View();
+            _logger.LogInformation("Calling Error Page");
+            try
+            {
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View(new ErrorViewModel { });
+            }
         }
 
         public async Task<IActionResult> NotFound(int statusCode)
         {
-            if (statusCode == 404)
+            _logger.LogInformation("Calling Not Found Page.");
+            try
             {
-                return View("NotFound");
+                if (statusCode == 404)
+                {
+                    return View("NotFound");
+                }
+                return View("Error");
             }
-            return View("Error");
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View(new ErrorViewModel { });
+            }
         }
     }
 }
