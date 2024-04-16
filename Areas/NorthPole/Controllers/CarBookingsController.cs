@@ -264,6 +264,16 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
+        public async Task<bool> CheckBookingExists(CarBooking booking)
+        {
+            var car_booking = await _context.CarBookings.FindAsync(booking.Id);
+            if (car_booking != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         [HttpGet("Search/{CarId:int}")]
 		public async Task<IActionResult> Search(int CarId)
         {
