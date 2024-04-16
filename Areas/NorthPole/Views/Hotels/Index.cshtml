@@ -1,9 +1,11 @@
-﻿@model IEnumerable<Hotel>
+﻿@model List<Hotel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Hotels";
 }
-
+@using COMP2139_Assignment1.Areas.NorthPole.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<NorthPoleUser> userManager;
 
 
 <DOCTYPE html>
