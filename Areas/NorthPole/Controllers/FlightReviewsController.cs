@@ -101,7 +101,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create")]
+        [HttpPost("Create/{flightId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int flightId, FlightReview review)
         {

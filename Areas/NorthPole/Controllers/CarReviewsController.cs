@@ -103,7 +103,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create")]
+        [HttpPost("Create/{carId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int carId, CarReview review)
         {
