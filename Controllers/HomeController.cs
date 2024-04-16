@@ -14,8 +14,7 @@ namespace COMP2139_Assignment1.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             _logger.LogInformation("Calling Home Page.");
             try

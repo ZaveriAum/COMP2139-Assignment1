@@ -21,7 +21,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
 		}
 
-        [HttpGet("Index/{userId:string}")]
+        [HttpGet("Index")]
 		public async Task<IActionResult> Index(string userId)
 		{
             _logger.LogInformation($"Index page called for user with user id: {userId}.");
@@ -44,7 +44,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Delete/{userId:string}")]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(string userId)
         {
             _logger.LogInformation($"Delete action invoked with userId: {userId}");
@@ -64,7 +64,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("DeleteConfirmed/{id:string}")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {

@@ -85,7 +85,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpGet("Create/{hotelId:int}")]
         [Authorize]
-        public async Task<IActionResult> Create(int hotelId)
+        public IActionResult Create(int hotelId)
         {
             _logger.LogInformation($"Create page for hotel review with hotelId: {hotelId}");
             try {
@@ -99,7 +99,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create/{hotelId:int}")]
+        [HttpPost("Create/")]
         [Authorize]
         public async Task<IActionResult> Create(int hotelId, HotelReview review)
         {

@@ -216,12 +216,16 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Search/{searchStringFrom}/{searchStringTo}/{searchStringDepartureDate}/{searchPassengerNum:int}")]
-        public async Task<IActionResult> Search(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate, int searchPassengerNum)
+        [HttpGet("SearchFlight/{searchStringFrom}/{searchStringTo}/{searchStringDepartureDate}/{searchPassengerNum:int}")]
+        public async Task<IActionResult> SearchFlight(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate, int searchPassengerNum)
 		{
 			_logger.LogInformation($"Search for information: searchStringTo: {searchStringTo}, searchStringFrom: {searchStringFrom}");
 			try {
-				var flightsQuery = from f in _context.Flights select f;
+                if (_context.Flights == null)
+                {
+                    return Problem("Sorry, there are currently no flights available at the moment!");
+                }
+                var flightsQuery = from f in _context.Flights select f;
 
 				bool searchPerformed = !String.IsNullOrEmpty(searchStringFrom) || !String.IsNullOrEmpty(searchStringTo);
 				if (searchPerformed)
@@ -233,7 +237,7 @@ namespace COMP2139_Assignment1.Controllers
 
 				if (searchPassengerNum > 0)
 				{
-					flightsQuery = flightsQuery.Where(f => f.Seats - _context.FlightBookings
+					flightsQuery =  flightsQuery.Where(f => f.Seats - _context.FlightBookings
 																 .Where(b => b.FlightId == f.FlightId)
 																 .Sum(b => b.NumberOfPassenger) >= searchPassengerNum);
 				}
@@ -247,7 +251,8 @@ namespace COMP2139_Assignment1.Controllers
 				ViewData["searchPassengerNum"] = searchPassengerNum;
 
 				return View("SearchFlight", flights);
-			}catch(Exception ex)
+			}
+            catch (Exception ex)
 			{
 				_logger.LogError(ex.Message);
                 return View();

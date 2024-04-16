@@ -45,7 +45,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Delete/{reviewId: int}")]
+        [HttpGet("Delete/{reviewId:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
@@ -88,7 +88,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpGet("Create/{carId:int}")]
         [Authorize]
-        public async Task<IActionResult> Create(int carId)
+        public IActionResult Create(int carId)
         {
             _logger.LogInformation($"Create review page  for car with id: {carId}.");
             try
@@ -103,7 +103,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create/{carId:int}")]
+        [HttpPost("Create")]
         [Authorize]
         public async Task<IActionResult> Create(int carId, CarReview review)
         {

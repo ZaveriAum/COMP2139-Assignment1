@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Flight";
 }
-
+@using COMP2139_Assignment1.Areas.NorthPole.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<NorthPoleUser> userManager;
 <DOCTYPE html>
     <html>
     <head>
@@ -14,7 +16,7 @@
         <div class="center-screen fill-screen mt-5 ">
         <h2 class="mt-5">Search For A Flight</h2>
 
-            <form class="d-flex flex-column form-one mb-5" asp-action="Search" method="get">
+            <form class="d-flex flex-column form-one mb-5" asp-action="SearchFlight" method="get">
                 <input class="input-one w-250" type="text" placeholder="From" name="searchStringFrom" required />
                 <input class="input-one w-250 mt-2" type="text" placeholder="Going to" name="searchStringTo" required />
                 <input class="input-one w-250 mt-2" type="date" id="searchStringDepartureDate" name="searchStringDepartureDate" required />

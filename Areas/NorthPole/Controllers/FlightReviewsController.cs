@@ -87,7 +87,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
 
         [HttpGet("Create/{flightId:int}")]
         [Authorize]
-        public async Task<IActionResult> Create(int flightId)
+        public IActionResult Create(int flightId)
         {
             _logger.LogInformation($"Create page for flight review id with flight id: {flightId}.");
             try {
@@ -101,7 +101,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create/{flightId:int}")]
+        [HttpPost("Create")]
         [Authorize]
         public async Task<IActionResult> Create(int flightId, FlightReview review)
         {

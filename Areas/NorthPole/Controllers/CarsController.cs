@@ -149,7 +149,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Create/{CarId:int}")]
+        [HttpGet("Create/{Carid:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int Carid)
         {

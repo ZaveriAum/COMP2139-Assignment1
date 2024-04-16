@@ -125,7 +125,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Edit/{id:int}")]
+        [HttpGet("Edit/{Id:int}")]
         public async Task<IActionResult> Edit(int Id)
         {
             _logger.LogInformation("Calling Edit page for Booked Car.");
