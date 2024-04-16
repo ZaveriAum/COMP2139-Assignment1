@@ -38,7 +38,7 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
 
             }
         }
@@ -68,7 +68,7 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -121,7 +121,7 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -155,7 +155,7 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -201,7 +201,7 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
 
         }
@@ -229,7 +229,7 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
 
         }
@@ -260,14 +260,14 @@ namespace COMP2139_Assignment1.Controllers
             } catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [HttpGet("Search/{CarId:int}")]
 		public async Task<IActionResult> Search(int CarId)
         {
-            _logger.LogInformation("Calling Search function for car");
+            _logger.LogInformation($"Calling Search function for car for car with id: {CarId}");
             try
             {
                 var Car = await _context.Cars.FindAsync(CarId);
@@ -303,12 +303,12 @@ namespace COMP2139_Assignment1.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
         
         // Helper function to only book if there is currently not a booking for said item
-        private async Task<bool> BookingDatesIntersect(CarBooking newBooking)
+        public async Task<bool> BookingDatesIntersect(CarBooking newBooking)
         {
             _logger.LogInformation("Validating Booking Dates.");
             try

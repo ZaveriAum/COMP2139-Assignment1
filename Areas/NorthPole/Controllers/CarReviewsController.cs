@@ -15,77 +15,117 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
     {
         private readonly UserManager<NorthPoleUser> _userManager;
         private readonly ApplicationDbContext _context;
-        public CarReviewsController(ApplicationDbContext context, UserManager<NorthPoleUser> userManager)
+        private readonly ILogger<CarReviewsController> _logger;
+
+        public CarReviewsController(ApplicationDbContext context, UserManager<NorthPoleUser> userManager, ILogger<CarReviewsController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet("Index/{CarId:int}")]
         public async Task<IActionResult> Index(int CarId)
         {
-            var car = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == CarId);
-            var carReviews = await _context.CarReviews
-				.Where(cr => cr.CarId == CarId)
-                .Include(cr => cr.User)
-                .ToListAsync();
-            ViewBag.CarId = CarId;
-            ViewBag.carModel = car?.Model;
-            ViewBag.carBrand = car?.Brand;
-            return View(carReviews);
+            _logger.LogInformation($"Review Page for car with id: {CarId}.");
+            try {
+                var car = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == CarId);
+                var carReviews = await _context.CarReviews
+                    .Where(cr => cr.CarId == CarId)
+                    .Include(cr => cr.User)
+                    .ToListAsync();
+                ViewBag.CarId = CarId;
+                ViewBag.carModel = car?.Model;
+                ViewBag.carBrand = car?.Brand;
+                return View(carReviews);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
+            }
         }
 
         [HttpGet("Delete/{reviewId: int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
-            var carReview = await _context.CarReviews.Include(cr => cr.User).FirstOrDefaultAsync(p => p.Id== reviewId);
-            if (carReview == null)
+            _logger.LogInformation($"Delete Page for car-review with reviewId: {reviewId}");
+            try {
+                var carReview = await _context.CarReviews.Include(cr => cr.User).FirstOrDefaultAsync(p => p.Id == reviewId);
+                if (carReview == null)
+                {
+                    return NotFound();
+                }
+                return View(carReview);
+            }catch(Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return View();
             }
-            return View(carReview);
         }
 
         [HttpPost("DeleteConfirmed/{Id:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
-            var carReview = _context.CarReviews.Find(Id);
-            if (carReview != null)
+            _logger.LogInformation($"Delete the reivew with id: {Id}.");
+            try
             {
-                _context.CarReviews.Remove(carReview);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { carId = carReview.CarId});
+                var carReview = _context.CarReviews.Find(Id);
+                if (carReview != null)
+                {
+                    _context.CarReviews.Remove(carReview);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index), new { carId = carReview.CarId });
+                }
+                return NotFound();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
             }
-            return NotFound();
         }
 
         [HttpGet("Create/{carId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int carId)
         {
-            ViewBag.carId = carId;
-            ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View();
+            _logger.LogInformation($"Create review page  for car with id: {carId}.");
+            try
+            {
+                ViewBag.carId = carId;
+                ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return View();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
+            }
         }
 
         [HttpPost("Create/{carId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int carId, CarReview review)
         {
-            review.CarId= carId;
-            if(review.Comment == null)
+            _logger.LogInformation($"Create review for car with id: {carId} and message: {review.Comment}.");
+            try {
+                review.CarId = carId;
+                if (review.Comment == null)
+                {
+                    review.Comment = "No Comment Added";
+                }
+                review.DatePosted = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    _context.Update(review);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction(nameof(Index), new { carId = review.CarId });
+            }catch(Exception ex)
             {
-                review.Comment = "No Comment Added";
+                _logger.LogError(ex.Message);
+                return View();
             }
-            review.DatePosted = DateTime.Now;
-            if(ModelState.IsValid)
-            {
-                _context.Update(review);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index), new { carId = review.CarId });
         }
     }
 }

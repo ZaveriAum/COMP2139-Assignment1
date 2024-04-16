@@ -14,77 +14,116 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
     {
         private readonly UserManager<NorthPoleUser> _userManager;
         private readonly ApplicationDbContext _context;
-        public FlightReviewsController(ApplicationDbContext context, UserManager<NorthPoleUser> userManager)
+        private readonly ILogger<FlightReviewsController> _logger;
+        public FlightReviewsController(ApplicationDbContext context, UserManager<NorthPoleUser> userManager, ILogger<FlightReviewsController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet("Index/{FlightId:int}")]
         public async Task<IActionResult> Index(int FlightId)
         {
-            var flight = await _context.Flights.FirstOrDefaultAsync(f => f.FlightId == FlightId);
-            var flightReviews = await _context.FlightReviews
-                .Where(fr => fr.FlightId == FlightId)
-                .Include(fr => fr.User)
-                .ToListAsync();
-            ViewBag.FlightId = FlightId;
-            ViewBag.Airline = flight?.Airline;
-            ViewBag.Number = flight?.FlightNumber;
-            return View(flightReviews);
+            _logger.LogInformation($"Review page for flight with id: {FlightId}.");
+            try {
+                var flight = await _context.Flights.FirstOrDefaultAsync(f => f.FlightId == FlightId);
+                var flightReviews = await _context.FlightReviews
+                    .Where(fr => fr.FlightId == FlightId)
+                    .Include(fr => fr.User)
+                    .ToListAsync();
+                ViewBag.FlightId = FlightId;
+                ViewBag.Airline = flight?.Airline;
+                ViewBag.Number = flight?.FlightNumber;
+                return View(flightReviews);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
+            }
         }
 
         [HttpGet("Delete/{reviewId:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
-            var flightReview = await _context.FlightReviews.Include(fr => fr.User).FirstOrDefaultAsync(p => p.Id == reviewId);
-            if (flightReview == null)
+            _logger.LogInformation($"Delete page of flight review with reviewId: {reviewId}");
+            try
             {
-                return NotFound();
+                var flightReview = await _context.FlightReviews.Include(fr => fr.User).FirstOrDefaultAsync(p => p.Id == reviewId);
+                if (flightReview == null)
+                {
+                    return NotFound();
+                }
+                return View(flightReview);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
             }
-            return View(flightReview);
         }
 
         [HttpPost("DeleteConfirmed/{Id:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
-            var flightReview = _context.FlightReviews.Find(Id);
-            if (flightReview != null)
+            _logger.LogInformation($"Delete flight review with flight review id: {Id}");
+            try
             {
-                _context.FlightReviews.Remove(flightReview);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { flightId = flightReview.FlightId});
+                var flightReview = _context.FlightReviews.Find(Id);
+                if (flightReview != null)
+                {
+                    _context.FlightReviews.Remove(flightReview);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index), new { flightId = flightReview.FlightId });
+                }
+                return NotFound();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
             }
-            return NotFound();
         }
 
         [HttpGet("Create/{flightId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int flightId)
         {
-            ViewBag.flightId = flightId;
-            ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View();
+            _logger.LogInformation($"Create page for flight review id with flight id: {flightId}.");
+            try {
+                ViewBag.flightId = flightId;
+                ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return View();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return View();
+            }
         }
 
         [HttpPost("Create/{flightId:int}")]
         [Authorize]
         public async Task<IActionResult> Create(int flightId, FlightReview review)
         {
-            review.FlightId = flightId;
-            if (review.Comment == null)
+            _logger.LogInformation($"Create flight review id with flightId: {flightId} with comment: {review.Comment}.");
+            try {
+                review.FlightId = flightId;
+                if (review.Comment == null)
+                {
+                    review.Comment = "No Comment Added";
+                }
+                review.DatePosted = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    _context.Update(review);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction(nameof(Index), new { flightId = review.FlightId });
+            }catch(Exception ex)
             {
-                review.Comment = "No Comment Added";
+                _logger.LogError(ex.Message);
+                return View();
             }
-            review.DatePosted = DateTime.Now;
-            if (ModelState.IsValid)
-            {
-                _context.Update(review);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index), new { flightId = review.FlightId});
         }
     }
 }
