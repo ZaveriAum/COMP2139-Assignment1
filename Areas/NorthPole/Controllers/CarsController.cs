@@ -51,7 +51,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("Create")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Car car)
         {
@@ -72,7 +72,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("{carId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Details(int carId)
         {
             _logger.LogInformation("Details page for car details.");
@@ -92,7 +92,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpGet("{carId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int carId)
         {
             _logger.LogInformation("Edit page for car entity");
@@ -111,7 +111,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("{CarId:int}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int CarId, [Bind("CarId", "PlateNumber", "Brand", "Model", "City", "Price", "MaxPassenger", "RentalCompany", "Description", "PickUpLocation")] Car car)
         {
@@ -170,7 +170,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("DeleteConfirmed")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int CarId)
         {
@@ -205,7 +205,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Search/{City?}/{Model?}/{Brand?}/{MinPrice:double?}/{MaxPrice:double?}/{NumPassenger:int?}")]
+        [HttpGet]
         public async Task<IActionResult> Search(string City, string Model, string Brand, double MinPrice, double MaxPrice, int NumPassenger)
         {
             _logger.LogInformation("Seach the car for booking based on the user requirements");
