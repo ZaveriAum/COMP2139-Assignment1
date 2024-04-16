@@ -37,7 +37,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-		[HttpGet("SearchFlight")]
+/*		[HttpGet("SearchFlight")]
 		public async Task<IActionResult> SearchFlight()
 		{
 			_logger.LogInformation("Search flights page.");
@@ -50,7 +50,7 @@ namespace COMP2139_Assignment1.Controllers
 				_logger.LogError(ex.Message);
                 return View();
             }
-        }
+        }*/
 
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet("Create")]
@@ -216,7 +216,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("SearchFlight/{searchStringFrom}/{searchStringTo}/{searchStringDepartureDate}/{searchPassengerNum:int}")]
+		[HttpGet]
         public async Task<IActionResult> SearchFlight(string searchStringFrom, string searchStringTo, DateOnly searchStringDepartureDate, int searchPassengerNum)
 		{
 			_logger.LogInformation($"Search for information: searchStringTo: {searchStringTo}, searchStringFrom: {searchStringFrom}");

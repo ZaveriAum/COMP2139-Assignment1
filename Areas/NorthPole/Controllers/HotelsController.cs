@@ -214,7 +214,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Search/{Name}/{City}")]
+        [HttpGet("Search")]
         public async Task<IActionResult> Search(string Name, string City)
         {
             _logger.LogInformation($"Search for Hotel base on name: {Name}, city: {City}.");
