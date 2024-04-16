@@ -36,7 +36,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Create/{roomId:int}")]
+        [HttpGet("Create")]
         public async Task<IActionResult> Create(int roomId)
         {
             _logger.LogInformation($"Create booking page for roomId: {roomId}");
@@ -50,6 +50,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 ViewData["Description"] = room.Description;
                 ViewData["Price"] = room.Price;
                 ViewData["HotelId"] = room.HotelId;
+                ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 return View();
             }catch(Exception ex)
             {
@@ -59,7 +60,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
+        public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId", "UserId")] RoomBooking booking)
         {
             _logger.LogInformation($"Create room booking for car booking: {booking.BookedStartDate} : {booking.BookedEndDate} with room Id: {booking.RoomId}");
             try {

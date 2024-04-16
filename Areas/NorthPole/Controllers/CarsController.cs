@@ -149,7 +149,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Create/{Carid:int}")]
+        [HttpGet("Delete")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int Carid)
         {
@@ -170,7 +170,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("Create/{CarId:int}")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int CarId)
         {

@@ -17,6 +17,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @Html.HiddenFor(model => model.RoomId)
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"/>
             <div class="form-group">
                 <label asp-for="BookedStartDate" class="control-label"></label>
                 <input asp-for="BookedStartDate" class="form-control" />

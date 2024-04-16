@@ -20,6 +20,7 @@
         <form asp-action="Create" asp-route-CarId="@ViewData["CarId"]">
             <input type="hidden" asp-for="CarId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"/>
             <div class="form-group">
                 <label asp-for="BookedStartDate" class="control-label"></label>
                 <input type="date" asp-for="BookedStartDate" class="form-control" />

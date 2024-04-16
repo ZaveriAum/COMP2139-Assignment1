@@ -109,7 +109,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
             _logger.LogInformation($"Edit page for hotel with hotel id: {hotelId}");
             try {
-                var hotel = _db.Hotels.FindAsync(hotelId);
+                var hotel = await _db.Hotels.FindAsync(hotelId);
                 if (hotel == null)
                 {
                     return NotFound();
@@ -172,7 +172,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Delete/{hotelId:int}")]
+        [HttpGet("Delete")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int hotelId)
         {
@@ -192,13 +192,13 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("DeleteConfirmed/{HotelId:int}")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int HotelId)
+        public async Task<IActionResult> DeleteConfirmed(int hotelId)
         {
-            _logger.LogInformation($"Delete function to hotel with hotel id: {HotelId}");
+            _logger.LogInformation($"Delete function to hotel with hotel id: {hotelId}");
             try {
-                var hotel = await _db.Hotels.FindAsync(HotelId);
+                var hotel = await _db.Hotels.FindAsync(hotelId);
                 if (hotel != null)
                 {
                     _db.Hotels.Remove(hotel);
@@ -214,7 +214,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Search/{Name}/{City}")]
+        [HttpGet("Search")]
         public async Task<IActionResult> Search(string Name, string City)
         {
             _logger.LogInformation($"Search for Hotel base on name: {Name}, city: {City}.");
@@ -234,7 +234,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
     }
