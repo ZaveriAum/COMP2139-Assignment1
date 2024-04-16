@@ -21,7 +21,7 @@ namespace COMP2139_Assignment1.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Search Page for available cars.");
@@ -37,7 +37,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpGet("Create")]
+        [HttpGet]
         public IActionResult Create()
         {
             _logger.LogInformation("Create page for car");
@@ -72,7 +72,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Create/{carId:int}")]
+        [HttpGet("{carId:int}")]
         public async Task<IActionResult> Details(int carId)
         {
             _logger.LogInformation("Details page for car details.");
@@ -92,7 +92,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpGet("Create/{carId:int}")]
+        [HttpGet("{carId:int}")]
         public async Task<IActionResult> Edit(int carId)
         {
             _logger.LogInformation("Edit page for car entity");
@@ -111,7 +111,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("Create/{CarId:int}")]
+        [HttpPost("{CarId:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int CarId, [Bind("CarId", "PlateNumber", "Brand", "Model", "City", "Price", "MaxPassenger", "RentalCompany", "Description", "PickUpLocation")] Car car)
         {
@@ -149,7 +149,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Delete")]
+        [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int Carid)
         {
