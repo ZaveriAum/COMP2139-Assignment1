@@ -141,18 +141,7 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
-                var setUsername = await _userManager.SetUserNameAsync(user, Input.Username);
-                if (!setUsername.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set Username.";
-                    return RedirectToPage();
-                }
-                else
-                {
-                    user.UserName = Input.Username;
-                    user.UsernameChangeLimit -= 1;
-                    await _userManager.UpdateAsync(user);
-                }
+                await _userManager.UpdateAsync(user);
             }
             if (user.UsernameChangeLimit > 0)
             {
@@ -163,6 +152,18 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
                     {
                         StatusMessage = "Error : Username not available.Please enter a new username";
                         return RedirectToPage();
+                    }
+                    var setUsername = await _userManager.SetUserNameAsync(user, Input.Username);
+                    if (!setUsername.Succeeded)
+                    {
+                        StatusMessage = "Unexpected error when trying to set Username.";
+                        return RedirectToPage();
+                    }
+                    else
+                    {
+                        user.UserName = Input.Username;
+                        user.UsernameChangeLimit -= 1;
+                        await _userManager.UpdateAsync(user);
                     }
                 }
             }
