@@ -43,7 +43,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Create/{CarId:int}")]
+        [HttpGet("Create")]
         public async Task<IActionResult> Create(int CarId)
         {
             _logger.LogInformation("Calling Create car booking page.");
@@ -63,7 +63,7 @@ namespace COMP2139_Assignment1.Controllers
                 ViewData["Price"] = Car.Price;
                 ViewData["RentalCompany"] = Car.RentalCompany;
                 ViewData["SearchString"] = TempData["SearchString"];
-
+                ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 return View();
             } catch (Exception ex)
             {
@@ -73,7 +73,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
+        public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "CarId", "UserId")] CarBooking booking)
         {
             _logger.LogInformation("Book a car.");
             try
@@ -83,7 +83,6 @@ namespace COMP2139_Assignment1.Controllers
                 {
                     return NotFound();
                 }
-                booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 ViewData["PlateNumber"] = Car.PlateNumber;
                 ViewData["City"] = Car.City;
                 ViewData["PickupLocation"] = Car.PickUpLocation;

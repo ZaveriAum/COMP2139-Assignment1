@@ -37,7 +37,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Create/{FlightId:int}")]
+        [HttpGet("Create")]
         public async Task<IActionResult> Create(int FlightId)
         {
             _logger.LogInformation("Create page for flight booking");
@@ -71,6 +71,7 @@ namespace COMP2139_Assignment1.Controllers
                 ViewData["From"] = Flight.From;
                 ViewData["To"] = Flight.To;
                 ViewData["Seats"] = Flight.Seats;
+                ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 return View();
             }catch(Exception ex)
             {
@@ -80,12 +81,11 @@ namespace COMP2139_Assignment1.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger")] FlightBooking booking)
+        public async Task<IActionResult> Create([Bind("FlightId", "PassengerName", "PassportNumber", "NumberOfPassenger", "UserId")] FlightBooking booking)
         {
             _logger.LogInformation("Create a car booking for user for the car entity.");
             try {
-                var flight = _context.Flights.Find(booking.FlightId);
-                booking.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var flight = await _context.Flights.FindAsync(booking.FlightId);
                 if (ModelState.IsValid)
                 {
                     int bookedSeats = _context.FlightBookings
