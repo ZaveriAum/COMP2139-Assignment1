@@ -176,7 +176,7 @@ namespace COMP2139_Assignment1.Controllers
 		}
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpGet("Delete/{flightId:int}")]
+		[HttpGet("Delete")]
 		public async Task<IActionResult> Delete(int flightId)
 		{
 			_logger.LogInformation("Delete page for flight entity.");
@@ -195,7 +195,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpPost("DeleteConfirmed/{flightId:int}")]
+		[HttpPost("DeleteConfirmed")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int flightId)
 		{
