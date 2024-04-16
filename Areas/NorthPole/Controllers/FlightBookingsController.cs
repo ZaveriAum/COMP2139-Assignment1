@@ -33,7 +33,7 @@ namespace COMP2139_Assignment1.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -75,7 +75,7 @@ namespace COMP2139_Assignment1.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -200,7 +200,6 @@ namespace COMP2139_Assignment1.Controllers
 
                     return View("Index", FlightBookingList);
                 }
-
                 else
                 {
                     return NotFound();
@@ -208,7 +207,7 @@ namespace COMP2139_Assignment1.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -235,7 +234,7 @@ namespace COMP2139_Assignment1.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -259,7 +258,7 @@ namespace COMP2139_Assignment1.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
     }

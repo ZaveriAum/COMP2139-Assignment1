@@ -33,7 +33,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -48,7 +48,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -63,7 +63,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -85,7 +85,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -120,7 +120,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -159,11 +159,11 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
-		private async Task<bool> FlightExists(int flightId)
+		public async Task<bool> FlightExists(int flightId)
 		{
 			_logger.LogInformation("Check if the flight exists.");
 			try {
@@ -190,7 +190,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -212,7 +212,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -250,7 +250,7 @@ namespace COMP2139_Assignment1.Controllers
 			}catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 	}

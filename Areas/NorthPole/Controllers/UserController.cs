@@ -40,7 +40,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -60,7 +60,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -84,7 +84,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
     }

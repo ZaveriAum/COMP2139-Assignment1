@@ -47,12 +47,19 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         public async Task<IActionResult> Delete(int reviewId)
         {
             _logger.LogInformation($"Delete page for the hotel review with reviewId: {reviewId}.");
-            var hotelReview = await _context.HotelReviews.Include(hr => hr.User).FirstOrDefaultAsync(p => p.Id == reviewId);
-            if (hotelReview == null)
+            try
             {
-                return NotFound();
+                var hotelReview = await _context.HotelReviews.Include(hr => hr.User).FirstOrDefaultAsync(p => p.Id == reviewId);
+                if (hotelReview == null)
+                {
+                    return NotFound();
+                }
+                return View(hotelReview);
+            }catch(Exception ex)
+            {
+                _logger.LogError (ex.Message);
+                return View();
             }
-            return View(hotelReview);
         }
 
         [HttpPost("DeleteConfirmed/{Id:int}")]

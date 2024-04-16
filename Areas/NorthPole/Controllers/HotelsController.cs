@@ -28,30 +28,30 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger.LogInformation("List the hotels");
             try
             {
-                return View(_db.Hotels.ToList());
+                return View(_db.Hotels.ToListAsync());
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [HttpGet("Index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Calling the list of hotels.");
             try {
-                return View(_db.Hotels.ToList());
+                return View(_db.Hotels.ToListAsync());
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [HttpGet("Create")]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             _logger.LogInformation("Create page for hotel entity.");
             try {
@@ -59,38 +59,38 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Hotel hotel)
+        public async Task<IActionResult> Create(Hotel hotel)
         {
             _logger.LogInformation("Create page for hotel entity.");
             try {
                 if (ModelState.IsValid)
                 {
-                    _db.Hotels.Add(hotel);
-                    _db.SaveChanges();
+                    await _db.Hotels.AddAsync(hotel);
+                    await _db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
                 return View(hotel);
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [HttpGet("Details/{hotelId:int}")]
-        public IActionResult Details(int hotelId)
+        public async Task<IActionResult> Details(int hotelId)
         {
             _logger.LogInformation("Details page for hotel entity.");
             try
             {
-                var hotel = _db.Hotels.FirstOrDefault(p => p.HotelId == hotelId);
+                var hotel = await _db.Hotels.FirstOrDefaultAsync(p => p.HotelId == hotelId);
                 if (hotel == null)
                 {
                     return NotFound();
@@ -99,17 +99,17 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet("Edit/{hotelId:int}")]
-        public IActionResult Edit(int hotelId)
+        public async Task<IActionResult> Edit(int hotelId)
         {
             _logger.LogInformation($"Edit page for hotel with hotel id: {hotelId}");
             try {
-                var hotel = _db.Hotels.Find(hotelId);
+                var hotel = _db.Hotels.FindAsync(hotelId);
                 if (hotel == null)
                 {
                     return NotFound();
@@ -118,7 +118,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
@@ -157,10 +157,10 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
-        private bool HotelExists(int hotelId)
+        public bool HotelExists(int hotelId)
         {
             _logger.LogInformation($"Check if the hotel exists with the id: {hotelId}.");
             try {
@@ -187,18 +187,18 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPost("DeleteConfirmed/{HotelId:int}")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int HotelId)
+        public async Task<IActionResult> DeleteConfirmed(int HotelId)
         {
             _logger.LogInformation($"Delete function to hotel with hotel id: {HotelId}");
             try {
-                var hotel = _db.Hotels.Find(HotelId);
+                var hotel = await _db.Hotels.FindAsync(HotelId);
                 if (hotel != null)
                 {
                     _db.Hotels.Remove(hotel);
@@ -210,7 +210,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "An error occurred while processing your request.");
+                return View();
             }
         }
 
