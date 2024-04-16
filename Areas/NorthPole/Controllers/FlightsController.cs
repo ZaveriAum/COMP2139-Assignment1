@@ -22,7 +22,7 @@ namespace COMP2139_Assignment1.Controllers
 		}
 
 
-		[HttpGet("Index")]
+		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
 			_logger.LogInformation("Search page for available flight");
@@ -53,7 +53,7 @@ namespace COMP2139_Assignment1.Controllers
         }*/
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpGet("Create")]
+        [HttpGet]
 		public IActionResult Create() 
 		{
 			_logger.LogInformation("Create page for Flight entity.");
@@ -68,7 +68,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpPost("Create")]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(Flight flight)
 		{
@@ -108,7 +108,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpGet("Edit/{flightId:int}")]
+		[HttpGet]
 		public IActionResult Edit(int flightId)
 		{
 			_logger.LogInformation("Edit page for flight entity.");
@@ -125,7 +125,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpPost("Edit/{flightId:int}")]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int flightId, [Bind("FlightId", "FlightNumber", "Airline", "DepartureDate", "DepartureTime", "ArrivalDate", "ArrivalTime", "Price", "From", "To", "Seats")] Flight flight)
 		{
@@ -176,7 +176,7 @@ namespace COMP2139_Assignment1.Controllers
 		}
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpGet("Delete")]
+		[HttpGet]
 		public async Task<IActionResult> Delete(int flightId)
 		{
 			_logger.LogInformation("Delete page for flight entity.");
@@ -195,7 +195,7 @@ namespace COMP2139_Assignment1.Controllers
         }
 
 		[Authorize(Roles = "SuperAdmin,Admin")]
-		[HttpPost("DeleteConfirmed")]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int flightId)
 		{

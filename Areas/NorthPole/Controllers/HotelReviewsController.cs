@@ -22,7 +22,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index/{HotelId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Index(int HotelId)
         {
             _logger.LogInformation($"Index page for Hotel review with hotelId: {HotelId}");
@@ -42,7 +42,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Delete/{reviewId:int}")]
+        [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
@@ -62,7 +62,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("DeleteConfirmed/{Id:int}")]
+        [HttpPost]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
@@ -83,7 +83,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Create/{hotelId:int}")]
+        [HttpGet]
         [Authorize]
         public IActionResult Create(int hotelId)
         {
@@ -99,7 +99,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create/{hotelId:int}")]
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create(int hotelId, HotelReview review)
         {

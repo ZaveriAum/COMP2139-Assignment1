@@ -22,7 +22,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index/{FlightId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Index(int FlightId)
         {
             _logger.LogInformation($"Review page for flight with id: {FlightId}.");
@@ -43,7 +43,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Delete/{reviewId:int}")]
+        [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int reviewId)
         {
@@ -63,7 +63,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("DeleteConfirmed/{Id:int}")]
+        [HttpPost]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
@@ -85,7 +85,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Create/{flightId:int}")]
+        [HttpGet]
         [Authorize]
         public IActionResult Create(int flightId)
         {
@@ -101,7 +101,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create/{flightId:int}")]
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create(int flightId, FlightReview review)
         {

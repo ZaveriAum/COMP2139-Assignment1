@@ -22,7 +22,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index/{RoomId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Index(int RoomId)
         {
             _logger.LogInformation($"Room Booking page for roomId: {RoomId}");
@@ -36,7 +36,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Create")]
+        [HttpGet]
         public async Task<IActionResult> Create(int roomId)
         {
             _logger.LogInformation($"Create booking page for roomId: {roomId}");
@@ -59,7 +59,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "RoomId", "UserId")] RoomBooking booking)
         {
             _logger.LogInformation($"Create room booking for car booking: {booking.BookedStartDate} : {booking.BookedEndDate} with room Id: {booking.RoomId}");
@@ -94,7 +94,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Edit/{Id:int}")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
             _logger.LogInformation($"Edit page the car id with carId: {Id}");
@@ -119,7 +119,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Edit/{Id:int}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int Id, [Bind("Id", "BookedStartDate", "BookedEndDate", "RoomId")] RoomBooking booking)
         {
@@ -162,7 +162,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 return View();
             }
         }
-        [HttpGet("Delete/{id:int}")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation($"Delete page for room booking controller: {id}.");
@@ -187,7 +187,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("DeleteConfirmed/{id:int}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -214,7 +214,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Search/{RoomId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Search(int RoomId)
         {
             _logger.LogInformation($"Searching for room booking with id: {RoomId}");

@@ -21,7 +21,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index/{hotelId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Index(int hotelId)
         {
             _logger.LogInformation($"List of room for hotel: {hotelId}.");
@@ -36,7 +36,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Details/{id:int}")]
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             _logger.LogInformation($"Details page for rooms with room id: {id}");
@@ -56,7 +56,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpGet("Create/{hotelId:int}")]
+        [HttpGet]
         public async Task<IActionResult> Create(int hotelId)
         {
             _logger.LogInformation($"Create page for hotel with id: {hotelId}");
@@ -80,7 +80,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("Create")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Description", "Price", "MaxGuest", "HotelId")] Room room)
         {
@@ -102,7 +102,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Edit/{hotelId:int}")]
+        [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Edit(int hotelId)
         {
@@ -122,7 +122,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpPost("Edit/{roomId:int}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Edit(int roomId, [Bind("RoomId", "Description", "Price", "MaxGuest", "HotelId")] Room room)
@@ -148,7 +148,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Delete/{roomId:int}")]
+        [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int roomId)
         {
@@ -169,7 +169,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("DeleteConfirmed/{roomId:int}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int roomId)
         {
@@ -192,7 +192,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet("Search/{MinPrice:double}/{MaxPrice:double}/{NumGuest:int}")]
+        [HttpGet]
 
         public async Task<IActionResult> Search(double MinPrice, double MaxPrice, int NumGuest)
         {

@@ -27,7 +27,7 @@ namespace COMP2139_Assignment1.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index/{CarId:int}")]
+        [HttpGet("Index")
         public async Task<IActionResult> Index(int CarId)
         {
             _logger.LogInformation("Listing all the cars searched by the user.");
@@ -124,7 +124,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpGet("Edit/{Id:int}")]
+        [HttpGet("Edit")]
         public async Task<IActionResult> Edit(int Id)
         {
             _logger.LogInformation("Calling Edit page for Booked Car.");
@@ -158,7 +158,7 @@ namespace COMP2139_Assignment1.Controllers
             }
         }
 
-        [HttpPost("Edit/{Id:int}")]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int Id, [Bind("Id", "BookedStartDate", "BookedEndDate", "CarId")] CarBooking booking)
         {
@@ -205,7 +205,7 @@ namespace COMP2139_Assignment1.Controllers
 
         }
 
-        [HttpGet("Delete/{id:int}")]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation("Callding Delete page for Booked car.");
@@ -233,7 +233,7 @@ namespace COMP2139_Assignment1.Controllers
 
         }
 
-        [HttpPost("DeleteConfirmed/{id:int}")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -273,7 +273,7 @@ namespace COMP2139_Assignment1.Controllers
             return false;
         }
 
-        [HttpGet("Search/{CarId:int}")]
+        [HttpGet("Search")]
 		public async Task<IActionResult> Search(int CarId)
         {
             _logger.LogInformation($"Calling Search function for car for car with id: {CarId}");
