@@ -23,7 +23,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         }
 
         [HttpGet("List")]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
             _logger.LogInformation("List the hotels");
             try
@@ -41,7 +41,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
         {
             _logger.LogInformation("Calling the list of hotels.");
             try {
-                return View(_db.Hotels.ToListAsync());
+                return View(_db.Hotels.ToList());
             }catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
