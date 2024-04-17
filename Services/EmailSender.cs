@@ -18,7 +18,7 @@ namespace COMP2139_Assignment1.Services
             try
             {
                 var client = new SendGridClient(_sendGridKey);
-                var from = new EmailAddress("aumzaveri06@gmail.com", "Project Collaborator");
+                var from = new EmailAddress("aumzaveri06@gmail.com", "NorthPole");
                 var to = new EmailAddress(email);
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
                 var response = await client.SendEmailAsync(msg);
