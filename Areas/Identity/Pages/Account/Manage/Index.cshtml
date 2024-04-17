@@ -47,6 +47,16 @@
                 <label asp-for="Input.Address" class="form-label"></label>
                 <span asp-validation-for="Input.Address" class="text-danger"></span>
             </div>
+                        <div class="form-floating mb-3">
+                <input asp-for="Input.FrequentFlyerNr" class="form-control input-one" placeholder="Please enter your Country." />
+                <label asp-for="Input.FrequentFlyerNr" class="form-label"></label>
+                <span asp-validation-for="Input.FrequentFlyerNr" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.HotelLoyaltyNr" class="form-control input-one" placeholder="Please enter your Country." />
+                <label asp-for="Input.HotelLoyaltyNr" class="form-label"></label>
+                <span asp-validation-for="Input.HotelLoyaltyNr" class="text-danger"></span>
+            </div>
             <button id="update-profile-button" type="submit" class="w-100 button-one bttn">Save</button>
         </div>
         <div class="col-md-6 d-flex flex-column justify-content-center align-items-center h-100">

@@ -77,6 +77,13 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             public string City { get; set; }
             [Display(Name = "Address")]
             public string Address { get; set; }
+            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [Display(Name = "Frequent flyer number")]
+            public string FrequentFlyerNr{ get; set; }
+            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [Display(Name = "Hotel Loyalty number")]
+            public string HotelLoyaltyNr { get; set; }
+
             [Display(Name = "Profile Picture")]
             public byte[] ProfilePicture { get; set; }
         }
@@ -91,6 +98,8 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             var country = user.Country;
             var city = user.City;  
             var address = user.Address;
+            var frequentFlyerNr = user.FrequentFlyerNumber;
+            var hotelLoyaltyNr = user.HotelLoyaltyNumber;
             Username = userName;
             Input = new InputModel
             {
@@ -102,6 +111,8 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
                 Country = country,
                 City = city,    
                 Address = address,
+                HotelLoyaltyNr = hotelLoyaltyNr,
+                FrequentFlyerNr = frequentFlyerNr
 
             };
         }
@@ -196,6 +207,18 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             if (Input.Address != address)
             {
                 user.Address = Input.Address;
+                await _userManager.UpdateAsync(user);
+            }
+            var frequentFlyerNr = user.FrequentFlyerNumber;
+            if (Input.FrequentFlyerNr != frequentFlyerNr)
+            {
+                user.FrequentFlyerNumber = Input.FrequentFlyerNr;
+                await _userManager.UpdateAsync(user);
+            }
+            var hotelLoyaltyNr = user.HotelLoyaltyNumber;
+            if (Input.HotelLoyaltyNr != hotelLoyaltyNr)
+            {
+                user.HotelLoyaltyNumber = Input.HotelLoyaltyNr;
                 await _userManager.UpdateAsync(user);
             }
             if (Request.Form.Files.Count > 0)

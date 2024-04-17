@@ -128,86 +128,102 @@ public class RegisterModel : PageModel
 
     public async Task OnGetAsync(string returnUrl = null)
     {
-        ReturnUrl = returnUrl;
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        _logger.LogInformation("Register Page for first time user.");
+        try {
+            ReturnUrl = returnUrl;
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            ReturnUrl = returnUrl;
+        }
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
     {
-        returnUrl ??= Url.Content("~/");
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        if (ModelState.IsValid)
+        _logger.LogInformation("Processing pregistration based on user information");
+        try
         {
-            Console.WriteLine("Hi");
-            var user = CreateUser();
-
-            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-            MailAddress EmailAddress = new MailAddress(Input.Email);
-            string username = EmailAddress.User;
-            var phoneNumber = Input.PhoneNumber;
-            var address = Input.Address;
-            var country = Input.Country;
-            user = new NorthPoleUser
+            returnUrl ??= Url.Content("~/");
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            if (ModelState.IsValid)
             {
-                UserName = username,
-                FirstName = Input.FirstName,
-                LastName = Input.LastName,
-                Email = Input.Email,
-                PhoneNumber = phoneNumber,
-                Address = Input.Address,
-                Country = Input.Country,
-                City = Input.City
-            };
+                Console.WriteLine("Hi");
+                var user = CreateUser();
 
-
-            var result = await _userManager.CreateAsync(user, Input.Password);
-
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User created a new account with password.");
-                await _userManager.AddToRoleAsync(user, Enum.Roles.Traveler.ToString());
-                
-                var userId = await _userManager.GetUserIdAsync(user);
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                    protocol: Request.Scheme);
-
-                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                if (!_userManager.Options.SignIn.RequireConfirmedAccount)
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                MailAddress EmailAddress = new MailAddress(Input.Email);
+                string username = EmailAddress.User;
+                var phoneNumber = Input.PhoneNumber;
+                var address = Input.Address;
+                var country = Input.Country;
+                user = new NorthPoleUser
                 {
-                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    UserName = username,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Email = Input.Email,
+                    PhoneNumber = phoneNumber,
+                    Address = Input.Address,
+                    Country = Input.Country,
+                    City = Input.City
+                };
+
+
+                var result = await _userManager.CreateAsync(user, Input.Password);
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+                    await _userManager.AddToRoleAsync(user, Enum.Roles.Traveler.ToString());
+
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    if (!_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
                 }
-                else
+                foreach (var error in result.Errors)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+            // If we got this far, something failed, redisplay form
+            return Page();
+        }catch(Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return Page();
         }
-
-        // If we got this far, something failed, redisplay form
-        return Page();
-    }
-
+        }
     private NorthPoleUser CreateUser()
     {
+        _logger.LogInformation("Create User.");
         try
         {
             return Activator.CreateInstance<NorthPoleUser>();
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError(ex.Message);
             throw new InvalidOperationException($"Can't create an instance of '{nameof(NorthPoleUser)}'. " +
                 $"Ensure that '{nameof(NorthPoleUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                 $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
