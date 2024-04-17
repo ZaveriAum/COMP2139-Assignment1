@@ -16,22 +16,22 @@
 
             <div class="form-group">
                 <label asp-for="PassengerName" class="control-label"></label>
-                <input asp-for="PassengerName" class="form-control" />
+                <input asp-for="PassengerName" class="input-one" />
                 <span asp-validation-for="PassengerName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PassportNumber" class="control-label"></label>
-                <input asp-for="PassportNumber" class="form-control" />
+                <input asp-for="PassportNumber" class="input-one" />
                 <span asp-validation-for="PassportNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumberOfPassenger" class="control-label"></label>
-                <input asp-for="NumberOfPassenger" class="form-control" />
+                <input asp-for="NumberOfPassenger" class="input-one" />
                 <span asp-validation-for="NumberOfPassenger" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="bttn button-one" />
-                <a class="bttn button-two  mt-3" asp-action="Index" >Back to List</a>
+                <a href='javascript:history.go(-1)' class=" bttn button-two ">Back to List</a>
             </div>
             <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"/>
         </form>
