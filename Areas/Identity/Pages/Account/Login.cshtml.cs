@@ -91,67 +91,83 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!string.IsNullOrEmpty(ErrorMessage))
+            _logger.LogInformation("Login Page for User.");
+            try {
+                if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+                    ModelState.AddModelError(string.Empty, ErrorMessage);
+                }
+
+                returnUrl ??= Url.Content("~/");
+
+                // Clear the existing external cookie to ensure a clean login process
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+                ReturnUrl = returnUrl;
+            }catch(Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
+                _logger.LogError(ex.Message);
+                ReturnUrl = Url.Content("~/");
             }
-
-            returnUrl ??= Url.Content("~/");
-
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            if (ModelState.IsValid)
+            _logger.LogInformation("Try logging in.");
+            try
             {
-                var username = Input.Email;
-                if (IsValidEmail(Input.Email))
+                returnUrl ??= Url.Content("~/");
+
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+                if (ModelState.IsValid)
                 {
-                    var user = await _userManager.FindByEmailAsync(Input.Email);
-                    if (user != null)
+                    var username = Input.Email;
+                    if (IsValidEmail(Input.Email))
                     {
-                        username = user.UserName;
+                        var user = await _userManager.FindByEmailAsync(Input.Email);
+                        if (user != null)
+                        {
+                            username = user.UserName;
+                        }
+                    }
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                    var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return RedirectToPage("Profile");
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out.");
+                        return RedirectToPage("./Lockout");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return Page();
                     }
                 }
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToPage("Profile");
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
-            }
 
-            // If we got this far, something failed, redisplay form
-            return Page();
+                // If we got this far, something failed, redisplay form
+                return Page();
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return Page();
+            }
         }
         public bool IsValidEmail(string email)
         {
+            _logger.LogInformation($"Check if the email : {email} is valid or not.");
             try
             {
                 MailAddress m = new MailAddress(email);
@@ -159,6 +175,7 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account
             }
             catch (FormatException e)
             {
+                _logger.LogError(e.Message);
                 return false;
             }
         }

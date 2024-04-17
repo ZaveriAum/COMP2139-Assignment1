@@ -27,7 +27,7 @@ namespace COMP2139_Assignment1.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Index")
+        [HttpGet("Index")]
         public async Task<IActionResult> Index(int CarId)
         {
             _logger.LogInformation("Listing all the cars searched by the user.");
