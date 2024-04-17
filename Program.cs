@@ -75,12 +75,15 @@ namespace COMP2139_Assignment1
             //app.MapControllerRoute(
             //    name: "area",
             //    pattern: "{area:exists}/{controller=Project}/{action=Index}/{id?}");
-            // the above is routing to the area in program.cs
+            //the above is routing to the area in program.cs
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            app.MapControllerRoute(
+                name: "Hotels",
+                pattern: "{area=NorthPole}/{controller=Hotels}/{action=Details}/{HotelName?}",
+                defaults: new { controller = "Hotels", action = "Details" });
             app.Run();
         }
     }

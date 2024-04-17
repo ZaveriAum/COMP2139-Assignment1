@@ -85,8 +85,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int hotelId)
+        [HttpGet("{hotelName}")]
+        public async Task<IActionResult> Details(int hotelId, string hotelName)
         {
             _logger.LogInformation("Details page for hotel entity.");
             try
@@ -96,6 +96,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 {
                     return NotFound();
                 }
+
                 return View(hotel);
             }catch(Exception ex)
             {
@@ -103,6 +104,8 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Controllers
                 return View();
             }
         }
+
+
 
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpGet]
