@@ -26,7 +26,7 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
-            _logger.LogInformation(returnUrl"Logout for the loged in user.");
+            _logger.LogInformation("Logout for the loged in user.");
             try
             {
                 await _signInManager.SignOutAsync();
