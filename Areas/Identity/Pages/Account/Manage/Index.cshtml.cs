@@ -30,8 +30,6 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public string Username { get; set; }
-
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -86,6 +84,8 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Profile Picture")]
             public byte[] ProfilePicture { get; set; }
+            [Display(Name = "Username")]
+            public string OUsername { get; set; }
         }
 
         private async Task LoadAsync(NorthPoleUser user)
@@ -100,10 +100,10 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             var address = user.Address;
             var frequentFlyerNr = user.FrequentFlyerNumber;
             var hotelLoyaltyNr = user.HotelLoyaltyNumber;
-            Username = userName;
+
             Input = new InputModel
             {
-                Username = userName,
+                OUsername = userName,
                 FirstName = firstName,
                 LastName = lastName,
                 PhoneNumber = phoneNumber,
@@ -143,28 +143,11 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (user.UsernameChangeLimit <=10 )
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                if (Input.OUsername != user.UserName)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-                await _userManager.UpdateAsync(user);
-            }
-            if (user.UsernameChangeLimit > 0)
-            {
-                if (Input.Username != user.UserName)
-                {
-                    var userNameExists = await _userManager.FindByNameAsync(Input.Username);
-                    if (userNameExists != null)
-                    {
-                        StatusMessage = "Error : Username not available.Please enter a new username";
-                        return RedirectToPage();
-                    }
-                    var setUsername = await _userManager.SetUserNameAsync(user, Input.Username);
+                    var setUsername = await _userManager.SetUserNameAsync(user, Input.OUsername);
                     if (!setUsername.Succeeded)
                     {
                         StatusMessage = "Unexpected error when trying to set Username.";
@@ -172,8 +155,8 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
                     }
                     else
                     {
-                        user.UserName = Input.Username;
-                        user.UsernameChangeLimit -= 1;
+                        user.UserName = Input.OUsername;
+                        user.UsernameChangeLimit += 1;
                         await _userManager.UpdateAsync(user);
                     }
                 }
@@ -195,6 +178,17 @@ namespace COMP2139_Assignment1.Areas.Identity.Pages.Account.Manage
             if (Input.Country != country)
             {
                 user.Country = Input.Country;
+                await _userManager.UpdateAsync(user);
+            }
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            if (Input.PhoneNumber != phoneNumber)
+            {
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                if (!setPhoneResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    return RedirectToPage();
+                }
                 await _userManager.UpdateAsync(user);
             }
             var city = user.City;

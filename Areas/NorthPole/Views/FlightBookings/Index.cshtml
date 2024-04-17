@@ -39,7 +39,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Flight.Airline)
                 </td>
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admind"))
                 {
                 <td>
                     @Html.DisplayFor(modelItem => item.PassengerName)
