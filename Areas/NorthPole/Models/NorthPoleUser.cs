@@ -26,10 +26,7 @@ namespace COMP2139_Assignment1.Areas.NorthPole.Models
         public byte[]? ProfilePicture { get; set; }
         public string? Address { get; set; }
 
-        [Required(ErrorMessage = "Country is required.")]
         public string? Country { get; set; }
-
-        [Required(ErrorMessage = "City is required.")]
         public string? City { get; set; }
     }
 }

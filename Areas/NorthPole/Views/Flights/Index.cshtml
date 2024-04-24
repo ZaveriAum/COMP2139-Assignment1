@@ -42,7 +42,6 @@
                         <div class="center-screen">
                             <a asp-controller="Flights" class="bttn button-one w-250" asp-action="Details" asp-route-flightId="@flight.FlightId">View Details</a>
                             <a asp-controller="FlightBookings" class="bttn button-two w-250 mt-2" asp-action="Create" asp-route-flightId="@flight.FlightId">Book This Flight!</a>
-                            <a asp-controller="FlightBookings" asp-action="Search" asp-route-flightId="@flight.FlightId" class="bttn button-three w-250 mt-2">View Bookings</a>
                             <a asp-controller="FlightReviews" class="bttn button-four w-250 mt-2" asp-action="Index" asp-route-FlightId="@flight.FlightId">Read Plane Reviews</a>
                         </div>
                     </div>

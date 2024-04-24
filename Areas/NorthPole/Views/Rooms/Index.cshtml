@@ -85,8 +85,11 @@
             <p>No Data for this Hotel.</p>
         }
         </div>
-<p>
+        @if (User.IsInRole("Admin"))
+        {
+            <p>
     <a asp-action="Create" asp-route-HotelId="@ViewBag.HotelId" class="bttn button-one">Create New Room</a>
-</p>
+</p>}
+                <a href='javascript:history.go(-1)' class="bttn button-three w-250 mt-2">Back to List</a>
 </body>
 </html>
