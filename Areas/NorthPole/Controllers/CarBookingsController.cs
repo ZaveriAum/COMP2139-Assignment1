@@ -75,7 +75,7 @@ namespace COMP2139_Assignment1.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create([Bind("BookedStartDate", "BookedEndDate", "CarId", "UserId")] CarBooking booking)
         {
-            _logger.LogInformation("Book a car.");
+            _logger.LogInformation($"Book a car. with userId: {booking.UserId} and carId: {booking.CarId}");
             try
             {
                 var Car = await _context.Cars.FindAsync(booking.CarId);
