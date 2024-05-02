@@ -14,8 +14,8 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control input-one" placeholder="Please choose your username." />
-                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Input.OUsername" class="form-control input-one" placeholder="Please choose your username." />
+                <label asp-for="Input.OUsername" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.FirstName" class="form-control input-one" placeholder="Please enter your First Name." />
@@ -46,16 +46,6 @@
                 <input asp-for="Input.Address" class="form-control input-one" placeholder="Please enter your Country." />
                 <label asp-for="Input.Address" class="form-label"></label>
                 <span asp-validation-for="Input.Address" class="text-danger"></span>
-            </div>
-                        <div class="form-floating mb-3">
-                <input asp-for="Input.FrequentFlyerNr" class="form-control input-one" placeholder="Please enter your Country." />
-                <label asp-for="Input.FrequentFlyerNr" class="form-label"></label>
-                <span asp-validation-for="Input.FrequentFlyerNr" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.HotelLoyaltyNr" class="form-control input-one" placeholder="Please enter your Country." />
-                <label asp-for="Input.HotelLoyaltyNr" class="form-label"></label>
-                <span asp-validation-for="Input.HotelLoyaltyNr" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="w-100 button-one bttn">Save</button>
         </div>

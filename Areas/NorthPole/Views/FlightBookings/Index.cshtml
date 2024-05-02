@@ -39,15 +39,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Flight.Airline)
                 </td>
-                @if (User.IsInRole("Admin"))
-                {
+                    @if (User.IsInRole("Admin"))
+                    {
                 <td>
                     @Html.DisplayFor(modelItem => item.PassengerName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PassportNumber)
                     </td>
-                }
+
                 <td>
                    @item.User.FirstName  @item.User.LastName
                 </td>
@@ -55,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.User.Email)
                 </td>
                 <td><a class="bttn button-one" asp-area="NorthPole" asp-controller="User" asp-action="Index" asp-route-userId="@item.User.Id">View User</a></td>
-                
+                    }
             </tr>
         }
     </tbody>

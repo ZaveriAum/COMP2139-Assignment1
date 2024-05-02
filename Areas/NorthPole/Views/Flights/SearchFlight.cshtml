@@ -78,9 +78,11 @@
             }
         }
         </div>
-
-        <p>
-            <a class="bttn button-one mt-3 w-250" asp-area="" asp-action="Create">Add Flight</a>
-        </p>
+        @if (User.IsInRole("Admin"))
+        {
+            <p>
+                <a class="bttn button-one mt-3 w-250" asp-area="" asp-action="Create">Add Flight</a>
+        </p>}
+        <a href='javascript:history.go(-1)' class="bttn button-three w-250 mt-2">Back to List</a>
     </body>
 </html>
